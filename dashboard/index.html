@@ -139,6 +139,8 @@
     <button class="btn" id="preset-quarter">Квартал</button>
     <button class="btn" id="preset-all">Весь период</button>
     <div class="sep"></div>
+    <select id="month-picker"><option value="">Выбрать целый месяц…</option></select>
+    <div class="sep"></div>
     <select id="city-select"><option value="__all__">Все города</option></select>
   </div>
 
@@ -252,6 +254,10 @@ document.getElementById("pw-submit").addEventListener("click", submitPassword);
 pwInput.addEventListener("keydown", (e) => { if (e.key === "Enter") submitPassword(); });
 
 const MONTHS_RU = ["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
+// Категории/города, которые не нужно учитывать нигде — ни в разбивке, ни в общих итогах
+const EXCLUDED_CITIES = new Set([
+  "Основная воронка", "АI_лидогенерация", "NPS", "Дожим", "VIP-клиенты", "Жалоба (VIP)", "_unmatched",
+]);
 const SPEND_STORAGE_KEY = "victory-ad-spend-v1";
 
 let meta = null;
@@ -379,6 +385,7 @@ async function aggregate(cityFilter, from, to) {
       if (!raw.byDay[day]) raw.byDay[day] = { leads: 0, arrived: 0, dealsWon: 0 };
 
       for (const [city, cityData] of Object.entries(dayData.cities || {})) {
+        if (EXCLUDED_CITIES.has(city)) continue;
         if (cityFilter !== "__all__" && city !== cityFilter) continue;
 
         for (const lead of Object.values(cityData.leads || {})) {
@@ -544,7 +551,7 @@ function renderTrend(raw, from, to) {
 let compareChart = null;
 async function renderCompare(from, to) {
   const fullMonthRange = isFullMonthRange(from, to);
-  const cityNames = [...new Set(Object.values(meta.dealCategoryNames || {}))];
+  const cityNames = [...new Set(Object.values(meta.dealCategoryNames || {}))].filter((c) => !EXCLUDED_CITIES.has(c));
   const months = monthsInRange(from, to);
   const rows = [];
   for (const city of cityNames) {
@@ -556,14 +563,15 @@ async function renderCompare(from, to) {
   rows.sort((a,b) => fullMonthRange ? (b.d.romiCash - a.d.romiCash) : (b.raw.leads - a.raw.leads));
 
   const table = document.getElementById("compare-table");
-  const finCols = fullMonthRange ? `<th>ДРР (оплата)</th><th>ROMI (оплата)</th>` : "";
-  table.innerHTML = `<thead><tr><th>Город</th><th>Заявки</th><th>ПЦП</th><th>Явка</th><th>Договор</th><th>Приход</th>${finCols}</tr></thead><tbody>${
+  const finCols = fullMonthRange ? `<th>ДРР (по кассе)</th><th>ROMI (по кассе)</th>` : "";
+  table.innerHTML = `<thead><tr><th>Город</th><th>Заявки</th><th>ПЦП</th><th>Явка</th><th>Договор</th><th>Траты</th><th>Приход в кассу</th>${finCols}</tr></thead><tbody>${
     rows.map((r) => `<tr>
       <td style="font-weight:600;">${r.city}</td>
       <td>${fmtNum(r.raw.leads)}</td>
       <td>${fmtNum(r.raw.pcp)}</td>
       <td>${fmtNum(r.raw.arrived)}</td>
       <td>${fmtNum(r.raw.dealsWon)}</td>
+      <td>${fmtMoney(r.spend)}</td>
       <td>${fmtMoney(r.raw.cashIn)}</td>
       ${fullMonthRange ? `<td>${fmtPct(r.d.drrCash)}</td><td style="color:${r.d.romiCash>=100?'#3D7A54':r.d.romiCash>=0?'#A9793A':'#A23B2E'}; font-weight:600;">${fmtPct(r.d.romiCash)}</td>` : ""}
     </tr>`).join("")
@@ -608,8 +616,8 @@ async function renderCompare(from, to) {
 
 function renderCitySelect() {
   const sel = document.getElementById("city-select");
-  const cityNames = [...new Set(Object.values(meta.dealCategoryNames || {}))];
-  sel.innerHTML = `<option value="__all__">Все города</option>` + cityNames.map((c) => `<option value="${c}">${c}</option>`).join("") + `<option value="_unmatched">Без определённого города</option>`;
+  const cityNames = [...new Set(Object.values(meta.dealCategoryNames || {}))].filter((c) => !EXCLUDED_CITIES.has(c));
+  sel.innerHTML = `<option value="__all__">Все города</option>` + cityNames.map((c) => `<option value="${c}">${c}</option>`).join("");
   sel.value = currentCity;
 }
 
@@ -617,7 +625,7 @@ function renderSpendEditor() {
   const from = document.getElementById("date-from").value;
   const to = document.getElementById("date-to").value;
   const months = monthsInRange(from, to);
-  const cityNames = currentCity === "__all__" ? [...new Set(Object.values(meta.dealCategoryNames || {}))] : [currentCity];
+  const cityNames = currentCity === "__all__" ? [...new Set(Object.values(meta.dealCategoryNames || {}))].filter((c) => !EXCLUDED_CITIES.has(c)) : [currentCity];
   const el = document.getElementById("spend-editor");
   el.innerHTML = `<table class="spend-table"><thead><tr><th>Месяц</th>${cityNames.map((c)=>`<th>${c}</th>`).join("")}</tr></thead><tbody>${
     months.map((m) => {
@@ -671,6 +679,8 @@ function setPreset(preset) {
   const from = document.getElementById("date-from");
   const to = document.getElementById("date-to");
   document.querySelectorAll(".filter-bar .btn").forEach((b) => b.classList.remove("btn-accent","active"));
+  const monthPicker = document.getElementById("month-picker");
+  if (monthPicker) monthPicker.value = "";
   if (preset === "today") {
     from.value = to.value = todayStr();
     document.getElementById("preset-today").classList.add("btn-accent","active");
@@ -690,6 +700,26 @@ function setPreset(preset) {
   }
   refresh();
 }
+
+function populateMonthPicker() {
+  const sel = document.getElementById("month-picker");
+  const now = new Date();
+  const currentMonthKey = `${now.getUTCFullYear()}-${String(now.getUTCMonth()+1).padStart(2,"0")}`;
+  const allMonths = monthsInRange("2026-01-01", `${currentMonthKey}-01`);
+  sel.innerHTML = `<option value="">Выбрать целый месяц…</option>` + allMonths.slice().reverse().map((m) => {
+    const [y, mo] = m.split("-");
+    return `<option value="${m}">${MONTHS_RU[parseInt(mo,10)-1]} ${y}</option>`;
+  }).join("");
+}
+
+document.getElementById("month-picker").addEventListener("change", (e) => {
+  const m = e.target.value;
+  if (!m) return;
+  document.querySelectorAll(".filter-bar .btn").forEach((b) => b.classList.remove("btn-accent","active"));
+  document.getElementById("date-from").value = `${m}-01`;
+  document.getElementById("date-to").value = lastDayOfMonth(m);
+  refresh();
+});
 
 document.getElementById("preset-today").addEventListener("click", () => setPreset("today"));
 document.getElementById("preset-month").addEventListener("click", () => setPreset("month"));
@@ -737,6 +767,7 @@ async function initDashboard() {
   await loadMeta();
   await loadAdSpend();
   renderCitySelect();
+  populateMonthPicker();
   setPreset("month");
 }
 
