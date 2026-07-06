@@ -92,10 +92,31 @@
 
   .footnote { font-size:10.5px; color:#8A8272; padding:0 28px 22px 28px; line-height:1.6; }
   .empty { font-size:12px; color:#8A8272; padding:14px 0; text-align:center; }
+
+  /* ---------- Экран пароля ---------- */
+  #lock-screen { position:fixed; inset:0; background:var(--ink); color:var(--paper); display:flex; align-items:center; justify-content:center; z-index:100; }
+  #lock-screen.hidden { display:none; }
+  .lock-box { width:100%; max-width:320px; text-align:center; padding:0 20px; }
+  .lock-eyebrow { font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); }
+  .lock-title { font-family:'Fraunces', serif; font-size:24px; margin:6px 0 20px 0; }
+  .lock-input { width:100%; padding:12px 14px; border-radius:9px; border:1.5px solid #3A4239; background:#232920; color:var(--paper); font-family:'IBM Plex Mono', monospace; font-size:14px; outline:none; text-align:center; letter-spacing:0.2em; }
+  .lock-input:focus { border-color:var(--gold); }
+  .lock-btn { margin-top:12px; width:100%; padding:12px; border-radius:9px; border:none; background:var(--gold); color:#1B211D; font-weight:600; font-size:13.5px; cursor:pointer; }
+  .lock-btn:hover { background:#BD8B48; }
+  .lock-msg { font-size:12px; color:#E8A79A; min-height:16px; margin-top:10px; }
 </style>
 </head>
 <body>
-<div class="root">
+<div id="lock-screen">
+  <div class="lock-box">
+    <div class="lock-eyebrow">Доступ ограничен</div>
+    <div class="lock-title">Введите пароль</div>
+    <input type="password" id="pw-input" class="lock-input" placeholder="••••" autocomplete="off" inputmode="numeric">
+    <button class="lock-btn" id="pw-submit">Войти</button>
+    <div class="lock-msg" id="pw-msg"></div>
+  </div>
+</div>
+<div class="root" id="dashboard-root" style="display:none;">
   <div class="header">
     <div>
       <h1>Victory парсинг</h1>
@@ -189,6 +210,47 @@
 </div>
 
 <script>
+/* ======================================================================
+   ПАРОЛЬ — простая клиентская защита (хэш пароля в коде, не сам пароль).
+   Не заменяет приватность репозитория, но закрывает от случайного просмотра.
+   ====================================================================== */
+const PASSWORD_HASH = "e7bf10c44f4b9e2019beb9b8401e859348e2779323c227a1008b9720e11d7d6a";
+const PW_SESSION_KEY = "victory-dashboard-unlocked";
+
+async function sha256(text) {
+  const enc = new TextEncoder().encode(text);
+  const buf = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+const lockScreen = document.getElementById("lock-screen");
+const pwInput = document.getElementById("pw-input");
+const pwMsg = document.getElementById("pw-msg");
+const dashboardRoot = document.getElementById("dashboard-root");
+
+function unlockDashboard() {
+  sessionStorage.setItem(PW_SESSION_KEY, "1");
+  lockScreen.classList.add("hidden");
+  dashboardRoot.style.display = "block";
+  initDashboard();
+}
+
+async function submitPassword() {
+  const val = pwInput.value;
+  if (!val) return;
+  const hash = await sha256(val);
+  if (hash === PASSWORD_HASH) {
+    unlockDashboard();
+  } else {
+    pwMsg.textContent = "Неверный пароль";
+    pwInput.value = "";
+    pwInput.focus();
+  }
+}
+
+document.getElementById("pw-submit").addEventListener("click", submitPassword);
+pwInput.addEventListener("keydown", (e) => { if (e.key === "Enter") submitPassword(); });
+
 const MONTHS_RU = ["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
 const SPEND_STORAGE_KEY = "victory-ad-spend-v1";
 
@@ -636,12 +698,18 @@ document.getElementById("spend-import-btn").addEventListener("click", () => {
   }
 });
 
-(async function init() {
+async function initDashboard() {
   await loadMeta();
   await loadAdSpend();
   renderCitySelect();
   setPreset("month");
-})();
+}
+
+if (sessionStorage.getItem(PW_SESSION_KEY) === "1") {
+  unlockDashboard();
+} else {
+  setTimeout(() => pwInput.focus(), 50);
+}
 </script>
 </body>
 </html>
