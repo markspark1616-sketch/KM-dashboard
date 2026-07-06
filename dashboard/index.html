@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Victory парсинг — дашборд</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+  :root {
+    --ink:#1B211D; --paper:#F1F3EC; --paper-2:#E6E9DE; --paper-3:#DCE0D2; --line:#C7CDBC;
+    --teal:#2F5D50; --gold:#A9793A; --gold-soft:#F1E6D2;
+    --good:#3D7A54; --good-soft:#DEEBE1; --bad:#A23B2E; --bad-soft:#F3DFDA;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:'IBM Plex Sans', sans-serif; background:#DEE2D6; color:var(--ink); min-height:100vh; display:flex; justify-content:center; padding:20px 10px; }
+  .root { background:var(--paper); border-radius:18px; max-width:1240px; width:100%; }
+  h1,h2,h3 { font-family:'Fraunces', serif; font-weight:600; margin:0; }
+  .mono { font-family:'IBM Plex Mono', monospace; }
+  .header { display:flex; justify-content:space-between; align-items:flex-end; padding:24px 28px 14px 28px; border-bottom:1px solid var(--line); gap:14px; flex-wrap:wrap; }
+  .header h1 { font-size:26px; }
+  .header .sub { font-size:12.5px; color:#5B6459; margin-top:4px; }
+  .status-line { font-size:11px; color:#7C8377; display:flex; align-items:center; gap:8px; }
+  .btn { font-family:'IBM Plex Mono', monospace; font-size:11px; color:#5B6459; background:#fff; border:1px solid var(--line); border-radius:8px; padding:7px 12px; cursor:pointer; }
+  .btn:hover { background:var(--paper-2); }
+  .btn-accent { border:1px dashed var(--gold); background:var(--gold-soft); color:#6B5230; }
+  .btn-accent.active, .btn-accent:hover { background:var(--gold); color:#fff; border-style:solid; }
+
+  .filter-bar { display:flex; gap:8px; flex-wrap:wrap; align-items:center; padding:12px 28px; background:var(--paper-2); border-bottom:1px solid var(--line); }
+  .filter-bar input[type=date] { font-family:'IBM Plex Mono', monospace; font-size:12px; border:1px solid var(--line); border-radius:8px; padding:6px 8px; background:#fff; }
+  .filter-bar select { font-family:'IBM Plex Mono', monospace; font-size:12px; border:1px solid var(--line); border-radius:8px; padding:6px 8px; background:#fff; }
+  .sep { width:1px; height:20px; background:var(--line); margin:0 4px; }
+
+  .body { padding:20px 28px 30px 28px; }
+
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(105px,1fr)); gap:9px; margin-bottom:18px; }
+  .kpi { background:#fff; border:1px solid var(--line); border-radius:11px; padding:10px 13px; }
+  .kpi.bad { background:var(--bad-soft); border-color:#E8BFB6; }
+  .kpi .v { font-family:'Fraunces', serif; font-size:20px; font-weight:600; }
+  .kpi.bad .v { color:var(--bad); }
+  .kpi .l { font-size:10.5px; color:#5B6459; margin-top:2px; }
+  .kpi.bad .l { color:#8A4A3D; }
+
+  .row2 { display:grid; grid-template-columns:1.1fr 1fr; gap:16px; margin-bottom:18px; }
+  @media (max-width:860px) { .row2 { grid-template-columns:1fr; } }
+  .panel { background:#fff; border:1px solid var(--line); border-radius:14px; padding:15px 17px; margin-bottom:18px; }
+  .eyebrow { font-family:'IBM Plex Mono', monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--gold); }
+  .panel h3 { font-size:15px; font-weight:500; margin:2px 0 10px 0; }
+
+  .funnel-row { display:grid; grid-template-columns:1fr 100px 68px; align-items:center; gap:8px; margin-bottom:7px; }
+  .funnel-track { background:var(--paper-2); border-radius:6px; height:26px; overflow:hidden; }
+  .funnel-bar { background:linear-gradient(90deg, var(--teal), #3f7565); height:100%; display:flex; align-items:center; padding-left:8px; border-radius:6px; min-width:40px; }
+  .funnel-bar span { color:#fff; font-size:11px; }
+  .funnel-label { font-size:12px; }
+  .funnel-drop { font-size:10.5px; color:var(--gold); text-align:right; }
+
+  .fin-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .fin-card { background:var(--paper-2); border-radius:10px; padding:9px 11px; }
+  .fin-card.good { background:var(--good-soft); }
+  .fin-card .l { font-size:10.5px; color:#5B6459; }
+  .fin-card.good .l { color:#2E5D40; }
+  .fin-card .v { font-family:'Fraunces', serif; font-size:16px; font-weight:600; margin-top:2px; }
+  .fin-card.good .v { color:var(--good); }
+
+  .reason-row { margin-bottom:8px; }
+  .reason-top { display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:3px; }
+  .reason-bar-track { background:var(--paper-2); border-radius:5px; height:6px; }
+  .reason-bar-fill { background:var(--bad); height:100%; border-radius:5px; }
+
+  .reason-cols { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:10px; }
+  @media (max-width:700px) { .reason-cols { grid-template-columns:1fr; } }
+  .reason-col { background:var(--paper-2); border-radius:10px; padding:9px 11px; }
+  .reason-col h4 { font-size:12px; font-weight:600; margin:0 0 6px 0; }
+  .reason-col p { font-size:11.5px; color:#5B6459; margin:0; line-height:1.7; }
+
+  .spend-table { width:100%; border-collapse:collapse; font-size:12.5px; }
+  .spend-table th, .spend-table td { padding:6px 8px; text-align:left; border-bottom:1px solid var(--paper-2); }
+  .spend-table input { font-family:'IBM Plex Mono', monospace; font-size:12.5px; width:110px; border:1.5px solid var(--gold); border-radius:6px; padding:5px 7px; background:var(--gold-soft); }
+
+  .compare-table-wrap { overflow-x:auto; }
+  table.compare { width:100%; border-collapse:collapse; font-size:12px; }
+  table.compare th { font-family:'IBM Plex Mono', monospace; font-size:9.5px; text-transform:uppercase; color:#7C8377; padding:7px 9px; border-bottom:1px solid var(--line); white-space:nowrap; text-align:left; }
+  table.compare td { padding:7px 9px; border-bottom:1px solid var(--paper-2); white-space:nowrap; }
+  table.compare tr:hover td { background:var(--paper-2); }
+
+  .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.4); display:none; align-items:center; justify-content:center; z-index:50; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:var(--paper); border-radius:14px; padding:20px; max-width:520px; width:92%; max-height:80vh; overflow:auto; }
+  .modal textarea { width:100%; height:160px; font-family:'IBM Plex Mono', monospace; font-size:11px; border:1px solid var(--line); border-radius:8px; padding:8px; }
+  .modal-actions { display:flex; gap:8px; margin-top:10px; justify-content:flex-end; }
+
+  .footnote { font-size:10.5px; color:#8A8272; padding:0 28px 22px 28px; line-height:1.6; }
+  .empty { font-size:12px; color:#8A8272; padding:14px 0; text-align:center; }
+</style>
+</head>
+<body>
+<div class="root">
+  <div class="header">
+    <div>
+      <h1>Victory парсинг</h1>
+      <div class="sub">Bitrix24 · синхронизация 06:00 и 18:00 МСК</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span class="status-line mono" id="sync-status">загрузка…</span>
+      <button class="btn" id="refresh-btn">Обновить</button>
+      <button class="btn" id="spend-modal-btn">Траты на рекламу</button>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <input type="date" id="date-from">
+    <span class="mono" style="color:#5B6459;">—</span>
+    <input type="date" id="date-to">
+    <div class="sep"></div>
+    <button class="btn" id="preset-today">Сегодня</button>
+    <button class="btn btn-accent active" id="preset-month">Этот месяц</button>
+    <button class="btn" id="preset-quarter">Квартал</button>
+    <button class="btn" id="preset-all">Весь период</button>
+    <div class="sep"></div>
+    <select id="city-select"><option value="__all__">Все города</option></select>
+  </div>
+
+  <div class="body">
+    <div class="kpi-grid" id="kpi-grid"></div>
+
+    <div class="row2">
+      <div class="panel">
+        <span class="eyebrow">Считается само</span>
+        <h3>Воронка</h3>
+        <div id="funnel"></div>
+      </div>
+      <div class="panel">
+        <span class="eyebrow">Считается само</span>
+        <h3>Финансы и юнит-экономика</h3>
+        <div class="fin-grid" id="fin-grid"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:4px;">
+        <div>
+          <span class="eyebrow">Считается само</span>
+          <h3 style="margin-bottom:0;">Причины брака</h3>
+        </div>
+        <div style="display:flex; gap:4px;">
+          <button class="btn btn-accent active" id="reason-combined-btn">Общий список</button>
+          <button class="btn" id="reason-bystatus-btn">По статусам</button>
+        </div>
+      </div>
+      <div id="reason-combined"></div>
+      <div id="reason-bystatus" style="display:none;"></div>
+    </div>
+
+    <div class="panel">
+      <span class="eyebrow">Тренд</span>
+      <h3>Динамика по дням</h3>
+      <canvas id="trend-chart" height="90"></canvas>
+    </div>
+
+    <div class="panel">
+      <span class="eyebrow">Сравнение</span>
+      <h3>Города за выбранный период</h3>
+      <div class="compare-table-wrap">
+        <table class="compare" id="compare-table"></table>
+      </div>
+      <canvas id="compare-chart" height="100" style="margin-top:14px;"></canvas>
+    </div>
+  </div>
+
+  <div class="footnote">
+    Заявки/ПЦП/Явка и т.д. считаются по дате СОЗДАНИЯ лида — если лид, созданный неделю назад, только сегодня дошёл до приёма, показатель «Явка» задним числом обновится в его исходном дне при следующей синхронизации.
+    Договор/Приход/Планы считаются по дате создания сделки, город сделки — по воронке. Траты на рекламу вводятся вручную и хранятся в этом браузере
+    (кнопка «Траты на рекламу» также позволяет выгрузить их как JSON, чтобы сохранить в репозитории и не потерять при смене браузера).
+  </div>
+</div>
+
+<div class="modal-overlay" id="spend-modal">
+  <div class="modal">
+    <h3 style="margin-bottom:10px;">Траты на рекламу</h3>
+    <div id="spend-editor"></div>
+    <p style="font-size:11px; color:#8A8272; margin:12px 0 4px 0;">Экспорт/импорт (чтобы сохранить между браузерами или закоммитить в репозиторий как data/ad-spend.json):</p>
+    <textarea id="spend-json" class="mono"></textarea>
+    <div class="modal-actions">
+      <button class="btn" id="spend-import-btn">Импортировать из поля выше</button>
+      <button class="btn btn-accent" id="spend-close-btn">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const MONTHS_RU = ["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
+const SPEND_STORAGE_KEY = "victory-ad-spend-v1";
+
+let meta = null;
+let monthCache = {};
+let adSpend = {};
+let currentCity = "__all__";
+let reasonView = "combined";
+
+const fmtNum = (n) => (isFinite(n) ? Math.round(n) : 0).toLocaleString("ru-RU");
+const fmtMoney = (n) => `${fmtNum(n)} \u20BD`;
+const fmtPct = (n) => `${(isFinite(n)?n:0).toLocaleString("ru-RU",{minimumFractionDigits:1,maximumFractionDigits:1})}%`;
+const safeDiv = (a,b) => b ? a/b : 0;
+
+function todayStr() { return new Date().toISOString().slice(0,10); }
+function fmtDateInput(d) { return d.toISOString().slice(0,10); }
+
+function monthsInRange(from, to) {
+  const months = [];
+  let d = new Date(from.slice(0,7) + "-01T00:00:00Z");
+  const end = new Date(to.slice(0,7) + "-01T00:00:00Z");
+  while (d <= end) {
+    months.push(d.toISOString().slice(0,7));
+    d.setUTCMonth(d.getUTCMonth() + 1);
+  }
+  return months;
+}
+
+async function loadMeta() {
+  const res = await fetch(`../data/meta.json?t=${Date.now()}`);
+  meta = await res.json();
+}
+
+async function loadMonth(monthKey) {
+  if (monthCache[monthKey]) return monthCache[monthKey];
+  try {
+    const res = await fetch(`../data/months/${monthKey}.json?t=${Date.now()}`);
+    if (!res.ok) throw new Error("no file");
+    const data = await res.json();
+    monthCache[monthKey] = data;
+    return data;
+  } catch (e) {
+    const empty = { month: monthKey, days: {} };
+    monthCache[monthKey] = empty;
+    return empty;
+  }
+}
+
+// ---------------------------------------------------------------------
+// Траты на рекламу (localStorage + попытка подтянуть базовый data/ad-spend.json)
+// ---------------------------------------------------------------------
+
+async function loadAdSpend() {
+  let base = {};
+  try {
+    const res = await fetch(`../data/ad-spend.json?t=${Date.now()}`);
+    if (res.ok) base = await res.json();
+  } catch (e) {}
+  let local = {};
+  try { local = JSON.parse(localStorage.getItem(SPEND_STORAGE_KEY) || "{}"); } catch (e) {}
+  adSpend = { ...base };
+  for (const month of Object.keys(local)) {
+    adSpend[month] = { ...(adSpend[month] || {}), ...local[month] };
+  }
+}
+
+function saveAdSpend() {
+  localStorage.setItem(SPEND_STORAGE_KEY, JSON.stringify(adSpend));
+}
+
+function getSpendForMonthsAndCity(months, city) {
+  let total = 0;
+  for (const m of months) {
+    const monthSpend = adSpend[m] || {};
+    if (city === "__all__") {
+      total += Object.values(monthSpend).reduce((a,b) => a + (parseFloat(b)||0), 0);
+    } else {
+      total += parseFloat(monthSpend[city]) || 0;
+    }
+  }
+  return total;
+}
+
+// ---------------------------------------------------------------------
+// Агрегация
+// ---------------------------------------------------------------------
+
+function isInRange(day, from, to) { return day >= from && day <= to; }
+
+async function aggregate(cityFilter, from, to) {
+  const months = monthsInRange(from, to);
+  const monthDatas = await Promise.all(months.map(loadMonth));
+
+  const raw = {
+    leads: 0, pcp: 0, booked: 0, activeBooked: 0, arrived: 0, junk: 0, noAnswer: 0,
+    dealsWon: 0, cashIn: 0, planAllCount: 0, planAllSum: 0, planWonSum: 0,
+    junkReasonsCombined: {}, junkReasonsByStatus: {},
+    byDay: {}, // day -> {leads, arrived, dealsWon}
+  };
+
+  const groups = meta.groups || {};
+  const pcpSet = new Set(groups.pcpStatusIds || []);
+  const bookedSet = new Set(groups.bookedStatusIds || []);
+  const activeBookedSet = new Set(groups.activeBookedStatusIds || []);
+  const arrivedSet = new Set(groups.arrivedStatusIds || []);
+  const junkSet = new Set(groups.junkStatusIds || []);
+  const noAnswerSet = new Set(groups.noAnswerStatusIds || []);
+  const statusNames = meta.leadStatusNames || {};
+  const stageMap = meta.dealStageMap || {};
+
+  for (const monthData of monthDatas) {
+    for (const [day, dayData] of Object.entries(monthData.days || {})) {
+      if (!isInRange(day, from, to)) continue;
+      if (!raw.byDay[day]) raw.byDay[day] = { leads: 0, arrived: 0, dealsWon: 0 };
+
+      for (const [city, cityData] of Object.entries(dayData.cities || {})) {
+        if (cityFilter !== "__all__" && city !== cityFilter) continue;
+
+        for (const lead of Object.values(cityData.leads || {})) {
+          raw.leads++; raw.byDay[day].leads++;
+          if (pcpSet.has(lead.s)) raw.pcp++;
+          if (bookedSet.has(lead.s)) raw.booked++;
+          if (activeBookedSet.has(lead.s)) raw.activeBooked++;
+          if (arrivedSet.has(lead.s)) { raw.arrived++; raw.byDay[day].arrived++; }
+          if (noAnswerSet.has(lead.s)) raw.noAnswer++;
+          if (junkSet.has(lead.s)) {
+            raw.junk++;
+            const statusName = statusNames[lead.s] || lead.s;
+            const reasonText = (lead.r || "Без указания причины").trim() || "Без указания причины";
+            raw.junkReasonsCombined[reasonText] = (raw.junkReasonsCombined[reasonText] || 0) + 1;
+            if (!raw.junkReasonsByStatus[statusName]) raw.junkReasonsByStatus[statusName] = {};
+            raw.junkReasonsByStatus[statusName][reasonText] = (raw.junkReasonsByStatus[statusName][reasonText] || 0) + 1;
+          }
+        }
+
+        for (const deal of Object.values(cityData.deals || {})) {
+          const stageInfo = stageMap[deal.stage] || {};
+          const isWon = stageInfo.semantics === "S";
+          if (deal.plan > 0) { raw.planAllCount++; raw.planAllSum += deal.plan; }
+          if (isWon) {
+            raw.dealsWon++; raw.byDay[day].dealsWon++;
+            raw.cashIn += deal.opportunity;
+            raw.planWonSum += deal.plan;
+          }
+        }
+      }
+    }
+  }
+
+  return raw;
+}
+
+function computeDerived(raw, spend) {
+  return {
+    priceQualified: safeDiv(spend, raw.pcp),
+    priceBooked: safeDiv(spend, raw.booked),
+    priceArrived: safeDiv(spend, raw.arrived),
+    priceContract: safeDiv(spend, raw.dealsWon),
+    drrCash: safeDiv(spend, raw.cashIn) * 100,
+    drrPlan: safeDiv(spend, raw.planWonSum) * 100,
+    romiCash: safeDiv(raw.cashIn - spend, spend) * 100,
+    romiPlan: safeDiv(raw.planWonSum - spend, spend) * 100,
+    crLeadQual: safeDiv(raw.pcp, raw.leads) * 100,
+    crQualBooked: safeDiv(raw.booked, raw.pcp) * 100,
+    crBookedArrived: safeDiv(raw.arrived, raw.booked) * 100,
+    crQualArrived: safeDiv(raw.arrived, raw.pcp) * 100,
+    crLeadBooked: safeDiv(raw.booked, raw.leads) * 100,
+    crLeadArrived: safeDiv(raw.arrived, raw.leads) * 100,
+  };
+}
+
+// ---------------------------------------------------------------------
+// Рендер
+// ---------------------------------------------------------------------
+
+function kpiHtml(label, value, bad) {
+  return `<div class="kpi ${bad?'bad':''}"><div class="v">${value}</div><div class="l">${label}</div></div>`;
+}
+
+function finHtml(label, value, good) {
+  return `<div class="fin-card ${good?'good':''}"><div class="l">${label}</div><div class="v">${value}</div></div>`;
+}
+
+function renderKpis(raw) {
+  document.getElementById("kpi-grid").innerHTML = [
+    kpiHtml("Заявки", fmtNum(raw.leads)),
+    kpiHtml("ПЦП", fmtNum(raw.pcp)),
+    kpiHtml("Записи", fmtNum(raw.booked)),
+    kpiHtml("Активные записи", fmtNum(raw.activeBooked)),
+    kpiHtml("Явка", fmtNum(raw.arrived)),
+    kpiHtml("Брак", fmtNum(raw.junk), true),
+    kpiHtml("Недозвон", fmtNum(raw.noAnswer)),
+  ].join("");
+}
+
+function renderFunnel(raw) {
+  const stages = [["Заявки", raw.leads], ["ПЦП", raw.pcp], ["Записи", raw.booked], ["Явка", raw.arrived], ["Договор", raw.dealsWon]];
+  const max = Math.max(1, ...stages.map((s) => s[1]));
+  document.getElementById("funnel").innerHTML = stages.map(([label, value], i) => {
+    const pct = Math.max(6, (value/max)*100);
+    const prev = i > 0 ? stages[i-1][1] : null;
+    const drop = prev !== null ? safeDiv(value, prev)*100 : null;
+    return `<div class="funnel-row">
+      <div class="funnel-track"><div class="funnel-bar" style="width:${pct}%"><span class="mono">${fmtNum(value)}</span></div></div>
+      <span class="funnel-label">${label}</span>
+      <span class="funnel-drop mono">${drop!==null?`↓ ${fmtPct(drop)}`:""}</span>
+    </div>`;
+  }).join("");
+}
+
+function renderFin(raw, d) {
+  document.getElementById("fin-grid").innerHTML = [
+    finHtml("Приход в кассу / Сумма договора", fmtMoney(raw.cashIn)),
+    finHtml("Составлено планов", `${fmtNum(raw.planAllCount)} · ${fmtMoney(raw.planAllSum)}`),
+    finHtml("Цена ПЦП / Записи", `${fmtMoney(d.priceQualified)} / ${fmtMoney(d.priceBooked)}`),
+    finHtml("Цена явки / договора", `${fmtMoney(d.priceArrived)} / ${fmtMoney(d.priceContract)}`),
+    finHtml("ДРР: по оплате / по плану", `${fmtPct(d.drrCash)} / ${fmtPct(d.drrPlan)}`, true),
+    finHtml("ROMI: по оплате / по плану", `${fmtPct(d.romiCash)} / ${fmtPct(d.romiPlan)}`, true),
+  ].join("");
+}
+
+function renderReasons(raw) {
+  const combinedEl = document.getElementById("reason-combined");
+  const total = raw.junk || 1;
+  const combinedSorted = Object.entries(raw.junkReasonsCombined).sort((a,b) => b[1]-a[1]);
+  combinedEl.innerHTML = combinedSorted.length ? combinedSorted.map(([reason, count]) => `
+    <div class="reason-row">
+      <div class="reason-top"><span>${reason}</span><span class="mono">${fmtNum(count)} · ${fmtPct(count/total*100)}</span></div>
+      <div class="reason-bar-track"><div class="reason-bar-fill" style="width:${Math.max(3,count/combinedSorted[0][1]*100)}%"></div></div>
+    </div>`).join("") : `<div class="empty">Нет брака за этот период</div>`;
+
+  const byStatusEl = document.getElementById("reason-bystatus");
+  const statuses = Object.keys(raw.junkReasonsByStatus);
+  byStatusEl.innerHTML = statuses.length ? `<div class="reason-cols">${statuses.map((statusName) => {
+    const reasons = Object.entries(raw.junkReasonsByStatus[statusName]).sort((a,b)=>b[1]-a[1]);
+    const statusTotal = reasons.reduce((a,[,c])=>a+c,0);
+    return `<div class="reason-col">
+      <h4>${statusName} <span class="mono" style="color:#8A8272; font-weight:400;">· ${statusTotal}</span></h4>
+      <p>${reasons.map(([r,c]) => `${r} — ${c}`).join("<br>")}</p>
+    </div>`;
+  }).join("")}</div>` : `<div class="empty">Нет брака за этот период</div>`;
+}
+
+let trendChart = null;
+function renderTrend(raw, from, to) {
+  const days = [];
+  let d = new Date(from + "T00:00:00Z");
+  const end = new Date(to + "T00:00:00Z");
+  while (d <= end) { days.push(d.toISOString().slice(0,10)); d.setUTCDate(d.getUTCDate()+1); }
+
+  const ctx = document.getElementById("trend-chart");
+  if (trendChart) trendChart.destroy();
+  trendChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: days,
+      datasets: [
+        { label: "Заявки", data: days.map((d)=> (raw.byDay[d]||{}).leads || 0), borderColor: "#A9793A", backgroundColor: "#A9793A", tension:0.25, pointRadius: days.length > 60 ? 0 : 2 },
+        { label: "Явка", data: days.map((d)=> (raw.byDay[d]||{}).arrived || 0), borderColor: "#2F5D50", backgroundColor: "#2F5D50", tension:0.25, pointRadius: days.length > 60 ? 0 : 2 },
+        { label: "Договор", data: days.map((d)=> (raw.byDay[d]||{}).dealsWon || 0), borderColor: "#A23B2E", backgroundColor: "#A23B2E", tension:0.25, pointRadius: days.length > 60 ? 0 : 2 },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { labels: { font: { family:"IBM Plex Sans", size:11 } } } },
+      scales: {
+        x: { grid: { display:false }, ticks: { font:{family:"IBM Plex Mono", size:9}, color:"#5B6459", maxTicksLimit:14 } },
+        y: { grid: { color:"#DCE0D2" }, ticks: { font:{family:"IBM Plex Mono", size:10}, color:"#5B6459" } },
+      },
+    },
+  });
+}
+
+let compareChart = null;
+async function renderCompare(from, to) {
+  const cityNames = [...new Set(Object.values(meta.dealCategoryNames || {}))];
+  const months = monthsInRange(from, to);
+  const rows = [];
+  for (const city of cityNames) {
+    const raw = await aggregate(city, from, to);
+    const spend = getSpendForMonthsAndCity(months, city);
+    const d = computeDerived(raw, spend);
+    rows.push({ city, raw, d, spend });
+  }
+  rows.sort((a,b) => b.d.romiCash - a.d.romiCash);
+
+  const table = document.getElementById("compare-table");
+  table.innerHTML = `<thead><tr><th>Город</th><th>Заявки</th><th>ПЦП</th><th>Явка</th><th>Договор</th><th>Приход</th><th>ДРР (оплата)</th><th>ROMI (оплата)</th></tr></thead><tbody>${
+    rows.map((r) => `<tr>
+      <td style="font-weight:600;">${r.city}</td>
+      <td>${fmtNum(r.raw.leads)}</td>
+      <td>${fmtNum(r.raw.pcp)}</td>
+      <td>${fmtNum(r.raw.arrived)}</td>
+      <td>${fmtNum(r.raw.dealsWon)}</td>
+      <td>${fmtMoney(r.raw.cashIn)}</td>
+      <td>${fmtPct(r.d.drrCash)}</td>
+      <td style="color:${r.d.romiCash>=100?'#3D7A54':r.d.romiCash>=0?'#A9793A':'#A23B2E'}; font-weight:600;">${fmtPct(r.d.romiCash)}</td>
+    </tr>`).join("")
+  }</tbody>`;
+
+  const ctx = document.getElementById("compare-chart");
+  if (compareChart) compareChart.destroy();
+  compareChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: rows.map((r) => r.city),
+      datasets: [{ label: "ROMI по оплате, %", data: rows.map((r) => Math.round(r.d.romiCash*10)/10),
+        backgroundColor: rows.map((r) => r.d.romiCash>=100?"#3D7A54":r.d.romiCash>=0?"#A9793A":"#A23B2E"), borderRadius:6 }],
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display:false } },
+      scales: {
+        x: { grid:{display:false}, ticks:{font:{family:"IBM Plex Mono", size:9}, color:"#5B6459", maxRotation:40, minRotation:40} },
+        y: { grid:{color:"#DCE0D2"}, ticks:{font:{family:"IBM Plex Mono", size:10}, color:"#5B6459", callback:(v)=>`${v}%`} },
+      },
+    },
+  });
+}
+
+function renderCitySelect() {
+  const sel = document.getElementById("city-select");
+  const cityNames = [...new Set(Object.values(meta.dealCategoryNames || {}))];
+  sel.innerHTML = `<option value="__all__">Все города</option>` + cityNames.map((c) => `<option value="${c}">${c}</option>`).join("") + `<option value="_unmatched">Без определённого города</option>`;
+  sel.value = currentCity;
+}
+
+function renderSpendEditor() {
+  const from = document.getElementById("date-from").value;
+  const to = document.getElementById("date-to").value;
+  const months = monthsInRange(from, to);
+  const cityNames = currentCity === "__all__" ? [...new Set(Object.values(meta.dealCategoryNames || {}))] : [currentCity];
+  const el = document.getElementById("spend-editor");
+  el.innerHTML = `<table class="spend-table"><thead><tr><th>Месяц</th>${cityNames.map((c)=>`<th>${c}</th>`).join("")}</tr></thead><tbody>${
+    months.map((m) => {
+      const [y, mo] = m.split("-");
+      const label = `${MONTHS_RU[parseInt(mo,10)-1]} ${y}`;
+      return `<tr><td class="mono">${label}</td>${cityNames.map((c) => `<td><input type="number" data-month="${m}" data-city="${c}" value="${(adSpend[m]||{})[c] || ""}" placeholder="0"></td>`).join("")}</tr>`;
+    }).join("")
+  }</tbody></table>`;
+  el.querySelectorAll("input[data-month]").forEach((input) => {
+    input.addEventListener("input", (e) => {
+      const { month, city } = e.target.dataset;
+      if (!adSpend[month]) adSpend[month] = {};
+      adSpend[month][city] = e.target.value === "" ? 0 : parseFloat(e.target.value);
+      saveAdSpend();
+      document.getElementById("spend-json").value = JSON.stringify(adSpend, null, 2);
+      refresh();
+    });
+  });
+  document.getElementById("spend-json").value = JSON.stringify(adSpend, null, 2);
+}
+
+// ---------------------------------------------------------------------
+// Основной цикл обновления
+// ---------------------------------------------------------------------
+
+async function refresh() {
+  const from = document.getElementById("date-from").value;
+  const to = document.getElementById("date-to").value;
+  if (!from || !to) return;
+
+  const raw = await aggregate(currentCity, from, to);
+  const months = monthsInRange(from, to);
+  const spend = getSpendForMonthsAndCity(months, currentCity);
+  const d = computeDerived(raw, spend);
+
+  renderKpis(raw);
+  renderFunnel(raw);
+  renderFin(raw, d);
+  renderReasons(raw);
+  renderTrend(raw, from, to);
+  await renderCompare(from, to);
+
+  const stats = meta.lastRunStats;
+  document.getElementById("sync-status").textContent = stats
+    ? `обновлено: ${new Date(stats.at).toLocaleString("ru-RU", {dateStyle:"medium", timeStyle:"short"})}`
+    : "синхронизация ещё не запускалась";
+}
+
+function setPreset(preset) {
+  const now = new Date();
+  const from = document.getElementById("date-from");
+  const to = document.getElementById("date-to");
+  document.querySelectorAll(".filter-bar .btn").forEach((b) => b.classList.remove("btn-accent","active"));
+  if (preset === "today") {
+    from.value = to.value = todayStr();
+    document.getElementById("preset-today").classList.add("btn-accent","active");
+  } else if (preset === "month") {
+    from.value = fmtDateInput(new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)));
+    to.value = todayStr();
+    document.getElementById("preset-month").classList.add("btn-accent","active");
+  } else if (preset === "quarter") {
+    const qStartMonth = Math.floor(now.getUTCMonth()/3)*3;
+    from.value = fmtDateInput(new Date(Date.UTC(now.getUTCFullYear(), qStartMonth, 1)));
+    to.value = todayStr();
+    document.getElementById("preset-quarter").classList.add("btn-accent","active");
+  } else if (preset === "all") {
+    from.value = "2026-01-01";
+    to.value = todayStr();
+    document.getElementById("preset-all").classList.add("btn-accent","active");
+  }
+  refresh();
+}
+
+document.getElementById("preset-today").addEventListener("click", () => setPreset("today"));
+document.getElementById("preset-month").addEventListener("click", () => setPreset("month"));
+document.getElementById("preset-quarter").addEventListener("click", () => setPreset("quarter"));
+document.getElementById("preset-all").addEventListener("click", () => setPreset("all"));
+document.getElementById("date-from").addEventListener("change", refresh);
+document.getElementById("date-to").addEventListener("change", refresh);
+document.getElementById("city-select").addEventListener("change", (e) => { currentCity = e.target.value; refresh(); });
+document.getElementById("refresh-btn").addEventListener("click", () => { monthCache = {}; loadMeta().then(refresh); });
+
+document.getElementById("reason-combined-btn").addEventListener("click", () => {
+  reasonView = "combined";
+  document.getElementById("reason-combined").style.display = "block";
+  document.getElementById("reason-bystatus").style.display = "none";
+  document.getElementById("reason-combined-btn").classList.add("btn-accent","active");
+  document.getElementById("reason-bystatus-btn").classList.remove("btn-accent","active");
+});
+document.getElementById("reason-bystatus-btn").addEventListener("click", () => {
+  reasonView = "bystatus";
+  document.getElementById("reason-combined").style.display = "none";
+  document.getElementById("reason-bystatus").style.display = "block";
+  document.getElementById("reason-bystatus-btn").classList.add("btn-accent","active");
+  document.getElementById("reason-combined-btn").classList.remove("btn-accent","active");
+});
+
+document.getElementById("spend-modal-btn").addEventListener("click", () => {
+  renderSpendEditor();
+  document.getElementById("spend-modal").classList.add("open");
+});
+document.getElementById("spend-close-btn").addEventListener("click", () => {
+  document.getElementById("spend-modal").classList.remove("open");
+});
+document.getElementById("spend-import-btn").addEventListener("click", () => {
+  try {
+    adSpend = JSON.parse(document.getElementById("spend-json").value);
+    saveAdSpend();
+    renderSpendEditor();
+    refresh();
+  } catch (e) {
+    alert("Некорректный JSON: " + e.message);
+  }
+});
+
+(async function init() {
+  await loadMeta();
+  await loadAdSpend();
+  renderCitySelect();
+  setPreset("month");
+})();
+</script>
+</body>
+</html>

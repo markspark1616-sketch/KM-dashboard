@@ -1,0 +1,12 @@
+{
+  "name": "victory-dashboard-sync",
+  "version": "1.0.0",
+  "description": "Дважды в сутки забирает лиды и сделки Bitrix24 (источник Victory парсинг) и обновляет data/months/*.json",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "sync": "node scripts/sync-bitrix.js"
+  }
+}

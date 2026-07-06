@@ -1,0 +1,19 @@
+{
+  "lastSyncCursor": null,
+  "sourceName": "Victory парсинг",
+  "sourceId": null,
+  "leadStatusNames": {},
+  "dealStageMap": {},
+  "dealCategoryNames": {},
+  "dealCityHintList": [],
+  "groups": {
+    "pcpStatusIds": [],
+    "bookedStatusIds": [],
+    "activeBookedStatusIds": [],
+    "arrivedStatusIds": [],
+    "junkStatusIds": [],
+    "noAnswerStatusIds": []
+  },
+  "unmatchedSiteCodes": {},
+  "lastRunStats": null
+}
