@@ -279,6 +279,18 @@ function monthsInRange(from, to) {
   return months;
 }
 
+function lastDayOfMonth(monthKey) {
+  const [y, m] = monthKey.split("-").map(Number);
+  return new Date(Date.UTC(y, m, 0)).toISOString().slice(0,10);
+}
+
+/** true, только если from — 1-е число месяца, а to — последний день месяца (одного или нескольких подряд) */
+function isFullMonthRange(from, to) {
+  const startsOnFirst = from.slice(8,10) === "01";
+  const endsOnLast = to === lastDayOfMonth(to.slice(0,7));
+  return startsOnFirst && endsOnLast;
+}
+
 async function loadMeta() {
   const res = await fetch(`../data/meta.json?t=${Date.now()}`);
   meta = await res.json();
@@ -461,15 +473,20 @@ function renderFunnel(raw) {
   }).join("");
 }
 
-function renderFin(raw, d) {
+function renderFin(raw, d, fullMonthRange) {
+  const spendDependent = fullMonthRange
+    ? [
+        finHtml("Цена ПЦП / Записи", `${fmtMoney(d.priceQualified)} / ${fmtMoney(d.priceBooked)}`),
+        finHtml("Цена явки / договора", `${fmtMoney(d.priceArrived)} / ${fmtMoney(d.priceContract)}`),
+        finHtml("ДРР: по оплате / по плану", `${fmtPct(d.drrCash)} / ${fmtPct(d.drrPlan)}`, true),
+        finHtml("ROMI: по оплате / по плану", `${fmtPct(d.romiCash)} / ${fmtPct(d.romiPlan)}`, true),
+      ].join("")
+    : `<div class="empty" style="grid-column:1/-1;">Цена лида, ДРР и ROMI считаются только для целых месяцев (траты вводятся помесячно) — выберите период «Этот месяц», «Квартал» или диапазон от 1-го до последнего числа месяца.</div>`;
+
   document.getElementById("fin-grid").innerHTML = [
     finHtml("Приход в кассу / Сумма договора", fmtMoney(raw.cashIn)),
     finHtml("Составлено планов", `${fmtNum(raw.planAllCount)} · ${fmtMoney(raw.planAllSum)}`),
-    finHtml("Цена ПЦП / Записи", `${fmtMoney(d.priceQualified)} / ${fmtMoney(d.priceBooked)}`),
-    finHtml("Цена явки / договора", `${fmtMoney(d.priceArrived)} / ${fmtMoney(d.priceContract)}`),
-    finHtml("ДРР: по оплате / по плану", `${fmtPct(d.drrCash)} / ${fmtPct(d.drrPlan)}`, true),
-    finHtml("ROMI: по оплате / по плану", `${fmtPct(d.romiCash)} / ${fmtPct(d.romiPlan)}`, true),
-  ].join("");
+  ].join("") + spendDependent;
 }
 
 function renderReasons(raw) {
@@ -526,6 +543,7 @@ function renderTrend(raw, from, to) {
 
 let compareChart = null;
 async function renderCompare(from, to) {
+  const fullMonthRange = isFullMonthRange(from, to);
   const cityNames = [...new Set(Object.values(meta.dealCategoryNames || {}))];
   const months = monthsInRange(from, to);
   const rows = [];
@@ -535,10 +553,11 @@ async function renderCompare(from, to) {
     const d = computeDerived(raw, spend);
     rows.push({ city, raw, d, spend });
   }
-  rows.sort((a,b) => b.d.romiCash - a.d.romiCash);
+  rows.sort((a,b) => fullMonthRange ? (b.d.romiCash - a.d.romiCash) : (b.raw.leads - a.raw.leads));
 
   const table = document.getElementById("compare-table");
-  table.innerHTML = `<thead><tr><th>Город</th><th>Заявки</th><th>ПЦП</th><th>Явка</th><th>Договор</th><th>Приход</th><th>ДРР (оплата)</th><th>ROMI (оплата)</th></tr></thead><tbody>${
+  const finCols = fullMonthRange ? `<th>ДРР (оплата)</th><th>ROMI (оплата)</th>` : "";
+  table.innerHTML = `<thead><tr><th>Город</th><th>Заявки</th><th>ПЦП</th><th>Явка</th><th>Договор</th><th>Приход</th>${finCols}</tr></thead><tbody>${
     rows.map((r) => `<tr>
       <td style="font-weight:600;">${r.city}</td>
       <td>${fmtNum(r.raw.leads)}</td>
@@ -546,10 +565,26 @@ async function renderCompare(from, to) {
       <td>${fmtNum(r.raw.arrived)}</td>
       <td>${fmtNum(r.raw.dealsWon)}</td>
       <td>${fmtMoney(r.raw.cashIn)}</td>
-      <td>${fmtPct(r.d.drrCash)}</td>
-      <td style="color:${r.d.romiCash>=100?'#3D7A54':r.d.romiCash>=0?'#A9793A':'#A23B2E'}; font-weight:600;">${fmtPct(r.d.romiCash)}</td>
+      ${fullMonthRange ? `<td>${fmtPct(r.d.drrCash)}</td><td style="color:${r.d.romiCash>=100?'#3D7A54':r.d.romiCash>=0?'#A9793A':'#A23B2E'}; font-weight:600;">${fmtPct(r.d.romiCash)}</td>` : ""}
     </tr>`).join("")
   }</tbody>`;
+
+  if (!fullMonthRange) {
+    document.getElementById("compare-chart").style.display = "none";
+    const note = document.createElement("div");
+    note.className = "empty";
+    note.id = "compare-chart-note";
+    note.textContent = "График ROMI по городам доступен только при выборе целых месяцев.";
+    const old = document.getElementById("compare-chart-note");
+    if (old) old.remove();
+    document.getElementById("compare-chart").insertAdjacentElement("afterend", note);
+    if (compareChart) { compareChart.destroy(); compareChart = null; }
+    return;
+  } else {
+    document.getElementById("compare-chart").style.display = "block";
+    const oldNote = document.getElementById("compare-chart-note");
+    if (oldNote) oldNote.remove();
+  }
 
   const ctx = document.getElementById("compare-chart");
   if (compareChart) compareChart.destroy();
@@ -620,7 +655,7 @@ async function refresh() {
 
   renderKpis(raw);
   renderFunnel(raw);
-  renderFin(raw, d);
+  renderFin(raw, d, isFullMonthRange(from, to));
   renderReasons(raw);
   renderTrend(raw, from, to);
   await renderCompare(from, to);
