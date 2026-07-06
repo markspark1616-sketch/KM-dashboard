@@ -1,5 +1,5 @@
 {
-  "lastSyncCursor": null,
+  "lastSyncCursor": "2026-07-06T20:00:27.449Z",
   "sourceName": "Victory парсинг",
   "sourceId": "84",
   "leadStatusNames": {
@@ -1067,9 +1067,9 @@
   },
   "unmatchedSiteCodes": {},
   "lastRunStats": {
-    "at": "2026-07-06T17:46:10.272Z",
+    "at": "2026-07-06T20:00:27.449Z",
     "leadsFetched": 18629,
-    "dealsFetched": 2723,
+    "dealsFetched": 2722,
     "monthsTouched": [
       "2026-01",
       "2026-02",
@@ -1080,5 +1080,1248 @@
       "2026-07"
     ],
     "firstRun": true
-  }
+  },
+  "resolvedFieldCodes": {
+    "leadSiteInfoCode": "SOURCE_DESCRIPTION",
+    "leadJunkReasonCode": null,
+    "leadRefusalReasonCode": null,
+    "leadLowQualityReasonCode": null,
+    "dealPlanSumCode": "OPPORTUNITY"
+  },
+  "debugAllLeadFields": [
+    {
+      "code": "ID",
+      "title": "ID"
+    },
+    {
+      "code": "TITLE",
+      "title": "Название лида"
+    },
+    {
+      "code": "HONORIFIC",
+      "title": "Обращение"
+    },
+    {
+      "code": "NAME",
+      "title": "Имя"
+    },
+    {
+      "code": "SECOND_NAME",
+      "title": "Отчество"
+    },
+    {
+      "code": "LAST_NAME",
+      "title": "Фамилия"
+    },
+    {
+      "code": "BIRTHDATE",
+      "title": "Дата рождения"
+    },
+    {
+      "code": "COMPANY_TITLE",
+      "title": "Название компании"
+    },
+    {
+      "code": "SOURCE_ID",
+      "title": "Источник"
+    },
+    {
+      "code": "SOURCE_DESCRIPTION",
+      "title": "Дополнительно об источнике"
+    },
+    {
+      "code": "STATUS_ID",
+      "title": "Стадия"
+    },
+    {
+      "code": "STATUS_DESCRIPTION",
+      "title": "Дополнительно о стадии"
+    },
+    {
+      "code": "STATUS_SEMANTIC_ID",
+      "title": "Состояние статуса"
+    },
+    {
+      "code": "POST",
+      "title": "Должность"
+    },
+    {
+      "code": "ADDRESS",
+      "title": "Адрес"
+    },
+    {
+      "code": "ADDRESS_2",
+      "title": "Адрес (стр. 2)"
+    },
+    {
+      "code": "ADDRESS_CITY",
+      "title": "Город"
+    },
+    {
+      "code": "ADDRESS_POSTAL_CODE",
+      "title": "Почтовый индекс"
+    },
+    {
+      "code": "ADDRESS_REGION",
+      "title": "Район"
+    },
+    {
+      "code": "ADDRESS_PROVINCE",
+      "title": "Область"
+    },
+    {
+      "code": "ADDRESS_COUNTRY",
+      "title": "Страна"
+    },
+    {
+      "code": "ADDRESS_COUNTRY_CODE",
+      "title": "Код страны"
+    },
+    {
+      "code": "ADDRESS_LOC_ADDR_ID",
+      "title": "Идентификатор адреса местоположения"
+    },
+    {
+      "code": "CURRENCY_ID",
+      "title": "Валюта"
+    },
+    {
+      "code": "OPPORTUNITY",
+      "title": "Сумма"
+    },
+    {
+      "code": "IS_MANUAL_OPPORTUNITY",
+      "title": "IS_MANUAL_OPPORTUNITY"
+    },
+    {
+      "code": "OPENED",
+      "title": "Доступен для всех"
+    },
+    {
+      "code": "COMMENTS",
+      "title": "Комментарий"
+    },
+    {
+      "code": "HAS_PHONE",
+      "title": "Задан телефон"
+    },
+    {
+      "code": "HAS_EMAIL",
+      "title": "Задан e-mail"
+    },
+    {
+      "code": "HAS_IMOL",
+      "title": "Задана открытая линия"
+    },
+    {
+      "code": "ASSIGNED_BY_ID",
+      "title": "Ответственный"
+    },
+    {
+      "code": "CREATED_BY_ID",
+      "title": "Кем создан"
+    },
+    {
+      "code": "MODIFY_BY_ID",
+      "title": "Кем изменен"
+    },
+    {
+      "code": "MOVED_BY_ID",
+      "title": "MOVED_BY_ID"
+    },
+    {
+      "code": "DATE_CREATE",
+      "title": "Дата создания"
+    },
+    {
+      "code": "DATE_MODIFY",
+      "title": "Дата изменения"
+    },
+    {
+      "code": "MOVED_TIME",
+      "title": "MOVED_TIME"
+    },
+    {
+      "code": "COMPANY_ID",
+      "title": "Компания"
+    },
+    {
+      "code": "CONTACT_ID",
+      "title": "Контакт"
+    },
+    {
+      "code": "CONTACT_IDS",
+      "title": "CONTACT_IDS"
+    },
+    {
+      "code": "IS_RETURN_CUSTOMER",
+      "title": "Повторный лид"
+    },
+    {
+      "code": "DATE_CLOSED",
+      "title": "Дата завершения"
+    },
+    {
+      "code": "ORIGINATOR_ID",
+      "title": "Внешний источник"
+    },
+    {
+      "code": "ORIGIN_ID",
+      "title": "Идентификатор элемента во внешнем источнике"
+    },
+    {
+      "code": "UTM_SOURCE",
+      "title": "Рекламная система"
+    },
+    {
+      "code": "UTM_MEDIUM",
+      "title": "Тип трафика"
+    },
+    {
+      "code": "UTM_CAMPAIGN",
+      "title": "Обозначение рекламной кампании"
+    },
+    {
+      "code": "UTM_CONTENT",
+      "title": "Содержание кампании"
+    },
+    {
+      "code": "UTM_TERM",
+      "title": "Условие поиска кампании"
+    },
+    {
+      "code": "LAST_ACTIVITY_TIME",
+      "title": "LAST_ACTIVITY_TIME"
+    },
+    {
+      "code": "LAST_ACTIVITY_BY",
+      "title": "LAST_ACTIVITY_BY"
+    },
+    {
+      "code": "LAST_COMMUNICATION_TIME",
+      "title": "LAST_COMMUNICATION_TIME"
+    },
+    {
+      "code": "PHONE",
+      "title": "Телефон"
+    },
+    {
+      "code": "EMAIL",
+      "title": "E-mail"
+    },
+    {
+      "code": "WEB",
+      "title": "Сайт"
+    },
+    {
+      "code": "IM",
+      "title": "Мессенджер"
+    },
+    {
+      "code": "LINK",
+      "title": "LINK"
+    },
+    {
+      "code": "UF_CRM_1755787390",
+      "title": "UF_CRM_1755787390"
+    },
+    {
+      "code": "UF_CRM_1742316696315",
+      "title": "UF_CRM_1742316696315"
+    },
+    {
+      "code": "UF_CRM_1746529238",
+      "title": "UF_CRM_1746529238"
+    },
+    {
+      "code": "UF_CRM_1746528777",
+      "title": "UF_CRM_1746528777"
+    },
+    {
+      "code": "UF_CRM_1746529112",
+      "title": "UF_CRM_1746529112"
+    },
+    {
+      "code": "UF_CRM_1742318046715",
+      "title": "UF_CRM_1742318046715"
+    },
+    {
+      "code": "UF_CRM_1762508178",
+      "title": "UF_CRM_1762508178"
+    },
+    {
+      "code": "UF_CRM_1745957138",
+      "title": "UF_CRM_1745957138"
+    },
+    {
+      "code": "UF_CRM_1748008077",
+      "title": "UF_CRM_1748008077"
+    },
+    {
+      "code": "UF_CRM_1748008274",
+      "title": "UF_CRM_1748008274"
+    },
+    {
+      "code": "UF_CRM_1748008709",
+      "title": "UF_CRM_1748008709"
+    },
+    {
+      "code": "UF_CRM_1748280876",
+      "title": "UF_CRM_1748280876"
+    },
+    {
+      "code": "UF_CRM_1751026454528",
+      "title": "UF_CRM_1751026454528"
+    },
+    {
+      "code": "UF_CRM_1751961597022",
+      "title": "UF_CRM_1751961597022"
+    },
+    {
+      "code": "UF_CRM_1752673237",
+      "title": "UF_CRM_1752673237"
+    },
+    {
+      "code": "UF_CRM_1758009888",
+      "title": "UF_CRM_1758009888"
+    },
+    {
+      "code": "UF_CRM_1754927102",
+      "title": "UF_CRM_1754927102"
+    },
+    {
+      "code": "UF_CRM_LEAD_1755625701133",
+      "title": "UF_CRM_LEAD_1755625701133"
+    },
+    {
+      "code": "UF_CRM_LEAD_1755752994041",
+      "title": "UF_CRM_LEAD_1755752994041"
+    },
+    {
+      "code": "UF_CRM_1761035049591",
+      "title": "UF_CRM_1761035049591"
+    },
+    {
+      "code": "UF_CRM_LEAD_1761829560855",
+      "title": "UF_CRM_LEAD_1761829560855"
+    },
+    {
+      "code": "UF_CRM_1763978895",
+      "title": "UF_CRM_1763978895"
+    },
+    {
+      "code": "UF_CRM_LEAD_PREVIOUS_USER_FN",
+      "title": "UF_CRM_LEAD_PREVIOUS_USER_FN"
+    },
+    {
+      "code": "UF_CRM_1770219538",
+      "title": "UF_CRM_1770219538"
+    },
+    {
+      "code": "UF_CRM_1770984375",
+      "title": "UF_CRM_1770984375"
+    },
+    {
+      "code": "UF_CRM_1771439155",
+      "title": "UF_CRM_1771439155"
+    },
+    {
+      "code": "UF_CRM_1773155019732",
+      "title": "UF_CRM_1773155019732"
+    },
+    {
+      "code": "UF_CRM_WHATSAPPUSERNAME_WZ",
+      "title": "UF_CRM_WHATSAPPUSERNAME_WZ"
+    },
+    {
+      "code": "UF_CRM_WHATSAPPLID_WZ",
+      "title": "UF_CRM_WHATSAPPLID_WZ"
+    },
+    {
+      "code": "UF_CRM_1774525812546",
+      "title": "UF_CRM_1774525812546"
+    },
+    {
+      "code": "UF_CRM_1774525830934",
+      "title": "UF_CRM_1774525830934"
+    },
+    {
+      "code": "UF_CRM_1774526207243",
+      "title": "UF_CRM_1774526207243"
+    },
+    {
+      "code": "UF_CRM_1774526232878",
+      "title": "UF_CRM_1774526232878"
+    },
+    {
+      "code": "UF_CRM_1776754996821",
+      "title": "UF_CRM_1776754996821"
+    },
+    {
+      "code": "UF_CRM_CIANPROFILEID_WZ",
+      "title": "UF_CRM_CIANPROFILEID_WZ"
+    },
+    {
+      "code": "UF_CRM_1781517263857",
+      "title": "UF_CRM_1781517263857"
+    },
+    {
+      "code": "UF_CRM_LEAD_1756133621687",
+      "title": "UF_CRM_LEAD_1756133621687"
+    },
+    {
+      "code": "UF_CRM_1744362815",
+      "title": "UF_CRM_1744362815"
+    },
+    {
+      "code": "UF_CRM_MAXUSERNAME_WZ",
+      "title": "UF_CRM_MAXUSERNAME_WZ"
+    },
+    {
+      "code": "UF_CRM_MAXID_WZ",
+      "title": "UF_CRM_MAXID_WZ"
+    },
+    {
+      "code": "UF_CRM_1759217744",
+      "title": "UF_CRM_1759217744"
+    },
+    {
+      "code": "UF_CRM_1760366167481",
+      "title": "UF_CRM_1760366167481"
+    },
+    {
+      "code": "UF_CRM_1760626555",
+      "title": "UF_CRM_1760626555"
+    },
+    {
+      "code": "UF_CRM_1760945472",
+      "title": "UF_CRM_1760945472"
+    },
+    {
+      "code": "UF_CRM_1763017521",
+      "title": "UF_CRM_1763017521"
+    },
+    {
+      "code": "UF_CRM_1769503292",
+      "title": "UF_CRM_1769503292"
+    },
+    {
+      "code": "UF_CRM_1757924516",
+      "title": "UF_CRM_1757924516"
+    },
+    {
+      "code": "UF_CRM_1771315131",
+      "title": "UF_CRM_1771315131"
+    },
+    {
+      "code": "UF_CRM_1775476092",
+      "title": "UF_CRM_1775476092"
+    },
+    {
+      "code": "UF_CRM_1755754715521",
+      "title": "UF_CRM_1755754715521"
+    },
+    {
+      "code": "UF_CRM_LEAD_1758186297144",
+      "title": "UF_CRM_LEAD_1758186297144"
+    },
+    {
+      "code": "UF_CRM_1772538740",
+      "title": "UF_CRM_1772538740"
+    },
+    {
+      "code": "UF_CRM_1773161068",
+      "title": "UF_CRM_1773161068"
+    },
+    {
+      "code": "UF_CRM_1774601016",
+      "title": "UF_CRM_1774601016"
+    }
+  ],
+  "debugAllDealFields": [
+    {
+      "code": "ID",
+      "title": "ID"
+    },
+    {
+      "code": "TITLE",
+      "title": "Название"
+    },
+    {
+      "code": "TYPE_ID",
+      "title": "Тип"
+    },
+    {
+      "code": "CATEGORY_ID",
+      "title": "Воронка"
+    },
+    {
+      "code": "STAGE_ID",
+      "title": "Стадия сделки"
+    },
+    {
+      "code": "PREVIOUS_STAGE_ID",
+      "title": "Предыдущая стадия"
+    },
+    {
+      "code": "STAGE_SEMANTIC_ID",
+      "title": "Группа стадии"
+    },
+    {
+      "code": "IS_NEW",
+      "title": "Новая сделка"
+    },
+    {
+      "code": "IS_RECURRING",
+      "title": "Регулярная сделка"
+    },
+    {
+      "code": "IS_RETURN_CUSTOMER",
+      "title": "Повторная сделка"
+    },
+    {
+      "code": "IS_REPEATED_APPROACH",
+      "title": "Повторное обращение"
+    },
+    {
+      "code": "PROBABILITY",
+      "title": "Вероятность"
+    },
+    {
+      "code": "CURRENCY_ID",
+      "title": "Валюта"
+    },
+    {
+      "code": "OPPORTUNITY",
+      "title": "Сумма"
+    },
+    {
+      "code": "IS_MANUAL_OPPORTUNITY",
+      "title": "Режим расчёта суммы"
+    },
+    {
+      "code": "TAX_VALUE",
+      "title": "Ставка налога"
+    },
+    {
+      "code": "COMPANY_ID",
+      "title": "Компания"
+    },
+    {
+      "code": "MYCOMPANY_ID",
+      "title": "Реквизиты вашей компании"
+    },
+    {
+      "code": "CONTACT_ID",
+      "title": "Контакт"
+    },
+    {
+      "code": "CONTACT_IDS",
+      "title": "Контакты"
+    },
+    {
+      "code": "QUOTE_ID",
+      "title": "Предложение"
+    },
+    {
+      "code": "BEGINDATE",
+      "title": "Дата начала"
+    },
+    {
+      "code": "CLOSEDATE",
+      "title": "Дата завершения"
+    },
+    {
+      "code": "OPENED",
+      "title": "Доступна для всех"
+    },
+    {
+      "code": "CLOSED",
+      "title": "Закрыта"
+    },
+    {
+      "code": "COMMENTS",
+      "title": "Комментарий"
+    },
+    {
+      "code": "ASSIGNED_BY_ID",
+      "title": "Ответственный"
+    },
+    {
+      "code": "CREATED_BY_ID",
+      "title": "Кем создана"
+    },
+    {
+      "code": "MODIFY_BY_ID",
+      "title": "Кем изменена"
+    },
+    {
+      "code": "MOVED_BY_ID",
+      "title": "MOVED_BY_ID"
+    },
+    {
+      "code": "DATE_CREATE",
+      "title": "Дата создания"
+    },
+    {
+      "code": "DATE_MODIFY",
+      "title": "Дата изменения"
+    },
+    {
+      "code": "MOVED_TIME",
+      "title": "Когда передвинут"
+    },
+    {
+      "code": "SOURCE_ID",
+      "title": "Источник"
+    },
+    {
+      "code": "SOURCE_DESCRIPTION",
+      "title": "Дополнительно об источнике"
+    },
+    {
+      "code": "LEAD_ID",
+      "title": "Лид"
+    },
+    {
+      "code": "ADDITIONAL_INFO",
+      "title": "Дополнительная информация"
+    },
+    {
+      "code": "LOCATION_ID",
+      "title": "Местоположение"
+    },
+    {
+      "code": "ORIGINATOR_ID",
+      "title": "Внешний источник"
+    },
+    {
+      "code": "ORIGIN_ID",
+      "title": "Идентификатор элемента во внешнем источнике"
+    },
+    {
+      "code": "UTM_SOURCE",
+      "title": "Рекламная система"
+    },
+    {
+      "code": "UTM_MEDIUM",
+      "title": "Тип трафика"
+    },
+    {
+      "code": "UTM_CAMPAIGN",
+      "title": "Обозначение рекламной кампании"
+    },
+    {
+      "code": "UTM_CONTENT",
+      "title": "Содержание кампании"
+    },
+    {
+      "code": "UTM_TERM",
+      "title": "Условие поиска кампании"
+    },
+    {
+      "code": "PARENT_ID_1126",
+      "title": "NPS"
+    },
+    {
+      "code": "LAST_ACTIVITY_TIME",
+      "title": "LAST_ACTIVITY_TIME"
+    },
+    {
+      "code": "LAST_ACTIVITY_BY",
+      "title": "LAST_ACTIVITY_BY"
+    },
+    {
+      "code": "LAST_COMMUNICATION_TIME",
+      "title": "LAST_COMMUNICATION_TIME"
+    },
+    {
+      "code": "UF_CRM_686687234D86D",
+      "title": "UF_CRM_686687234D86D"
+    },
+    {
+      "code": "UF_CRM_690DE151E1832",
+      "title": "UF_CRM_690DE151E1832"
+    },
+    {
+      "code": "UF_CRM_68668723617ED",
+      "title": "UF_CRM_68668723617ED"
+    },
+    {
+      "code": "UF_CRM_68668723713C9",
+      "title": "UF_CRM_68668723713C9"
+    },
+    {
+      "code": "UF_CRM_1759173547",
+      "title": "UF_CRM_1759173547"
+    },
+    {
+      "code": "UF_CRM_1759173577",
+      "title": "UF_CRM_1759173577"
+    },
+    {
+      "code": "UF_CRM_686687237A32A",
+      "title": "UF_CRM_686687237A32A"
+    },
+    {
+      "code": "UF_CRM_1759735295",
+      "title": "UF_CRM_1759735295"
+    },
+    {
+      "code": "UF_CRM_690DE152204FE",
+      "title": "UF_CRM_690DE152204FE"
+    },
+    {
+      "code": "UF_CRM_1755787423",
+      "title": "UF_CRM_1755787423"
+    },
+    {
+      "code": "UF_CRM_68C91B42D7E58",
+      "title": "UF_CRM_68C91B42D7E58"
+    },
+    {
+      "code": "UF_CRM_6866872396835",
+      "title": "UF_CRM_6866872396835"
+    },
+    {
+      "code": "UF_CRM_686687239EA3E",
+      "title": "UF_CRM_686687239EA3E"
+    },
+    {
+      "code": "UF_CRM_68668723B519A",
+      "title": "UF_CRM_68668723B519A"
+    },
+    {
+      "code": "UF_CRM_68668723BDC54",
+      "title": "UF_CRM_68668723BDC54"
+    },
+    {
+      "code": "UF_CRM_68668723CFBDB",
+      "title": "UF_CRM_68668723CFBDB"
+    },
+    {
+      "code": "UF_CRM_1752058194",
+      "title": "UF_CRM_1752058194"
+    },
+    {
+      "code": "UF_CRM_1759307130",
+      "title": "UF_CRM_1759307130"
+    },
+    {
+      "code": "UF_CRM_1756462010",
+      "title": "UF_CRM_1756462010"
+    },
+    {
+      "code": "UF_CRM_1759307489",
+      "title": "UF_CRM_1759307489"
+    },
+    {
+      "code": "UF_CRM_1752058236",
+      "title": "UF_CRM_1752058236"
+    },
+    {
+      "code": "UF_CRM_1752058253",
+      "title": "UF_CRM_1752058253"
+    },
+    {
+      "code": "UF_CRM_1752058279",
+      "title": "UF_CRM_1752058279"
+    },
+    {
+      "code": "UF_CRM_6879EEC2ECE48",
+      "title": "UF_CRM_6879EEC2ECE48"
+    },
+    {
+      "code": "UF_CRM_690DE152273C2",
+      "title": "UF_CRM_690DE152273C2"
+    },
+    {
+      "code": "UF_CRM_690DE15230317",
+      "title": "UF_CRM_690DE15230317"
+    },
+    {
+      "code": "UF_CRM_1762786164",
+      "title": "UF_CRM_1762786164"
+    },
+    {
+      "code": "UF_CRM_DEAL_PREVIOUS_USER_FN",
+      "title": "UF_CRM_DEAL_PREVIOUS_USER_FN"
+    },
+    {
+      "code": "UF_CRM_69296025D10AD",
+      "title": "UF_CRM_69296025D10AD"
+    },
+    {
+      "code": "UF_CRM_6929602615EE1",
+      "title": "UF_CRM_6929602615EE1"
+    },
+    {
+      "code": "UF_CRM_1766661815851",
+      "title": "UF_CRM_1766661815851"
+    },
+    {
+      "code": "UF_CRM_699EF9CA7B2FC",
+      "title": "UF_CRM_699EF9CA7B2FC"
+    },
+    {
+      "code": "UF_CRM_699EF9CAEABD0",
+      "title": "UF_CRM_699EF9CAEABD0"
+    },
+    {
+      "code": "UF_CRM_699EF9CB02BF5",
+      "title": "UF_CRM_699EF9CB02BF5"
+    },
+    {
+      "code": "UF_CRM_1773309909478",
+      "title": "UF_CRM_1773309909478"
+    },
+    {
+      "code": "UF_CRM_1773309944620",
+      "title": "UF_CRM_1773309944620"
+    },
+    {
+      "code": "UF_CRM_1773310147133",
+      "title": "UF_CRM_1773310147133"
+    },
+    {
+      "code": "UF_CRM_1773310188821",
+      "title": "UF_CRM_1773310188821"
+    },
+    {
+      "code": "UF_CRM_1773310205634",
+      "title": "UF_CRM_1773310205634"
+    },
+    {
+      "code": "UF_CRM_1773310767172",
+      "title": "UF_CRM_1773310767172"
+    },
+    {
+      "code": "UF_CRM_69E5F375A1407",
+      "title": "UF_CRM_69E5F375A1407"
+    },
+    {
+      "code": "UF_CRM_69E5F375F3086",
+      "title": "UF_CRM_69E5F375F3086"
+    },
+    {
+      "code": "UF_CRM_69E5F37606948",
+      "title": "UF_CRM_69E5F37606948"
+    },
+    {
+      "code": "UF_CRM_69E5F37612C2F",
+      "title": "UF_CRM_69E5F37612C2F"
+    },
+    {
+      "code": "UF_CRM_69E5F3761E9AE",
+      "title": "UF_CRM_69E5F3761E9AE"
+    },
+    {
+      "code": "UF_CRM_69E5F37629EA9",
+      "title": "UF_CRM_69E5F37629EA9"
+    },
+    {
+      "code": "UF_CRM_69E5F37633F20",
+      "title": "UF_CRM_69E5F37633F20"
+    },
+    {
+      "code": "UF_CRM_68BEE381477FD",
+      "title": "UF_CRM_68BEE381477FD"
+    },
+    {
+      "code": "UF_CRM_1757074876",
+      "title": "UF_CRM_1757074876"
+    },
+    {
+      "code": "UF_CRM_1778056369",
+      "title": "UF_CRM_1778056369"
+    },
+    {
+      "code": "UF_CRM_68BEE38163011",
+      "title": "UF_CRM_68BEE38163011"
+    },
+    {
+      "code": "UF_CRM_68BEE38183CE4",
+      "title": "UF_CRM_68BEE38183CE4"
+    },
+    {
+      "code": "UF_CRM_68BEE3818A3D1",
+      "title": "UF_CRM_68BEE3818A3D1"
+    },
+    {
+      "code": "UF_CRM_1760443235",
+      "title": "UF_CRM_1760443235"
+    },
+    {
+      "code": "UF_CRM_1759307647",
+      "title": "UF_CRM_1759307647"
+    },
+    {
+      "code": "UF_CRM_690DE1523B8A5",
+      "title": "UF_CRM_690DE1523B8A5"
+    },
+    {
+      "code": "UF_CRM_1759308450",
+      "title": "UF_CRM_1759308450"
+    },
+    {
+      "code": "UF_CRM_1760452674",
+      "title": "UF_CRM_1760452674"
+    },
+    {
+      "code": "UF_CRM_1760452721",
+      "title": "UF_CRM_1760452721"
+    },
+    {
+      "code": "UF_CRM_1761982559",
+      "title": "UF_CRM_1761982559"
+    },
+    {
+      "code": "UF_CRM_689EF34C0E10B",
+      "title": "UF_CRM_689EF34C0E10B"
+    },
+    {
+      "code": "UF_CRM_690DE15241D96",
+      "title": "UF_CRM_690DE15241D96"
+    },
+    {
+      "code": "UF_CRM_68668723A727D",
+      "title": "UF_CRM_68668723A727D"
+    },
+    {
+      "code": "UF_CRM_690DE15248C72",
+      "title": "UF_CRM_690DE15248C72"
+    },
+    {
+      "code": "UF_CRM_68668723C74F9",
+      "title": "UF_CRM_68668723C74F9"
+    },
+    {
+      "code": "UF_CRM_692960261FDD6",
+      "title": "UF_CRM_692960261FDD6"
+    },
+    {
+      "code": "UF_CRM_1751637537744",
+      "title": "UF_CRM_1751637537744"
+    },
+    {
+      "code": "UF_CRM_68711E62DF19C",
+      "title": "UF_CRM_68711E62DF19C"
+    },
+    {
+      "code": "UF_CRM_1754039778522",
+      "title": "UF_CRM_1754039778522"
+    },
+    {
+      "code": "UF_CRM_689EF34BF25BD",
+      "title": "UF_CRM_689EF34BF25BD"
+    },
+    {
+      "code": "UF_CRM_68668723D7CA8",
+      "title": "UF_CRM_68668723D7CA8"
+    },
+    {
+      "code": "UF_CRM_1751552023",
+      "title": "UF_CRM_1751552023"
+    },
+    {
+      "code": "UF_CRM_1751552045",
+      "title": "UF_CRM_1751552045"
+    },
+    {
+      "code": "UF_CRM_1751552078",
+      "title": "UF_CRM_1751552078"
+    },
+    {
+      "code": "UF_CRM_1751552102",
+      "title": "UF_CRM_1751552102"
+    },
+    {
+      "code": "UF_CRM_1751552123",
+      "title": "UF_CRM_1751552123"
+    },
+    {
+      "code": "UF_CRM_1751552162",
+      "title": "UF_CRM_1751552162"
+    },
+    {
+      "code": "UF_CRM_1751552302",
+      "title": "UF_CRM_1751552302"
+    },
+    {
+      "code": "UF_CRM_1759217891",
+      "title": "UF_CRM_1759217891"
+    },
+    {
+      "code": "UF_CRM_690DE152509F5",
+      "title": "UF_CRM_690DE152509F5"
+    },
+    {
+      "code": "UF_CRM_1751552689",
+      "title": "UF_CRM_1751552689"
+    },
+    {
+      "code": "UF_CRM_1751552709",
+      "title": "UF_CRM_1751552709"
+    },
+    {
+      "code": "UF_CRM_699EF9CB0C705",
+      "title": "UF_CRM_699EF9CB0C705"
+    },
+    {
+      "code": "UF_CRM_69E5F3763D310",
+      "title": "UF_CRM_69E5F3763D310"
+    },
+    {
+      "code": "UF_CRM_1759481270",
+      "title": "UF_CRM_1759481270"
+    },
+    {
+      "code": "UF_CRM_1770634126",
+      "title": "UF_CRM_1770634126"
+    },
+    {
+      "code": "UF_CRM_1759481298",
+      "title": "UF_CRM_1759481298"
+    },
+    {
+      "code": "UF_CRM_1770634181",
+      "title": "UF_CRM_1770634181"
+    },
+    {
+      "code": "UF_CRM_1759481314",
+      "title": "UF_CRM_1759481314"
+    },
+    {
+      "code": "UF_CRM_1770634312",
+      "title": "UF_CRM_1770634312"
+    },
+    {
+      "code": "UF_CRM_1759481341",
+      "title": "UF_CRM_1759481341"
+    },
+    {
+      "code": "UF_CRM_1770634385",
+      "title": "UF_CRM_1770634385"
+    },
+    {
+      "code": "UF_CRM_1770273944",
+      "title": "UF_CRM_1770273944"
+    },
+    {
+      "code": "UF_CRM_1770634443",
+      "title": "UF_CRM_1770634443"
+    },
+    {
+      "code": "UF_CRM_6866872369670",
+      "title": "UF_CRM_6866872369670"
+    },
+    {
+      "code": "UF_CRM_68BEE38168A22",
+      "title": "UF_CRM_68BEE38168A22"
+    },
+    {
+      "code": "UF_CRM_68BEE38171E04",
+      "title": "UF_CRM_68BEE38171E04"
+    },
+    {
+      "code": "UF_CRM_68D265378940E",
+      "title": "UF_CRM_68D265378940E"
+    },
+    {
+      "code": "UF_CRM_1764768386",
+      "title": "UF_CRM_1764768386"
+    },
+    {
+      "code": "UF_CRM_1766737164",
+      "title": "UF_CRM_1766737164"
+    },
+    {
+      "code": "UF_CRM_69E5F376487AC",
+      "title": "UF_CRM_69E5F376487AC"
+    },
+    {
+      "code": "UF_CRM_69E5F37652AF3",
+      "title": "UF_CRM_69E5F37652AF3"
+    },
+    {
+      "code": "UF_CRM_69E5F3766197A",
+      "title": "UF_CRM_69E5F3766197A"
+    },
+    {
+      "code": "UF_CRM_1778663132",
+      "title": "UF_CRM_1778663132"
+    },
+    {
+      "code": "UF_CRM_1779295162",
+      "title": "UF_CRM_1779295162"
+    },
+    {
+      "code": "UF_CRM_1779449189",
+      "title": "UF_CRM_1779449189"
+    },
+    {
+      "code": "UF_CRM_1779442572",
+      "title": "UF_CRM_1779442572"
+    },
+    {
+      "code": "UF_CRM_1783062449",
+      "title": "UF_CRM_1783062449"
+    },
+    {
+      "code": "UF_CRM_1783062489",
+      "title": "UF_CRM_1783062489"
+    },
+    {
+      "code": "UF_CRM_1783062523",
+      "title": "UF_CRM_1783062523"
+    },
+    {
+      "code": "UF_CRM_1783062589",
+      "title": "UF_CRM_1783062589"
+    },
+    {
+      "code": "UF_CRM_1783062654",
+      "title": "UF_CRM_1783062654"
+    },
+    {
+      "code": "UF_CRM_1783062702",
+      "title": "UF_CRM_1783062702"
+    },
+    {
+      "code": "UF_CRM_1783062763",
+      "title": "UF_CRM_1783062763"
+    },
+    {
+      "code": "UF_CRM_1783065159",
+      "title": "UF_CRM_1783065159"
+    },
+    {
+      "code": "UF_CRM_1783065193",
+      "title": "UF_CRM_1783065193"
+    },
+    {
+      "code": "UF_CRM_1783065228",
+      "title": "UF_CRM_1783065228"
+    },
+    {
+      "code": "UF_CRM_1783065262",
+      "title": "UF_CRM_1783065262"
+    },
+    {
+      "code": "UF_CRM_1783065291",
+      "title": "UF_CRM_1783065291"
+    },
+    {
+      "code": "UF_CRM_1783065334",
+      "title": "UF_CRM_1783065334"
+    },
+    {
+      "code": "UF_CRM_1783065395",
+      "title": "UF_CRM_1783065395"
+    },
+    {
+      "code": "UF_CRM_1783065448",
+      "title": "UF_CRM_1783065448"
+    },
+    {
+      "code": "UF_CRM_1783065501",
+      "title": "UF_CRM_1783065501"
+    },
+    {
+      "code": "UF_CRM_1783073991",
+      "title": "UF_CRM_1783073991"
+    },
+    {
+      "code": "UF_CRM_1783074020",
+      "title": "UF_CRM_1783074020"
+    },
+    {
+      "code": "UF_CRM_1783065547",
+      "title": "UF_CRM_1783065547"
+    },
+    {
+      "code": "UF_CRM_1783074049",
+      "title": "UF_CRM_1783074049"
+    },
+    {
+      "code": "UF_CRM_1783074075",
+      "title": "UF_CRM_1783074075"
+    },
+    {
+      "code": "UF_CRM_1783065720",
+      "title": "UF_CRM_1783065720"
+    },
+    {
+      "code": "UF_CRM_1783065870",
+      "title": "UF_CRM_1783065870"
+    },
+    {
+      "code": "UF_CRM_1783069473",
+      "title": "UF_CRM_1783069473"
+    },
+    {
+      "code": "UF_CRM_1783065980",
+      "title": "UF_CRM_1783065980"
+    },
+    {
+      "code": "UF_CRM_1783066010",
+      "title": "UF_CRM_1783066010"
+    },
+    {
+      "code": "UF_CRM_1783066038",
+      "title": "UF_CRM_1783066038"
+    },
+    {
+      "code": "UF_CRM_1783066126",
+      "title": "UF_CRM_1783066126"
+    },
+    {
+      "code": "UF_CRM_1783066236",
+      "title": "UF_CRM_1783066236"
+    },
+    {
+      "code": "UF_CRM_1783066265",
+      "title": "UF_CRM_1783066265"
+    },
+    {
+      "code": "UF_CRM_1783066441",
+      "title": "UF_CRM_1783066441"
+    },
+    {
+      "code": "UF_CRM_1783066459",
+      "title": "UF_CRM_1783066459"
+    },
+    {
+      "code": "UF_CRM_1783066512",
+      "title": "UF_CRM_1783066512"
+    },
+    {
+      "code": "UF_CRM_1783066531",
+      "title": "UF_CRM_1783066531"
+    },
+    {
+      "code": "UF_CRM_1783066554",
+      "title": "UF_CRM_1783066554"
+    },
+    {
+      "code": "UF_CRM_1783066577",
+      "title": "UF_CRM_1783066577"
+    },
+    {
+      "code": "UF_CRM_1783066655",
+      "title": "UF_CRM_1783066655"
+    },
+    {
+      "code": "UF_CRM_1783066729",
+      "title": "UF_CRM_1783066729"
+    },
+    {
+      "code": "UF_CRM_1783066744",
+      "title": "UF_CRM_1783066744"
+    },
+    {
+      "code": "UF_CRM_1783074104",
+      "title": "UF_CRM_1783074104"
+    }
+  ]
 }
