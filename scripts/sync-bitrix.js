@@ -107,17 +107,51 @@ async function resolveSourceId(name) {
   return match.STATUS_ID;
 }
 
-/** Находит код кастомного поля (UF_CRM_XXXX) по его названию в интерфейсе */
-async function discoverFieldCode(entityFieldsMethod, title) {
-  const json = await callMethod(entityFieldsMethod, {});
-  const target = normalize(title);
-  for (const [code, def] of Object.entries(json.result || {})) {
-    if (def && typeof def === "object" && normalize(def.title) === target) {
-      return code;
-    }
+function stripPunctuation(str) {
+  return normalize(str).replace(/[():.,«»"'-]/g, "").replace(/\s+/g, " ").trim();
+}
+
+const fieldsCache = {};
+async function getFieldsList(entityFieldsMethod) {
+  if (!fieldsCache[entityFieldsMethod]) {
+    const json = await callMethod(entityFieldsMethod, {});
+    fieldsCache[entityFieldsMethod] = json.result || {};
   }
+  return fieldsCache[entityFieldsMethod];
+}
+
+/** Находит код кастомного поля (UF_CRM_XXXX) по его названию в интерфейсе.
+ *  Сначала точное совпадение, затем — без пунктуации/лишних пробелов, затем — по вхождению подстроки. */
+async function discoverFieldCode(entityFieldsMethod, title) {
+  const fields = await getFieldsList(entityFieldsMethod);
+  const target = normalize(title);
+  const targetStripped = stripPunctuation(title);
+
+  // 1. точное совпадение
+  for (const [code, def] of Object.entries(fields)) {
+    if (def && typeof def === "object" && normalize(def.title) === target) return code;
+  }
+  // 2. совпадение без пунктуации/лишних пробелов
+  for (const [code, def] of Object.entries(fields)) {
+    if (def && typeof def === "object" && stripPunctuation(def.title) === targetStripped) return code;
+  }
+  // 3. вхождение подстроки в любую сторону
+  for (const [code, def] of Object.entries(fields)) {
+    if (!def || typeof def !== "object" || !def.title) continue;
+    const t = stripPunctuation(def.title);
+    if (t.includes(targetStripped) || targetStripped.includes(t)) return code;
+  }
+
   console.warn(`⚠ Поле "${title}" не найдено через ${entityFieldsMethod} — будет пустым`);
   return null;
+}
+
+/** Возвращает полный список полей {код: название} — для отладки в meta.json, если что-то не найдётся */
+async function getDebugFieldList(entityFieldsMethod) {
+  const fields = await getFieldsList(entityFieldsMethod);
+  return Object.entries(fields)
+    .filter(([, def]) => def && typeof def === "object" && def.title)
+    .map(([code, def]) => ({ code, title: def.title }));
 }
 
 async function fetchLeadStatusNames() {
@@ -204,6 +238,9 @@ async function main() {
   const leadRefusalReasonCode = await discoverFieldCode("crm.lead.fields", FIELD_TITLES.leadRefusalReason);
   const leadLowQualityReasonCode = await discoverFieldCode("crm.lead.fields", FIELD_TITLES.leadLowQualityReason);
   const dealPlanSumCode = await discoverFieldCode("crm.deal.fields", FIELD_TITLES.dealPlanSum);
+
+  const debugLeadFields = await getDebugFieldList("crm.lead.fields");
+  const debugDealFields = await getDebugFieldList("crm.deal.fields");
 
   // --- meta / курсор последней синхронизации ---
   let meta = fs.existsSync(META_PATH)
@@ -302,6 +339,11 @@ async function main() {
   meta.dealStageMap = stageMap;
   meta.dealCategoryNames = categoryNames;
   meta.dealCityHintList = DEAL_CITY_HINT_LIST;
+  meta.resolvedFieldCodes = {
+    leadSiteInfoCode, leadJunkReasonCode, leadRefusalReasonCode, leadLowQualityReasonCode, dealPlanSumCode,
+  };
+  meta.debugAllLeadFields = debugLeadFields;
+  meta.debugAllDealFields = debugDealFields;
   meta.groups = {
     pcpStatusIds: PCP_STATUS_NAMES.map((n) => leadStatusIdByName[normalize(n)]).filter(Boolean),
     bookedStatusIds: BOOKED_STATUS_NAMES.map((n) => leadStatusIdByName[normalize(n)]).filter(Boolean),
