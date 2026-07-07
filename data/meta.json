@@ -1,5 +1,5 @@
 {
-  "lastSyncCursor": "2026-07-07T13:10:10.915Z",
+  "lastSyncCursor": "2026-07-07T17:13:50.453Z",
   "sourceName": "Victory парсинг",
   "sourceId": "84",
   "leadStatusNames": {
@@ -2930,18 +2930,18 @@
     }
   ],
   "lastRunStats": {
-    "at": "2026-07-07T13:10:10.915Z",
-    "leadsFetched": 18739,
-    "dealsFetched": 2738,
+    "at": "2026-07-07T17:13:50.453Z",
+    "leadsFetched": 270,
+    "dealsFetched": 12,
     "monthsTouched": [
+      "2026-06",
+      "2026-05",
+      "2026-04",
       "2026-01",
       "2026-02",
       "2026-03",
-      "2026-04",
-      "2026-05",
-      "2026-06",
       "2026-07"
     ],
-    "firstRun": true
+    "firstRun": false
   }
 }
