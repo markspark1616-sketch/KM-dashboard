@@ -38,9 +38,14 @@ if (!WEBHOOK_URL) {
 
 // Названия кастомных полей — как они выглядят в интерфейсе Bitrix24.
 // Коды полей (UF_CRM_...) находятся автоматически, см. discoverFieldCode().
+// ВАЖНО: подтверждено реальной выгрузкой crm.lead.fields — поля называются именно так:
+//   UF_CRM_1748008077 = "Причина некачественного лида" (статус "Некачественный лид")
+//   UF_CRM_1755787390 = "Причина не учета +"            (статус "Не учитываем")
+//   UF_CRM_1748280876 = "Причина условного отказа"      (статус "Условный отказ")
+// Поля "Причина брака" в системе не существует — это было ошибочное предположение.
 const FIELD_TITLES = {
   leadSiteInfo: "Дополнительно об источнике",
-  leadJunkReason: "Причина брака",
+  leadNotCountedReason: "Причина не учета +",
   leadRefusalReason: "Причина условного отказа",
   leadLowQualityReason: "Причина некачественного лида",
   dealPlanSum: "Сумма согласованного плана лечения со скидкой",
@@ -120,38 +125,53 @@ async function getFieldsList(entityFieldsMethod) {
   return fieldsCache[entityFieldsMethod];
 }
 
+/** Возвращает все "человеческие" названия поля, которые встречаются в его описании.
+ *  ВАЖНО: у кастомных полей (UF_CRM_...) свойство title обычно равно самому коду поля,
+ *  а настоящее отображаемое название лежит в listLabel/formLabel/filterLabel. */
+function fieldLabels(def) {
+  if (!def || typeof def !== "object") return [];
+  return [def.title, def.listLabel, def.formLabel, def.filterLabel].filter(Boolean);
+}
+
 /** Находит код кастомного поля (UF_CRM_XXXX) по его названию в интерфейсе.
- *  Сначала точное совпадение, затем — без пунктуации/лишних пробелов, затем — по вхождению подстроки. */
+ *  Проверяет title/listLabel/formLabel/filterLabel — сначала точное совпадение, затем без пунктуации.
+ *  Намеренно НЕ делает нечёткий поиск по вхождению подстроки — это один раз уже привело
+ *  к ложному совпадению (нашло системное поле OPPORTUNITY вместо нужного). */
 async function discoverFieldCode(entityFieldsMethod, title) {
   const fields = await getFieldsList(entityFieldsMethod);
   const target = normalize(title);
   const targetStripped = stripPunctuation(title);
 
-  // 1. точное совпадение
   for (const [code, def] of Object.entries(fields)) {
-    if (def && typeof def === "object" && normalize(def.title) === target) return code;
+    if (fieldLabels(def).some((label) => normalize(label) === target)) return code;
   }
-  // 2. совпадение без пунктуации/лишних пробелов
   for (const [code, def] of Object.entries(fields)) {
-    if (def && typeof def === "object" && stripPunctuation(def.title) === targetStripped) return code;
-  }
-  // 3. вхождение подстроки в любую сторону
-  for (const [code, def] of Object.entries(fields)) {
-    if (!def || typeof def !== "object" || !def.title) continue;
-    const t = stripPunctuation(def.title);
-    if (t.includes(targetStripped) || targetStripped.includes(t)) return code;
+    if (fieldLabels(def).some((label) => stripPunctuation(label) === targetStripped)) return code;
   }
 
   console.warn(`⚠ Поле "${title}" не найдено через ${entityFieldsMethod} — будет пустым`);
   return null;
 }
 
+/** Возвращает всех кандидатов (для отладки), даже без совпадения. */
+function findFieldCandidates(fields, title) {
+  const targetStripped = stripPunctuation(title);
+  const candidates = [];
+  for (const [code, def] of Object.entries(fields)) {
+    const labels = fieldLabels(def);
+    if (labels.some((l) => stripPunctuation(l).includes(targetStripped.split(" ")[0]))) {
+      candidates.push({ code, labels });
+    }
+  }
+  return candidates;
+}
+
 /** Возвращает полный список полей {код: название} — для отладки в meta.json, если что-то не найдётся */
 async function getDebugFieldList(entityFieldsMethod) {
   const fields = await getFieldsList(entityFieldsMethod);
   return Object.entries(fields)
-    .filter(([, def]) => def && typeof def === "object" && def.title)
-    .map(([code, def]) => ({ code, title: def.title }));
+    .filter(([, def]) => def && typeof def === "object" && fieldLabels(def).length)
+    .map(([code, def]) => ({ code, title: def.title, listLabel: def.listLabel || null, type: def.type || null }));
 }
 
 async function fetchLeadStatusNames() {
@@ -226,13 +246,34 @@ function ensureCity(dayData, city) {
   return dayData.cities[city];
 }
 
-/** Строит карту ID->текст для полей-списков (enumeration), где значение хранится как ID, а не текст */
-function buildEnumMap(fields, fieldCode) {
+/** Строит карту ID->текст для полей-списков.
+ *  Бывает 2 разных устройства таких полей в Bitrix24:
+ *  1. Обычный enum (список вариантов прямо в описании поля) — там есть def.items.
+ *  2. iblock_element (поле-справочник, "список"/Lists) — там значения хранятся в отдельном
+ *     инфоблоке (def.settings.IBLOCK_ID), и текст нужно получать отдельным запросом lists.element.get.
+ */
+async function buildEnumMap(fields, fieldCode) {
   const map = {};
   const def = fields[fieldCode];
-  if (def && Array.isArray(def.items)) {
-    for (const item of def.items) {
-      map[String(item.ID)] = item.VALUE;
+  if (!def) return map;
+
+  if (Array.isArray(def.items)) {
+    for (const item of def.items) map[String(item.ID)] = item.VALUE;
+    return map;
+  }
+
+  const iblockId = def.settings && def.settings.IBLOCK_ID;
+  if (def.type === "iblock_element" && iblockId) {
+    try {
+      const json = await callMethod("lists.element.get", {
+        IBLOCK_TYPE_ID: "lists",
+        IBLOCK_ID: iblockId,
+      });
+      for (const el of json.result || []) {
+        map[String(el.ID)] = el.NAME;
+      }
+    } catch (e) {
+      console.warn(`⚠ Не удалось получить варианты справочника (IBLOCK_ID=${iblockId}) для поля ${fieldCode}: ${e.message}. Проверьте, что у вебхука есть право "Списки" (lists).`);
     }
   }
   return map;
@@ -256,7 +297,7 @@ async function main() {
 
   console.log("Ищу коды кастомных полей...");
   const leadSiteInfoCode = await discoverFieldCode("crm.lead.fields", FIELD_TITLES.leadSiteInfo);
-  const leadJunkReasonCode = await discoverFieldCode("crm.lead.fields", FIELD_TITLES.leadJunkReason);
+  const leadNotCountedReasonCode = await discoverFieldCode("crm.lead.fields", FIELD_TITLES.leadNotCountedReason);
   const leadRefusalReasonCode = await discoverFieldCode("crm.lead.fields", FIELD_TITLES.leadRefusalReason);
   const leadLowQualityReasonCode = await discoverFieldCode("crm.lead.fields", FIELD_TITLES.leadLowQualityReason);
   const dealPlanSumCode = await discoverFieldCode("crm.deal.fields", FIELD_TITLES.dealPlanSum);
@@ -265,9 +306,9 @@ async function main() {
   const debugDealFields = await getDebugFieldList("crm.deal.fields");
 
   const leadFieldsRaw = await getFieldsList("crm.lead.fields");
-  const junkReasonEnumMap = leadJunkReasonCode ? buildEnumMap(leadFieldsRaw, leadJunkReasonCode) : {};
-  const refusalReasonEnumMap = leadRefusalReasonCode ? buildEnumMap(leadFieldsRaw, leadRefusalReasonCode) : {};
-  const lowQualityReasonEnumMap = leadLowQualityReasonCode ? buildEnumMap(leadFieldsRaw, leadLowQualityReasonCode) : {};
+  const notCountedReasonEnumMap = leadNotCountedReasonCode ? await buildEnumMap(leadFieldsRaw, leadNotCountedReasonCode) : {};
+  const refusalReasonEnumMap = leadRefusalReasonCode ? await buildEnumMap(leadFieldsRaw, leadRefusalReasonCode) : {};
+  const lowQualityReasonEnumMap = leadLowQualityReasonCode ? await buildEnumMap(leadFieldsRaw, leadLowQualityReasonCode) : {};
 
   // --- meta / курсор последней синхронизации ---
   let meta = fs.existsSync(META_PATH)
@@ -290,7 +331,7 @@ async function main() {
   console.log("Загружаю лиды...");
   const leads = await fetchAll("crm.lead.list", {
     filter: leadFilter,
-    select: ["ID", "STATUS_ID", "DATE_CREATE", leadSiteInfoCode, leadJunkReasonCode, leadRefusalReasonCode, leadLowQualityReasonCode].filter(Boolean),
+    select: ["ID", "STATUS_ID", "DATE_CREATE", leadSiteInfoCode, leadNotCountedReasonCode, leadRefusalReasonCode, leadLowQualityReasonCode].filter(Boolean),
   });
   console.log(`Загружено лидов (дельта): ${leads.length}`);
 
@@ -337,11 +378,13 @@ async function main() {
 
     const statusName = leadStatusNames[lead.STATUS_ID] || lead.STATUS_ID;
     let reasons = [];
-    // ВАЖНО: соответствие подтверждено пользователем явно — "Не учитываем" использует поле
-    // "Причина некачественного лида", а "Некачественный лид" — поле "Причина брака" (не по интуитивному названию!)
-    if (statusName === "Некачественный лид") reasons = decodeFieldValue(leadJunkReasonCode && lead[leadJunkReasonCode], junkReasonEnumMap);
+    // Соответствие подтверждено реальной выгрузкой crm.lead.fields (listLabel полей):
+    // "Некачественный лид" -> поле "Причина некачественного лида"
+    // "Не учитываем"       -> поле "Причина не учета +"
+    // "Условный отказ"     -> поле "Причина условного отказа"
+    if (statusName === "Некачественный лид") reasons = decodeFieldValue(leadLowQualityReasonCode && lead[leadLowQualityReasonCode], lowQualityReasonEnumMap);
     else if (statusName === "Условный отказ") reasons = decodeFieldValue(leadRefusalReasonCode && lead[leadRefusalReasonCode], refusalReasonEnumMap);
-    else if (statusName === "Не учитываем") reasons = decodeFieldValue(leadLowQualityReasonCode && lead[leadLowQualityReasonCode], lowQualityReasonEnumMap);
+    else if (statusName === "Не учитываем") reasons = decodeFieldValue(leadNotCountedReasonCode && lead[leadNotCountedReasonCode], notCountedReasonEnumMap);
 
     cityData.leads[lead.ID] = { s: lead.STATUS_ID, r: reasons };
   }
@@ -378,7 +421,7 @@ async function main() {
   meta.dealCategoryNames = categoryNames;
   meta.dealCityHintList = DEAL_CITY_HINT_LIST;
   meta.resolvedFieldCodes = {
-    leadSiteInfoCode, leadJunkReasonCode, leadRefusalReasonCode, leadLowQualityReasonCode, dealPlanSumCode,
+    leadSiteInfoCode, leadNotCountedReasonCode, leadRefusalReasonCode, leadLowQualityReasonCode, dealPlanSumCode,
   };
   meta.debugAllLeadFields = debugLeadFields;
   meta.debugAllDealFields = debugDealFields;
