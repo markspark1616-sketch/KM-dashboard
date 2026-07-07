@@ -48,12 +48,14 @@
   .eyebrow { font-family:'IBM Plex Mono', monospace; font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--gold); }
   .panel h3 { font-size:15px; font-weight:500; margin:2px 0 10px 0; }
 
-  .funnel-row { display:grid; grid-template-columns:1fr 100px 68px; align-items:center; gap:8px; margin-bottom:7px; }
+  .funnel-row-wrap { margin-bottom:10px; }
+  .funnel-row { display:grid; grid-template-columns:1fr 100px 130px; align-items:center; gap:8px; }
   .funnel-track { background:var(--paper-2); border-radius:6px; height:26px; overflow:hidden; }
   .funnel-bar { background:linear-gradient(90deg, var(--teal), #3f7565); height:100%; display:flex; align-items:center; padding-left:8px; border-radius:6px; min-width:40px; }
   .funnel-bar span { color:#fff; font-size:11px; }
   .funnel-label { font-size:12px; }
   .funnel-drop { font-size:10.5px; color:var(--gold); text-align:right; }
+  .funnel-sub { font-size:10px; color:#8A8272; text-align:right; margin-top:2px; padding-right:2px; }
 
   .fin-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
   .fin-card { background:var(--paper-2); border-radius:10px; padding:9px 11px; }
@@ -254,10 +256,12 @@ document.getElementById("pw-submit").addEventListener("click", submitPassword);
 pwInput.addEventListener("keydown", (e) => { if (e.key === "Enter") submitPassword(); });
 
 const MONTHS_RU = ["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
-// Категории/города, которые не нужно учитывать нигде — ни в разбивке, ни в общих итогах
+// Категории воронок сделок, которые не нужно учитывать нигде — ни в разбивке, ни в общих итогах
 const EXCLUDED_CITIES = new Set([
-  "Основная воронка", "АI_лидогенерация", "NPS", "Дожим", "VIP-клиенты", "Жалоба (VIP)", "_unmatched",
+  "Основная воронка", "АI_лидогенерация", "NPS", "Дожим", "VIP-клиенты", "Жалоба (VIP)",
 ]);
+// "_unmatched" (лиды без распознанного города) НЕ исключаем из общих итогов — просто не показываем
+// отдельной строкой в списке городов/сравнении (см. фильтрацию списков городов ниже)
 const SPEND_STORAGE_KEY = "victory-ad-spend-v1";
 
 let meta = null;
@@ -298,14 +302,14 @@ function isFullMonthRange(from, to) {
 }
 
 async function loadMeta() {
-  const res = await fetch(`../data/meta.json?t=${Date.now()}`);
+  const res = await fetch(`../data/meta.json?t=${Date.now()}`, { cache: "no-store" });
   meta = await res.json();
 }
 
 async function loadMonth(monthKey) {
   if (monthCache[monthKey]) return monthCache[monthKey];
   try {
-    const res = await fetch(`../data/months/${monthKey}.json?t=${Date.now()}`);
+    const res = await fetch(`../data/months/${monthKey}.json?t=${Date.now()}`, { cache: "no-store" });
     if (!res.ok) throw new Error("no file");
     const data = await res.json();
     monthCache[monthKey] = data;
@@ -324,7 +328,7 @@ async function loadMonth(monthKey) {
 async function loadAdSpend() {
   let base = {};
   try {
-    const res = await fetch(`../data/ad-spend.json?t=${Date.now()}`);
+    const res = await fetch(`../data/ad-spend.json?t=${Date.now()}`, { cache: "no-store" });
     if (res.ok) base = await res.json();
   } catch (e) {}
   let local = {};
@@ -365,7 +369,7 @@ async function aggregate(cityFilter, from, to) {
   const raw = {
     leads: 0, pcp: 0, booked: 0, activeBooked: 0, arrived: 0, junk: 0, noAnswer: 0,
     dealsWon: 0, cashIn: 0, planAllCount: 0, planAllSum: 0, planWonSum: 0,
-    junkReasonsCombined: {}, junkReasonsByStatus: {},
+    junkReasonsCombined: {}, junkReasonsByStatus: {}, junkCountByStatus: {},
     byDay: {}, // day -> {leads, arrived, dealsWon}
   };
 
@@ -398,10 +402,13 @@ async function aggregate(cityFilter, from, to) {
           if (junkSet.has(lead.s)) {
             raw.junk++;
             const statusName = statusNames[lead.s] || lead.s;
-            const reasonText = (lead.r || "Без указания причины").trim() || "Без указания причины";
-            raw.junkReasonsCombined[reasonText] = (raw.junkReasonsCombined[reasonText] || 0) + 1;
+            raw.junkCountByStatus[statusName] = (raw.junkCountByStatus[statusName] || 0) + 1;
+            const reasonList = Array.isArray(lead.r) && lead.r.length ? lead.r : ["Без указания причины"];
             if (!raw.junkReasonsByStatus[statusName]) raw.junkReasonsByStatus[statusName] = {};
-            raw.junkReasonsByStatus[statusName][reasonText] = (raw.junkReasonsByStatus[statusName][reasonText] || 0) + 1;
+            for (const reasonText of reasonList) {
+              raw.junkReasonsCombined[reasonText] = (raw.junkReasonsCombined[reasonText] || 0) + 1;
+              raw.junkReasonsByStatus[statusName][reasonText] = (raw.junkReasonsByStatus[statusName][reasonText] || 0) + 1;
+            }
           }
         }
 
@@ -467,15 +474,21 @@ function renderKpis(raw) {
 
 function renderFunnel(raw) {
   const stages = [["Заявки", raw.leads], ["ПЦП", raw.pcp], ["Записи", raw.booked], ["Явка", raw.arrived], ["Договор", raw.dealsWon]];
+  // для каких этапов дополнительно показываем конверсию именно от заявок (не от предыдущего этапа)
+  const cumulativeFromLeads = new Set(["ПЦП", "Записи", "Явка"]);
   const max = Math.max(1, ...stages.map((s) => s[1]));
   document.getElementById("funnel").innerHTML = stages.map(([label, value], i) => {
     const pct = Math.max(6, (value/max)*100);
     const prev = i > 0 ? stages[i-1][1] : null;
-    const drop = prev !== null ? safeDiv(value, prev)*100 : null;
-    return `<div class="funnel-row">
-      <div class="funnel-track"><div class="funnel-bar" style="width:${pct}%"><span class="mono">${fmtNum(value)}</span></div></div>
-      <span class="funnel-label">${label}</span>
-      <span class="funnel-drop mono">${drop!==null?`↓ ${fmtPct(drop)}`:""}</span>
+    const stepConv = prev !== null ? safeDiv(value, prev)*100 : null;
+    const fromLeads = cumulativeFromLeads.has(label) ? safeDiv(value, raw.leads)*100 : null;
+    return `<div class="funnel-row-wrap">
+      <div class="funnel-row">
+        <div class="funnel-track"><div class="funnel-bar" style="width:${pct}%"><span class="mono">${fmtNum(value)}</span></div></div>
+        <span class="funnel-label">${label}</span>
+        <span class="funnel-drop mono">${stepConv!==null?`от пред. этапа: ${fmtPct(stepConv)}`:""}</span>
+      </div>
+      ${fromLeads!==null ? `<div class="funnel-sub mono">от заявок: ${fmtPct(fromLeads)}</div>` : ""}
     </div>`;
   }).join("");
 }
@@ -510,12 +523,12 @@ function renderReasons(raw) {
   const statuses = Object.keys(raw.junkReasonsByStatus);
   byStatusEl.innerHTML = statuses.length ? `<div class="reason-cols">${statuses.map((statusName) => {
     const reasons = Object.entries(raw.junkReasonsByStatus[statusName]).sort((a,b)=>b[1]-a[1]);
-    const statusTotal = reasons.reduce((a,[,c])=>a+c,0);
+    const statusTotal = raw.junkCountByStatus[statusName] || 1;
     return `<div class="reason-col">
-      <h4>${statusName} <span class="mono" style="color:#8A8272; font-weight:400;">· ${statusTotal}</span></h4>
-      <p>${reasons.map(([r,c]) => `${r} — ${c}`).join("<br>")}</p>
+      <h4>${statusName} <span class="mono" style="color:#8A8272; font-weight:400;">· ${raw.junkCountByStatus[statusName] || 0}</span></h4>
+      <p>${reasons.map(([r,c]) => `${r} — ${c} (${fmtPct(c/statusTotal*100)})`).join("<br>")}</p>
     </div>`;
-  }).join("")}</div>` : `<div class="empty">Нет брака за этот период</div>`;
+  }).join("")}</div><p class="empty" style="text-align:left; padding-top:8px;">Если у лида отмечено несколько причин сразу — он учтён в каждой; проценты внутри статуса могут суммарно превышать 100%.</p>` : `<div class="empty">Нет брака за этот период</div>`;
 }
 
 let trendChart = null;

@@ -59,9 +59,18 @@ function normalizeCode(raw) {
  * Извлекает код сайта из значения поля «Дополнительно об источнике»
  * (обычно вида "Сайт: Заявка от Victory_SPb") и возвращает название города,
  * либо null, если не удалось сопоставить.
+ *
+ * У Перми в этом поле НЕТ суффикса города вообще — просто "Заявка от Victory"
+ * без "_XXX". Подтверждено пользователем явно, поэтому это отдельное правило,
+ * а не запись в CITY_MAP (там ключ — код после Victory_, а тут кода нет совсем).
  */
 function resolveCityFromSiteField(fieldValue) {
   if (!fieldValue) return { city: null, rawCode: null };
+  const normalized = normalizeCode(fieldValue);
+  // Если строка целиком заканчивается на "victory" без вообще какого-либо
+  // суффикса города после него — это Пермь (там суффикса нет в принципе)
+  if (/victory$/.test(normalized)) return { city: "Пермь", rawCode: "(без суффикса — Пермь)" };
+
   const match = String(fieldValue).match(/victory[_\s]?([a-zа-яё]+)/i);
   if (!match) return { city: null, rawCode: null };
   const rawCode = match[1];

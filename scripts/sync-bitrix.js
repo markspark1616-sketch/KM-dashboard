@@ -226,6 +226,28 @@ function ensureCity(dayData, city) {
   return dayData.cities[city];
 }
 
+/** Строит карту ID->текст для полей-списков (enumeration), где значение хранится как ID, а не текст */
+function buildEnumMap(fields, fieldCode) {
+  const map = {};
+  const def = fields[fieldCode];
+  if (def && Array.isArray(def.items)) {
+    for (const item of def.items) {
+      map[String(item.ID)] = item.VALUE;
+    }
+  }
+  return map;
+}
+
+/** Декодирует значение поля (может быть строкой, ID-строкой, массивом ID или массивом строк) в массив текстов */
+function decodeFieldValue(rawValue, enumMap) {
+  if (rawValue === null || rawValue === undefined || rawValue === "") return [];
+  const values = Array.isArray(rawValue) ? rawValue : [rawValue];
+  return values
+    .map((v) => (enumMap && enumMap[String(v)] !== undefined ? enumMap[String(v)] : v))
+    .map((v) => String(v).trim())
+    .filter(Boolean);
+}
+
 async function main() {
   console.log("Ищу источник и справочники...");
   const sourceId = await resolveSourceId(SOURCE_NAME);
@@ -241,6 +263,11 @@ async function main() {
 
   const debugLeadFields = await getDebugFieldList("crm.lead.fields");
   const debugDealFields = await getDebugFieldList("crm.deal.fields");
+
+  const leadFieldsRaw = await getFieldsList("crm.lead.fields");
+  const junkReasonEnumMap = leadJunkReasonCode ? buildEnumMap(leadFieldsRaw, leadJunkReasonCode) : {};
+  const refusalReasonEnumMap = leadRefusalReasonCode ? buildEnumMap(leadFieldsRaw, leadRefusalReasonCode) : {};
+  const lowQualityReasonEnumMap = leadLowQualityReasonCode ? buildEnumMap(leadFieldsRaw, leadLowQualityReasonCode) : {};
 
   // --- meta / курсор последней синхронизации ---
   let meta = fs.existsSync(META_PATH)
@@ -294,18 +321,29 @@ async function main() {
     const siteFieldValue = leadSiteInfoCode ? lead[leadSiteInfoCode] : null;
     const { city, rawCode } = resolveCityFromSiteField(siteFieldValue);
     const cityKey = city || "_unmatched";
-    if (!city && rawCode) {
-      meta.unmatchedSiteCodes[rawCode] = (meta.unmatchedSiteCodes[rawCode] || 0) + 1;
+    if (!city) {
+      if (rawCode) {
+        meta.unmatchedSiteCodes[rawCode] = (meta.unmatchedSiteCodes[rawCode] || 0) + 1;
+      } else {
+        // поле не пустое, но не похоже на "Victory_XXX" вообще — сохраняем пример для диагностики
+        meta.unrecognizedSiteFieldSamples = meta.unrecognizedSiteFieldSamples || [];
+        const sample = siteFieldValue ? String(siteFieldValue) : "(пусто)";
+        if (meta.unrecognizedSiteFieldSamples.length < 30 && !meta.unrecognizedSiteFieldSamples.includes(sample)) {
+          meta.unrecognizedSiteFieldSamples.push(sample);
+        }
+      }
     }
     const cityData = ensureCity(dayData, cityKey);
 
     const statusName = leadStatusNames[lead.STATUS_ID] || lead.STATUS_ID;
-    let reason = null;
-    if (statusName === "Некачественный лид") reason = (leadLowQualityReasonCode && lead[leadLowQualityReasonCode]) || null;
-    else if (statusName === "Условный отказ") reason = (leadRefusalReasonCode && lead[leadRefusalReasonCode]) || null;
-    else if (statusName === "Не учитываем") reason = (leadJunkReasonCode && lead[leadJunkReasonCode]) || null;
+    let reasons = [];
+    // ВАЖНО: соответствие подтверждено пользователем явно — "Не учитываем" использует поле
+    // "Причина некачественного лида", а "Некачественный лид" — поле "Причина брака" (не по интуитивному названию!)
+    if (statusName === "Некачественный лид") reasons = decodeFieldValue(leadJunkReasonCode && lead[leadJunkReasonCode], junkReasonEnumMap);
+    else if (statusName === "Условный отказ") reasons = decodeFieldValue(leadRefusalReasonCode && lead[leadRefusalReasonCode], refusalReasonEnumMap);
+    else if (statusName === "Не учитываем") reasons = decodeFieldValue(leadLowQualityReasonCode && lead[leadLowQualityReasonCode], lowQualityReasonEnumMap);
 
-    cityData.leads[lead.ID] = { s: lead.STATUS_ID, r: reason };
+    cityData.leads[lead.ID] = { s: lead.STATUS_ID, r: reasons };
   }
 
   // --- раскладываем сделки по дням/городам (город = воронка) ---
