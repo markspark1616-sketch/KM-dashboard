@@ -1,5 +1,5 @@
 {
-  "lastSyncCursor": "2026-07-06T20:00:27.449Z",
+  "lastSyncCursor": "2026-07-07T06:51:40.490Z",
   "sourceName": "Victory парсинг",
   "sourceId": "84",
   "leadStatusNames": {
@@ -1067,19 +1067,19 @@
   },
   "unmatchedSiteCodes": {},
   "lastRunStats": {
-    "at": "2026-07-06T20:00:27.449Z",
-    "leadsFetched": 18629,
-    "dealsFetched": 2722,
+    "at": "2026-07-07T06:51:40.490Z",
+    "leadsFetched": 274,
+    "dealsFetched": 6,
     "monthsTouched": [
-      "2026-01",
-      "2026-02",
-      "2026-03",
-      "2026-04",
-      "2026-05",
       "2026-06",
-      "2026-07"
+      "2026-07",
+      "2026-05",
+      "2026-04",
+      "2026-03",
+      "2026-01",
+      "2026-02"
     ],
-    "firstRun": true
+    "firstRun": false
   },
   "resolvedFieldCodes": {
     "leadSiteInfoCode": "SOURCE_DESCRIPTION",
