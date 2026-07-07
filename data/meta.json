@@ -1,23 +1,2947 @@
 {
-  "lastSyncCursor": null,
+  "lastSyncCursor": "2026-07-07T08:37:24.773Z",
   "sourceName": "Victory парсинг",
-  "sourceId": null,
-  "leadStatusNames": {},
-  "dealStageMap": {},
-  "dealCategoryNames": {},
-  "dealCityHintList": [],
+  "sourceId": "84",
+  "leadStatusNames": {
+    "1": "Некачественный лид",
+    "3": "Условный отказ",
+    "NEW": "Новая заявка",
+    "IN_PROCESS": "Взят в работу",
+    "PROCESSED": "Недозвон",
+    "UC_I0XLWE": "Не записан",
+    "UC_KXIWFH": "Отменил запись",
+    "UC_W36M8K": "Записан",
+    "UC_CI0W8O": "Подтверждён на завтра",
+    "UC_TD7XTT": "Подтвержден на сегодня",
+    "CONVERTED": "Пришёл",
+    "JUNK": "Не учитываем"
+  },
+  "dealStageMap": {
+    "NEW": {
+      "name": "Новая",
+      "semantics": null
+    },
+    "PREPARATION": {
+      "name": "Подготовка документов",
+      "semantics": null
+    },
+    "PREPAYMENT_INVOICE": {
+      "name": "Cчёт на предоплату",
+      "semantics": null
+    },
+    "EXECUTING": {
+      "name": "В работе",
+      "semantics": null
+    },
+    "FINAL_INVOICE": {
+      "name": "Финальный счёт",
+      "semantics": null
+    },
+    "WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "APOLOGY": {
+      "name": "Анализ причины провала",
+      "semantics": "F"
+    },
+    "C1:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C1:PREPAYMENT_INVOICE": {
+      "name": "Назначение ТМ",
+      "semantics": null
+    },
+    "C1:EXECUTING": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C1:UC_MLCFYZ": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C1:UC_IA4RQ3": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C1:UC_FCWL21": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C1:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C1:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C1:1": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C4:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C4:PREPARATION": {
+      "name": "Назначен ТМ",
+      "semantics": null
+    },
+    "C4:PREPAYMENT_INVOICE": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C4:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C4:FINAL_INVOICE": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C4:1": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C4:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C4:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C4:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C5:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C5:PREPARATION": {
+      "name": "Назначен ТМ",
+      "semantics": null
+    },
+    "C5:PREPAYMENT_INVOICE": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C5:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C5:FINAL_INVOICE": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C5:1": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C5:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C5:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C5:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C6:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C6:PREPARATION": {
+      "name": "Назначен ТМ",
+      "semantics": null
+    },
+    "C6:PREPAYMENT_INVOICE": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C6:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C6:FINAL_INVOICE": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C6:1": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C6:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C6:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C6:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C7:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C7:PREPARATION": {
+      "name": "Назначен ТМ",
+      "semantics": null
+    },
+    "C7:PREPAYMENT_INVOICE": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C7:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C7:FINAL_INVOICE": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C7:1": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C7:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C7:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C7:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C8:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C8:PREPARATION": {
+      "name": "Назначен ТМ",
+      "semantics": null
+    },
+    "C8:PREPAYMENT_INVOICE": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C8:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C8:FINAL_INVOICE": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C8:1": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C8:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C8:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C8:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C9:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C9:PREPARATION": {
+      "name": "Назначен ТМ",
+      "semantics": null
+    },
+    "C9:PREPAYMENT_INVOICE": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C9:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C9:FINAL_INVOICE": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C9:1": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C9:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C9:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C9:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C10:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C10:PREPARATION": {
+      "name": "Назначен ТМ",
+      "semantics": null
+    },
+    "C10:PREPAYMENT_INVOIC": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C10:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C10:FINAL_INVOICE": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C10:1": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C10:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C10:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C10:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C11:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C11:PREPARATION": {
+      "name": "Назначен ТМ",
+      "semantics": null
+    },
+    "C11:PREPAYMENT_INVOIC": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C11:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C11:FINAL_INVOICE": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C11:1": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C11:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C11:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C11:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C12:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C12:PREPARATION": {
+      "name": "Назначен ТМ",
+      "semantics": null
+    },
+    "C12:PREPAYMENT_INVOIC": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C12:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C12:FINAL_INVOICE": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C12:1": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C12:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C12:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C12:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C13:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C13:PREPARATION": {
+      "name": "Назначен ТМ",
+      "semantics": null
+    },
+    "C13:PREPAYMENT_INVOIC": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C13:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C13:FINAL_INVOICE": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C13:1": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C13:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C13:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C13:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C14:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C14:PREPARATION": {
+      "name": "Назначен ТМ",
+      "semantics": null
+    },
+    "C14:PREPAYMENT_INVOIC": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C14:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C14:FINAL_INVOICE": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C14:1": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C14:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C14:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C14:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C15:NEW": {
+      "name": "Не пришел",
+      "semantics": null
+    },
+    "C15:PREPARATION": {
+      "name": "ЗАПИСАН НА ОСТАЛЬНЫЕ ДНИ",
+      "semantics": null
+    },
+    "C15:PREPAYMENT_INVOIC": {
+      "name": "ЗАПИСАН НА ЗАВТРА",
+      "semantics": null
+    },
+    "C15:EXECUTING": {
+      "name": "ПОДТВЕРЖДЕН",
+      "semantics": null
+    },
+    "C15:FINAL_INVOICE": {
+      "name": "ПРИШЕЛ",
+      "semantics": null
+    },
+    "C15:UC_LNVU9C": {
+      "name": "ТМ НАЗНАЧЕН",
+      "semantics": null
+    },
+    "C15:UC_MSD2TV": {
+      "name": "ФИНАНСОВЫЙ ОТДЕЛ",
+      "semantics": null
+    },
+    "C15:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C15:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C16:NEW": {
+      "name": "Новая заявка",
+      "semantics": null
+    },
+    "C16:PREPARATION": {
+      "name": "Взят в работу",
+      "semantics": null
+    },
+    "C16:PREPAYMENT_INVOIC": {
+      "name": "Недозвон",
+      "semantics": null
+    },
+    "C16:UC_U0SEPX": {
+      "name": "Не записан",
+      "semantics": null
+    },
+    "C16:UC_GDZM4W": {
+      "name": "Отменил запись",
+      "semantics": null
+    },
+    "C16:UC_LP6T9X": {
+      "name": "Записан",
+      "semantics": null
+    },
+    "C16:EXECUTING": {
+      "name": "Подтвержден на завтра",
+      "semantics": null
+    },
+    "C16:FINAL_INVOICE": {
+      "name": "Подтвержден на сегодня",
+      "semantics": null
+    },
+    "C16:WON": {
+      "name": "Пришел",
+      "semantics": "S"
+    },
+    "C16:LOSE": {
+      "name": "Полный отказ",
+      "semantics": "F"
+    },
+    "C17:PREPARATION": {
+      "name": "Отправлено",
+      "semantics": null
+    },
+    "C17:UC_AI950I": {
+      "name": "Ошибка",
+      "semantics": null
+    },
+    "C17:PREPAYMENT_INVOIC": {
+      "name": "Согласие",
+      "semantics": null
+    },
+    "C17:UC_0JTQUS": {
+      "name": "Отказ",
+      "semantics": null
+    },
+    "C17:NEW": {
+      "name": "ничего",
+      "semantics": null
+    },
+    "C17:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C17:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C17:APOLOGY": {
+      "name": "Анализ причины провала",
+      "semantics": "F"
+    },
+    "C18:NEW": {
+      "name": "Новая заявка",
+      "semantics": null
+    },
+    "C18:PREPARATION": {
+      "name": "Детракторы",
+      "semantics": null
+    },
+    "C18:PREPAYMENT_INVOIC": {
+      "name": "Критики",
+      "semantics": null
+    },
+    "C18:EXECUTING": {
+      "name": "Промоутеры",
+      "semantics": null
+    },
+    "C18:1": {
+      "name": "Не учитываем",
+      "semantics": null
+    },
+    "C18:WON": {
+      "name": "ОС обработана",
+      "semantics": "S"
+    },
+    "C18:LOSE": {
+      "name": "Нет оценок",
+      "semantics": "F"
+    },
+    "C19:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C19:PREPARATION": {
+      "name": "Назначен ТМ",
+      "semantics": null
+    },
+    "C19:PREPAYMENT_INVOIC": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C19:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C19:1": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C19:2": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C19:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C19:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C19:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C20:NEW": {
+      "name": "Новая заявка",
+      "semantics": null
+    },
+    "C20:PREPARATION": {
+      "name": "Взят в работу",
+      "semantics": null
+    },
+    "C20:PREPAYMENT_INVOIC": {
+      "name": "Недозвон",
+      "semantics": null
+    },
+    "C20:8": {
+      "name": "На дозвоне",
+      "semantics": null
+    },
+    "C20:EXECUTING": {
+      "name": "Не записан",
+      "semantics": null
+    },
+    "C20:1": {
+      "name": "Отменил запись",
+      "semantics": null
+    },
+    "C20:2": {
+      "name": "Записан",
+      "semantics": null
+    },
+    "C20:3": {
+      "name": "Подтвержден на завтра",
+      "semantics": null
+    },
+    "C20:4": {
+      "name": "Подтвержден на сегодня",
+      "semantics": null
+    },
+    "C20:UC_ZFGB34": {
+      "name": "Полный отказ",
+      "semantics": null
+    },
+    "C20:5": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C20:6": {
+      "name": "ТМ назначен",
+      "semantics": null
+    },
+    "C20:7": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C20:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C20:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C21:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C21:PREPARATION": {
+      "name": "Назначение ТМ",
+      "semantics": null
+    },
+    "C21:PREPAYMENT_INVOIC": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C21:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C21:1": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C21:2": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C21:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C21:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C21:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C22:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C22:PREPARATION": {
+      "name": "Назначение ТМ",
+      "semantics": null
+    },
+    "C22:PREPAYMENT_INVOIC": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C22:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C22:1": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C22:2": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C22:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C22:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C22:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C23:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C23:PREPARATION": {
+      "name": "Назначение ТМ",
+      "semantics": null
+    },
+    "C23:PREPAYMENT_INVOIC": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C23:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C23:FINAL_INVOICE": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C23:1": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C23:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C23:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C23:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C24:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C24:PREPARATION": {
+      "name": "Назначение ТМ",
+      "semantics": null
+    },
+    "C24:PREPAYMENT_INVOIC": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C24:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C24:FINAL_INVOICE": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C24:1": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C24:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C24:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C24:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C27:NEW": {
+      "name": "Пришел",
+      "semantics": null
+    },
+    "C27:PREPARATION": {
+      "name": "Назначен ТМ",
+      "semantics": null
+    },
+    "C27:PREPAYMENT_INVOIC": {
+      "name": "На презентации",
+      "semantics": null
+    },
+    "C27:EXECUTING": {
+      "name": "На осмотре",
+      "semantics": null
+    },
+    "C27:FINAL_INVOICE": {
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C27:1": {
+      "name": "Фин отдел",
+      "semantics": null
+    },
+    "C27:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C27:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C27:APOLOGY": {
+      "name": "Расторжение",
+      "semantics": "F"
+    },
+    "C28:NEW": {
+      "name": "В базе",
+      "semantics": null
+    },
+    "C28:PREPARATION": {
+      "name": "Первый контакт",
+      "semantics": null
+    },
+    "C28:PREPAYMENT_INVOIC": {
+      "name": "Сбор предпочтений",
+      "semantics": null
+    },
+    "C28:EXECUTING": {
+      "name": "Запись на приём",
+      "semantics": null
+    },
+    "C28:FINAL_INVOICE": {
+      "name": "Планирование лечения",
+      "semantics": null
+    },
+    "C28:1": {
+      "name": "Подготовка к визиту",
+      "semantics": null
+    },
+    "C28:2": {
+      "name": "В процессе лечения",
+      "semantics": null
+    },
+    "C28:3": {
+      "name": "Лечение окончено",
+      "semantics": null
+    },
+    "C28:4": {
+      "name": "Поддержание контакта",
+      "semantics": null
+    },
+    "C28:5": {
+      "name": "Контакт потерян",
+      "semantics": null
+    },
+    "C28:6": {
+      "name": "Жалоба",
+      "semantics": null
+    },
+    "C28:UC_2DBOEG": {
+      "name": "Жалоба обработана",
+      "semantics": null
+    },
+    "C28:7": {
+      "name": "Предложение",
+      "semantics": null
+    },
+    "C28:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C28:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C29:NEW": {
+      "name": "Жалоба зафиксирована",
+      "semantics": null
+    },
+    "C29:PREPARATION": {
+      "name": "Диагностика",
+      "semantics": null
+    },
+    "C29:PREPAYMENT_INVOIC": {
+      "name": "Решение согласовано",
+      "semantics": null
+    },
+    "C29:EXECUTING": {
+      "name": "Решение выполнено",
+      "semantics": null
+    },
+    "C29:FINAL_INVOICE": {
+      "name": "Обратная связь получена",
+      "semantics": null
+    },
+    "C29:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C29:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    }
+  },
+  "dealCategoryNames": {
+    "0": "Основная воронка",
+    "1": "Санкт-Петербург",
+    "4": "Нижний Новгород",
+    "5": "Ростов",
+    "6": "Краснодар",
+    "7": "Кемерово",
+    "8": "Калининград",
+    "9": "Новокузнецк",
+    "10": "Омск",
+    "11": "Пермь",
+    "12": "Новосибирск первичный ОП",
+    "13": "Самара",
+    "14": "Красноярск",
+    "15": "Новосибирск вторичный ОП",
+    "16": "НВСБ Отдел доп. продаж",
+    "17": "AI_лидогенерация",
+    "18": "NPS",
+    "19": "Барнаул",
+    "20": "Дожим",
+    "21": "Тольятти",
+    "22": "Улан-Удэ",
+    "23": "Волгоград",
+    "24": "Иркутск",
+    "27": "Томск",
+    "28": "VIP-клиенты",
+    "29": "Жалоба (VIP)"
+  },
+  "dealCityHintList": [
+    "Санкт-Петербург",
+    "Нижний Новгород",
+    "Ростов",
+    "Краснодар",
+    "Кемерово",
+    "Калининград",
+    "Новокузнецк",
+    "Омск",
+    "Пермь",
+    "Новосибирск первичный ОП",
+    "Новосибирск вторичный ОП",
+    "НВСБ Отдел доп продаж",
+    "Самара",
+    "Красноярск",
+    "Барнаул",
+    "Тольятти",
+    "Улан-Удэ",
+    "Волгоград",
+    "Иркутск",
+    "Томск"
+  ],
   "groups": {
-    "pcpStatusIds": [],
-    "bookedStatusIds": [],
-    "activeBookedStatusIds": [],
-    "arrivedStatusIds": [],
-    "junkStatusIds": [],
-    "noAnswerStatusIds": []
+    "pcpStatusIds": [
+      "UC_I0XLWE",
+      "UC_KXIWFH",
+      "UC_W36M8K",
+      "UC_CI0W8O",
+      "UC_TD7XTT",
+      "CONVERTED"
+    ],
+    "bookedStatusIds": [
+      "UC_KXIWFH",
+      "UC_W36M8K",
+      "UC_CI0W8O",
+      "UC_TD7XTT",
+      "CONVERTED"
+    ],
+    "activeBookedStatusIds": [
+      "UC_W36M8K",
+      "UC_CI0W8O",
+      "UC_TD7XTT"
+    ],
+    "arrivedStatusIds": [
+      "CONVERTED"
+    ],
+    "junkStatusIds": [
+      "1",
+      "JUNK",
+      "3"
+    ],
+    "noAnswerStatusIds": [
+      "PROCESSED"
+    ]
   },
   "unmatchedSiteCodes": {},
-  "unrecognizedSiteFieldSamples": [],
-  "resolvedFieldCodes": {},
-  "debugAllLeadFields": [],
-  "debugAllDealFields": [],
-  "lastRunStats": null
+  "unrecognizedSiteFieldSamples": [
+    "Звонок поступил на номер: Самара - лиды - 79014683296-удалить 31.10.",
+    "(пусто)"
+  ],
+  "resolvedFieldCodes": {
+    "leadSiteInfoCode": "SOURCE_DESCRIPTION",
+    "leadNotCountedReasonCode": "UF_CRM_1755787390",
+    "leadRefusalReasonCode": "UF_CRM_1748280876",
+    "leadLowQualityReasonCode": "UF_CRM_1748008077",
+    "dealPlanSumCode": "UF_CRM_1751552023"
+  },
+  "debugAllLeadFields": [
+    {
+      "code": "ID",
+      "title": "ID",
+      "listLabel": null,
+      "type": "integer"
+    },
+    {
+      "code": "TITLE",
+      "title": "Название лида",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "HONORIFIC",
+      "title": "Обращение",
+      "listLabel": null,
+      "type": "crm_status"
+    },
+    {
+      "code": "NAME",
+      "title": "Имя",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "SECOND_NAME",
+      "title": "Отчество",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "LAST_NAME",
+      "title": "Фамилия",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "BIRTHDATE",
+      "title": "Дата рождения",
+      "listLabel": null,
+      "type": "date"
+    },
+    {
+      "code": "COMPANY_TITLE",
+      "title": "Название компании",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "SOURCE_ID",
+      "title": "Источник",
+      "listLabel": null,
+      "type": "crm_status"
+    },
+    {
+      "code": "SOURCE_DESCRIPTION",
+      "title": "Дополнительно об источнике",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "STATUS_ID",
+      "title": "Стадия",
+      "listLabel": null,
+      "type": "crm_status"
+    },
+    {
+      "code": "STATUS_DESCRIPTION",
+      "title": "Дополнительно о стадии",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "STATUS_SEMANTIC_ID",
+      "title": "Состояние статуса",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "POST",
+      "title": "Должность",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "ADDRESS",
+      "title": "Адрес",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "ADDRESS_2",
+      "title": "Адрес (стр. 2)",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "ADDRESS_CITY",
+      "title": "Город",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "ADDRESS_POSTAL_CODE",
+      "title": "Почтовый индекс",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "ADDRESS_REGION",
+      "title": "Район",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "ADDRESS_PROVINCE",
+      "title": "Область",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "ADDRESS_COUNTRY",
+      "title": "Страна",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "ADDRESS_COUNTRY_CODE",
+      "title": "Код страны",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "ADDRESS_LOC_ADDR_ID",
+      "title": "Идентификатор адреса местоположения",
+      "listLabel": null,
+      "type": "integer"
+    },
+    {
+      "code": "CURRENCY_ID",
+      "title": "Валюта",
+      "listLabel": null,
+      "type": "crm_currency"
+    },
+    {
+      "code": "OPPORTUNITY",
+      "title": "Сумма",
+      "listLabel": null,
+      "type": "double"
+    },
+    {
+      "code": "IS_MANUAL_OPPORTUNITY",
+      "title": "IS_MANUAL_OPPORTUNITY",
+      "listLabel": null,
+      "type": "char"
+    },
+    {
+      "code": "OPENED",
+      "title": "Доступен для всех",
+      "listLabel": null,
+      "type": "char"
+    },
+    {
+      "code": "COMMENTS",
+      "title": "Комментарий",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "HAS_PHONE",
+      "title": "Задан телефон",
+      "listLabel": null,
+      "type": "char"
+    },
+    {
+      "code": "HAS_EMAIL",
+      "title": "Задан e-mail",
+      "listLabel": null,
+      "type": "char"
+    },
+    {
+      "code": "HAS_IMOL",
+      "title": "Задана открытая линия",
+      "listLabel": null,
+      "type": "char"
+    },
+    {
+      "code": "ASSIGNED_BY_ID",
+      "title": "Ответственный",
+      "listLabel": null,
+      "type": "user"
+    },
+    {
+      "code": "CREATED_BY_ID",
+      "title": "Кем создан",
+      "listLabel": null,
+      "type": "user"
+    },
+    {
+      "code": "MODIFY_BY_ID",
+      "title": "Кем изменен",
+      "listLabel": null,
+      "type": "user"
+    },
+    {
+      "code": "MOVED_BY_ID",
+      "title": "MOVED_BY_ID",
+      "listLabel": null,
+      "type": "user"
+    },
+    {
+      "code": "DATE_CREATE",
+      "title": "Дата создания",
+      "listLabel": null,
+      "type": "datetime"
+    },
+    {
+      "code": "DATE_MODIFY",
+      "title": "Дата изменения",
+      "listLabel": null,
+      "type": "datetime"
+    },
+    {
+      "code": "MOVED_TIME",
+      "title": "MOVED_TIME",
+      "listLabel": null,
+      "type": "datetime"
+    },
+    {
+      "code": "COMPANY_ID",
+      "title": "Компания",
+      "listLabel": null,
+      "type": "crm_company"
+    },
+    {
+      "code": "CONTACT_ID",
+      "title": "Контакт",
+      "listLabel": null,
+      "type": "crm_contact"
+    },
+    {
+      "code": "CONTACT_IDS",
+      "title": "CONTACT_IDS",
+      "listLabel": null,
+      "type": "crm_contact"
+    },
+    {
+      "code": "IS_RETURN_CUSTOMER",
+      "title": "Повторный лид",
+      "listLabel": null,
+      "type": "char"
+    },
+    {
+      "code": "DATE_CLOSED",
+      "title": "Дата завершения",
+      "listLabel": null,
+      "type": "datetime"
+    },
+    {
+      "code": "ORIGINATOR_ID",
+      "title": "Внешний источник",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "ORIGIN_ID",
+      "title": "Идентификатор элемента во внешнем источнике",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "UTM_SOURCE",
+      "title": "Рекламная система",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "UTM_MEDIUM",
+      "title": "Тип трафика",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "UTM_CAMPAIGN",
+      "title": "Обозначение рекламной кампании",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "UTM_CONTENT",
+      "title": "Содержание кампании",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "UTM_TERM",
+      "title": "Условие поиска кампании",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "LAST_ACTIVITY_TIME",
+      "title": "LAST_ACTIVITY_TIME",
+      "listLabel": null,
+      "type": "datetime"
+    },
+    {
+      "code": "LAST_ACTIVITY_BY",
+      "title": "LAST_ACTIVITY_BY",
+      "listLabel": null,
+      "type": "user"
+    },
+    {
+      "code": "LAST_COMMUNICATION_TIME",
+      "title": "LAST_COMMUNICATION_TIME",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "PHONE",
+      "title": "Телефон",
+      "listLabel": null,
+      "type": "crm_multifield"
+    },
+    {
+      "code": "EMAIL",
+      "title": "E-mail",
+      "listLabel": null,
+      "type": "crm_multifield"
+    },
+    {
+      "code": "WEB",
+      "title": "Сайт",
+      "listLabel": null,
+      "type": "crm_multifield"
+    },
+    {
+      "code": "IM",
+      "title": "Мессенджер",
+      "listLabel": null,
+      "type": "crm_multifield"
+    },
+    {
+      "code": "LINK",
+      "title": "LINK",
+      "listLabel": null,
+      "type": "crm_multifield"
+    },
+    {
+      "code": "UF_CRM_1755787390",
+      "title": "UF_CRM_1755787390",
+      "listLabel": "Причина не учета +",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1742316696315",
+      "title": "UF_CRM_1742316696315",
+      "listLabel": "Полных лет",
+      "type": "double"
+    },
+    {
+      "code": "UF_CRM_1746529238",
+      "title": "UF_CRM_1746529238",
+      "listLabel": "Дата и время первичного приема",
+      "type": "datetime"
+    },
+    {
+      "code": "UF_CRM_1746528777",
+      "title": "UF_CRM_1746528777",
+      "listLabel": "Причина недозвона (список)",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1746529112",
+      "title": "UF_CRM_1746529112",
+      "listLabel": "Причины не записи (список)",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1742318046715",
+      "title": "UF_CRM_1742318046715",
+      "listLabel": "Дата записи",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1762508178",
+      "title": "UF_CRM_1762508178",
+      "listLabel": "Дата/время записи",
+      "type": "datetime"
+    },
+    {
+      "code": "UF_CRM_1745957138",
+      "title": "UF_CRM_1745957138",
+      "listLabel": "Исполнитель",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1748008077",
+      "title": "UF_CRM_1748008077",
+      "listLabel": "Причина некачественного лида",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1748008274",
+      "title": "UF_CRM_1748008274",
+      "listLabel": "Способ оплаты",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1748008709",
+      "title": "UF_CRM_1748008709",
+      "listLabel": "Причина отмены записи",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1748280876",
+      "title": "UF_CRM_1748280876",
+      "listLabel": "Причина условного отказа",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1751026454528",
+      "title": "UF_CRM_1751026454528",
+      "listLabel": "Комментарий колл-центра",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1751961597022",
+      "title": "UF_CRM_1751961597022",
+      "listLabel": "Общался бот",
+      "type": "boolean"
+    },
+    {
+      "code": "UF_CRM_1752673237",
+      "title": "UF_CRM_1752673237",
+      "listLabel": "Ночной Оператор",
+      "type": "employee"
+    },
+    {
+      "code": "UF_CRM_1758009888",
+      "title": "UF_CRM_1758009888",
+      "listLabel": "Другое что беспокоит",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1754927102",
+      "title": "UF_CRM_1754927102",
+      "listLabel": "Инфоповод (стр)",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_LEAD_1755625701133",
+      "title": "UF_CRM_LEAD_1755625701133",
+      "listLabel": "Укажите ФИО врача",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_LEAD_1755752994041",
+      "title": "UF_CRM_LEAD_1755752994041",
+      "listLabel": "Представьтесь, пожалуйста",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1761035049591",
+      "title": "UF_CRM_1761035049591",
+      "listLabel": "Записал бот",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_LEAD_1761829560855",
+      "title": "UF_CRM_LEAD_1761829560855",
+      "listLabel": "Врач-агент",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1763978895",
+      "title": "UF_CRM_1763978895",
+      "listLabel": "Создан вручную",
+      "type": "boolean"
+    },
+    {
+      "code": "UF_CRM_LEAD_PREVIOUS_USER_FN",
+      "title": "UF_CRM_LEAD_PREVIOUS_USER_FN",
+      "listLabel": "Предыдущий ответственный (лид)",
+      "type": "employee"
+    },
+    {
+      "code": "UF_CRM_1770219538",
+      "title": "UF_CRM_1770219538",
+      "listLabel": "Недозвон",
+      "type": "double"
+    },
+    {
+      "code": "UF_CRM_1770984375",
+      "title": "UF_CRM_1770984375",
+      "listLabel": "Целевой лид",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1771439155",
+      "title": "UF_CRM_1771439155",
+      "listLabel": "Попыток дозвона",
+      "type": "double"
+    },
+    {
+      "code": "UF_CRM_1773155019732",
+      "title": "UF_CRM_1773155019732",
+      "listLabel": "Обратный звонок",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_WHATSAPPUSERNAME_WZ",
+      "title": "UF_CRM_WHATSAPPUSERNAME_WZ",
+      "listLabel": "WhatsappUsername_WZ",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_WHATSAPPLID_WZ",
+      "title": "UF_CRM_WHATSAPPLID_WZ",
+      "listLabel": "WhatsappLid_WZ",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1774525812546",
+      "title": "UF_CRM_1774525812546",
+      "listLabel": "Фамилия (ИИ)",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1774525830934",
+      "title": "UF_CRM_1774525830934",
+      "listLabel": "Имя (ИИ)",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1774526207243",
+      "title": "UF_CRM_1774526207243",
+      "listLabel": "Отчество (ИИ)",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1774526232878",
+      "title": "UF_CRM_1774526232878",
+      "listLabel": "Возраст (ИИ)",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1776754996821",
+      "title": "UF_CRM_1776754996821",
+      "listLabel": "Обзвон",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_CIANPROFILEID_WZ",
+      "title": "UF_CRM_CIANPROFILEID_WZ",
+      "listLabel": "CianProfileId_WZ",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1781517263857",
+      "title": "UF_CRM_1781517263857",
+      "listLabel": "Был звонок",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_LEAD_1756133621687",
+      "title": "UF_CRM_LEAD_1756133621687",
+      "listLabel": "Выберите филиал для проверки",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1744362815",
+      "title": "UF_CRM_1744362815",
+      "listLabel": "Город",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_MAXUSERNAME_WZ",
+      "title": "UF_CRM_MAXUSERNAME_WZ",
+      "listLabel": "MaxUsername_WZ",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_MAXID_WZ",
+      "title": "UF_CRM_MAXID_WZ",
+      "listLabel": "MaxId_WZ",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1759217744",
+      "title": "UF_CRM_1759217744",
+      "listLabel": "Направление лечения",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1760366167481",
+      "title": "UF_CRM_1760366167481",
+      "listLabel": "Комментарий из разговора",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1760626555",
+      "title": "UF_CRM_1760626555",
+      "listLabel": "Прозвон",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1760945472",
+      "title": "UF_CRM_1760945472",
+      "listLabel": "Платная диагностика",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1763017521",
+      "title": "UF_CRM_1763017521",
+      "listLabel": "Входящий звонок",
+      "type": "boolean"
+    },
+    {
+      "code": "UF_CRM_1769503292",
+      "title": "UF_CRM_1769503292",
+      "listLabel": "Причина провала Сделки",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1757924516",
+      "title": "UF_CRM_1757924516",
+      "listLabel": "Предыдущая стадия (п.п.)",
+      "type": "crm_status"
+    },
+    {
+      "code": "UF_CRM_1771315131",
+      "title": "UF_CRM_1771315131",
+      "listLabel": "Количество записей",
+      "type": "integer"
+    },
+    {
+      "code": "UF_CRM_1775476092",
+      "title": "UF_CRM_1775476092",
+      "listLabel": "ID_49",
+      "type": "integer"
+    },
+    {
+      "code": "UF_CRM_1755754715521",
+      "title": "UF_CRM_1755754715521",
+      "listLabel": "Была на стадии \"Не записан\" (Тех.поле)",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_LEAD_1758186297144",
+      "title": "UF_CRM_LEAD_1758186297144",
+      "listLabel": "тест",
+      "type": "boolean"
+    },
+    {
+      "code": "UF_CRM_1772538740",
+      "title": "UF_CRM_1772538740",
+      "listLabel": "Запуск БП",
+      "type": "boolean"
+    },
+    {
+      "code": "UF_CRM_1773161068",
+      "title": "UF_CRM_1773161068",
+      "listLabel": "Город (список)",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1774601016",
+      "title": "UF_CRM_1774601016",
+      "listLabel": "Исходное название Лида",
+      "type": "string"
+    }
+  ],
+  "debugAllDealFields": [
+    {
+      "code": "ID",
+      "title": "ID",
+      "listLabel": null,
+      "type": "integer"
+    },
+    {
+      "code": "TITLE",
+      "title": "Название",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "TYPE_ID",
+      "title": "Тип",
+      "listLabel": null,
+      "type": "crm_status"
+    },
+    {
+      "code": "CATEGORY_ID",
+      "title": "Воронка",
+      "listLabel": null,
+      "type": "crm_category"
+    },
+    {
+      "code": "STAGE_ID",
+      "title": "Стадия сделки",
+      "listLabel": null,
+      "type": "crm_status"
+    },
+    {
+      "code": "PREVIOUS_STAGE_ID",
+      "title": "Предыдущая стадия",
+      "listLabel": null,
+      "type": "crm_status"
+    },
+    {
+      "code": "STAGE_SEMANTIC_ID",
+      "title": "Группа стадии",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "IS_NEW",
+      "title": "Новая сделка",
+      "listLabel": null,
+      "type": "char"
+    },
+    {
+      "code": "IS_RECURRING",
+      "title": "Регулярная сделка",
+      "listLabel": null,
+      "type": "char"
+    },
+    {
+      "code": "IS_RETURN_CUSTOMER",
+      "title": "Повторная сделка",
+      "listLabel": null,
+      "type": "char"
+    },
+    {
+      "code": "IS_REPEATED_APPROACH",
+      "title": "Повторное обращение",
+      "listLabel": null,
+      "type": "char"
+    },
+    {
+      "code": "PROBABILITY",
+      "title": "Вероятность",
+      "listLabel": null,
+      "type": "integer"
+    },
+    {
+      "code": "CURRENCY_ID",
+      "title": "Валюта",
+      "listLabel": null,
+      "type": "crm_currency"
+    },
+    {
+      "code": "OPPORTUNITY",
+      "title": "Сумма",
+      "listLabel": null,
+      "type": "double"
+    },
+    {
+      "code": "IS_MANUAL_OPPORTUNITY",
+      "title": "Режим расчёта суммы",
+      "listLabel": null,
+      "type": "char"
+    },
+    {
+      "code": "TAX_VALUE",
+      "title": "Ставка налога",
+      "listLabel": null,
+      "type": "double"
+    },
+    {
+      "code": "COMPANY_ID",
+      "title": "Компания",
+      "listLabel": null,
+      "type": "crm_company"
+    },
+    {
+      "code": "MYCOMPANY_ID",
+      "title": "Реквизиты вашей компании",
+      "listLabel": null,
+      "type": "crm_company"
+    },
+    {
+      "code": "CONTACT_ID",
+      "title": "Контакт",
+      "listLabel": null,
+      "type": "crm_contact"
+    },
+    {
+      "code": "CONTACT_IDS",
+      "title": "Контакты",
+      "listLabel": null,
+      "type": "crm_contact"
+    },
+    {
+      "code": "QUOTE_ID",
+      "title": "Предложение",
+      "listLabel": null,
+      "type": "crm_quote"
+    },
+    {
+      "code": "BEGINDATE",
+      "title": "Дата начала",
+      "listLabel": null,
+      "type": "date"
+    },
+    {
+      "code": "CLOSEDATE",
+      "title": "Дата завершения",
+      "listLabel": null,
+      "type": "date"
+    },
+    {
+      "code": "OPENED",
+      "title": "Доступна для всех",
+      "listLabel": null,
+      "type": "char"
+    },
+    {
+      "code": "CLOSED",
+      "title": "Закрыта",
+      "listLabel": null,
+      "type": "char"
+    },
+    {
+      "code": "COMMENTS",
+      "title": "Комментарий",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "ASSIGNED_BY_ID",
+      "title": "Ответственный",
+      "listLabel": null,
+      "type": "user"
+    },
+    {
+      "code": "CREATED_BY_ID",
+      "title": "Кем создана",
+      "listLabel": null,
+      "type": "user"
+    },
+    {
+      "code": "MODIFY_BY_ID",
+      "title": "Кем изменена",
+      "listLabel": null,
+      "type": "user"
+    },
+    {
+      "code": "MOVED_BY_ID",
+      "title": "MOVED_BY_ID",
+      "listLabel": null,
+      "type": "user"
+    },
+    {
+      "code": "DATE_CREATE",
+      "title": "Дата создания",
+      "listLabel": null,
+      "type": "datetime"
+    },
+    {
+      "code": "DATE_MODIFY",
+      "title": "Дата изменения",
+      "listLabel": null,
+      "type": "datetime"
+    },
+    {
+      "code": "MOVED_TIME",
+      "title": "Когда передвинут",
+      "listLabel": null,
+      "type": "datetime"
+    },
+    {
+      "code": "SOURCE_ID",
+      "title": "Источник",
+      "listLabel": null,
+      "type": "crm_status"
+    },
+    {
+      "code": "SOURCE_DESCRIPTION",
+      "title": "Дополнительно об источнике",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "LEAD_ID",
+      "title": "Лид",
+      "listLabel": null,
+      "type": "crm_lead"
+    },
+    {
+      "code": "ADDITIONAL_INFO",
+      "title": "Дополнительная информация",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "LOCATION_ID",
+      "title": "Местоположение",
+      "listLabel": null,
+      "type": "location"
+    },
+    {
+      "code": "ORIGINATOR_ID",
+      "title": "Внешний источник",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "ORIGIN_ID",
+      "title": "Идентификатор элемента во внешнем источнике",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "UTM_SOURCE",
+      "title": "Рекламная система",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "UTM_MEDIUM",
+      "title": "Тип трафика",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "UTM_CAMPAIGN",
+      "title": "Обозначение рекламной кампании",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "UTM_CONTENT",
+      "title": "Содержание кампании",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "UTM_TERM",
+      "title": "Условие поиска кампании",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "PARENT_ID_1126",
+      "title": "NPS",
+      "listLabel": null,
+      "type": "crm_entity"
+    },
+    {
+      "code": "LAST_ACTIVITY_TIME",
+      "title": "LAST_ACTIVITY_TIME",
+      "listLabel": null,
+      "type": "datetime"
+    },
+    {
+      "code": "LAST_ACTIVITY_BY",
+      "title": "LAST_ACTIVITY_BY",
+      "listLabel": null,
+      "type": "user"
+    },
+    {
+      "code": "LAST_COMMUNICATION_TIME",
+      "title": "LAST_COMMUNICATION_TIME",
+      "listLabel": null,
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_686687234D86D",
+      "title": "UF_CRM_686687234D86D",
+      "listLabel": "Полных лет",
+      "type": "double"
+    },
+    {
+      "code": "UF_CRM_690DE151E1832",
+      "title": "UF_CRM_690DE151E1832",
+      "listLabel": "Причина не учета +",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_68668723617ED",
+      "title": "UF_CRM_68668723617ED",
+      "listLabel": "Дата и время первичного приема",
+      "type": "datetime"
+    },
+    {
+      "code": "UF_CRM_68668723713C9",
+      "title": "UF_CRM_68668723713C9",
+      "listLabel": "Причина недозвона (список)",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1759173547",
+      "title": "UF_CRM_1759173547",
+      "listLabel": "Дата и время приема (вторичка)",
+      "type": "datetime"
+    },
+    {
+      "code": "UF_CRM_1759173577",
+      "title": "UF_CRM_1759173577",
+      "listLabel": "Дата и время повторного приема (дожим)",
+      "type": "datetime"
+    },
+    {
+      "code": "UF_CRM_686687237A32A",
+      "title": "UF_CRM_686687237A32A",
+      "listLabel": "Причины не записи (список)",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1759735295",
+      "title": "UF_CRM_1759735295",
+      "listLabel": "Причина не учета (Сделки)",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_690DE152204FE",
+      "title": "UF_CRM_690DE152204FE",
+      "listLabel": "Дата/время записи",
+      "type": "datetime"
+    },
+    {
+      "code": "UF_CRM_1755787423",
+      "title": "UF_CRM_1755787423",
+      "listLabel": "Причина некачественного лида +",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_68C91B42D7E58",
+      "title": "UF_CRM_68C91B42D7E58",
+      "listLabel": "Другое что беспокоит",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_6866872396835",
+      "title": "UF_CRM_6866872396835",
+      "listLabel": "Дата записи",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_686687239EA3E",
+      "title": "UF_CRM_686687239EA3E",
+      "listLabel": "Исполнитель",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_68668723B519A",
+      "title": "UF_CRM_68668723B519A",
+      "listLabel": "Способ оплаты",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_68668723BDC54",
+      "title": "UF_CRM_68668723BDC54",
+      "listLabel": "Причина отмены записи",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_68668723CFBDB",
+      "title": "UF_CRM_68668723CFBDB",
+      "listLabel": "Комментарий колл-центра",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1752058194",
+      "title": "UF_CRM_1752058194",
+      "listLabel": "Торговый менеджер",
+      "type": "employee"
+    },
+    {
+      "code": "UF_CRM_1759307130",
+      "title": "UF_CRM_1759307130",
+      "listLabel": "Торговый менеджер вторичной воронки",
+      "type": "employee"
+    },
+    {
+      "code": "UF_CRM_1756462010",
+      "title": "UF_CRM_1756462010",
+      "listLabel": "Оператор колл-центра",
+      "type": "employee"
+    },
+    {
+      "code": "UF_CRM_1759307489",
+      "title": "UF_CRM_1759307489",
+      "listLabel": "Оператор колл-центра вторичной воронки",
+      "type": "employee"
+    },
+    {
+      "code": "UF_CRM_1752058236",
+      "title": "UF_CRM_1752058236",
+      "listLabel": "Дженерик",
+      "type": "employee"
+    },
+    {
+      "code": "UF_CRM_1752058253",
+      "title": "UF_CRM_1752058253",
+      "listLabel": "Координатор",
+      "type": "employee"
+    },
+    {
+      "code": "UF_CRM_1752058279",
+      "title": "UF_CRM_1752058279",
+      "listLabel": "Фин менеджер",
+      "type": "employee"
+    },
+    {
+      "code": "UF_CRM_6879EEC2ECE48",
+      "title": "UF_CRM_6879EEC2ECE48",
+      "listLabel": "Ночной Оператор",
+      "type": "employee"
+    },
+    {
+      "code": "UF_CRM_690DE152273C2",
+      "title": "UF_CRM_690DE152273C2",
+      "listLabel": "Записал бот",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_690DE15230317",
+      "title": "UF_CRM_690DE15230317",
+      "listLabel": "Врач-агент",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1762786164",
+      "title": "UF_CRM_1762786164",
+      "listLabel": "Торговый менеджер дожима",
+      "type": "employee"
+    },
+    {
+      "code": "UF_CRM_DEAL_PREVIOUS_USER_FN",
+      "title": "UF_CRM_DEAL_PREVIOUS_USER_FN",
+      "listLabel": "Предыдущий ответственный (сделка)",
+      "type": "employee"
+    },
+    {
+      "code": "UF_CRM_69296025D10AD",
+      "title": "UF_CRM_69296025D10AD",
+      "listLabel": "Создан вручную",
+      "type": "boolean"
+    },
+    {
+      "code": "UF_CRM_6929602615EE1",
+      "title": "UF_CRM_6929602615EE1",
+      "listLabel": "Предыдущий ответственный (лид)",
+      "type": "employee"
+    },
+    {
+      "code": "UF_CRM_1766661815851",
+      "title": "UF_CRM_1766661815851",
+      "listLabel": "Общее",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_699EF9CA7B2FC",
+      "title": "UF_CRM_699EF9CA7B2FC",
+      "listLabel": "Недозвон",
+      "type": "double"
+    },
+    {
+      "code": "UF_CRM_699EF9CAEABD0",
+      "title": "UF_CRM_699EF9CAEABD0",
+      "listLabel": "Целевой лид",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_699EF9CB02BF5",
+      "title": "UF_CRM_699EF9CB02BF5",
+      "listLabel": "Попыток дозвона",
+      "type": "double"
+    },
+    {
+      "code": "UF_CRM_1773309909478",
+      "title": "UF_CRM_1773309909478",
+      "listLabel": "Уровень сервиса",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1773309944620",
+      "title": "UF_CRM_1773309944620",
+      "listLabel": "Уровень консультации",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1773310147133",
+      "title": "UF_CRM_1773310147133",
+      "listLabel": "Итоговая сумма лечения",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1773310188821",
+      "title": "UF_CRM_1773310188821",
+      "listLabel": "Решили ли проблему",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1773310205634",
+      "title": "UF_CRM_1773310205634",
+      "listLabel": "Причина отказа (строка)",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1773310767172",
+      "title": "UF_CRM_1773310767172",
+      "listLabel": "Оценка",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_69E5F375A1407",
+      "title": "UF_CRM_69E5F375A1407",
+      "listLabel": "Обратный звонок",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_69E5F375F3086",
+      "title": "UF_CRM_69E5F375F3086",
+      "listLabel": "WhatsappUsername_WZ",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_69E5F37606948",
+      "title": "UF_CRM_69E5F37606948",
+      "listLabel": "WhatsappLid_WZ",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_69E5F37612C2F",
+      "title": "UF_CRM_69E5F37612C2F",
+      "listLabel": "Фамилия (ИИ)",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_69E5F3761E9AE",
+      "title": "UF_CRM_69E5F3761E9AE",
+      "listLabel": "Имя (ИИ)",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_69E5F37629EA9",
+      "title": "UF_CRM_69E5F37629EA9",
+      "listLabel": "Отчество (ИИ)",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_69E5F37633F20",
+      "title": "UF_CRM_69E5F37633F20",
+      "listLabel": "Возраст (ИИ)",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_68BEE381477FD",
+      "title": "UF_CRM_68BEE381477FD",
+      "listLabel": "Укажите ФИО врача",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1757074876",
+      "title": "UF_CRM_1757074876",
+      "listLabel": "Причина провала Сделки",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1778056369",
+      "title": "UF_CRM_1778056369",
+      "listLabel": "Причина провала Сделки (строка)",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_68BEE38163011",
+      "title": "UF_CRM_68BEE38163011",
+      "listLabel": "Представьтесь, пожалуйста",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_68BEE38183CE4",
+      "title": "UF_CRM_68BEE38183CE4",
+      "listLabel": "MaxUsername_WZ",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_68BEE3818A3D1",
+      "title": "UF_CRM_68BEE3818A3D1",
+      "listLabel": "MaxId_WZ",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1760443235",
+      "title": "UF_CRM_1760443235",
+      "listLabel": "В работе у менеджера",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1759307647",
+      "title": "UF_CRM_1759307647",
+      "listLabel": "Оператор дожима",
+      "type": "employee"
+    },
+    {
+      "code": "UF_CRM_690DE1523B8A5",
+      "title": "UF_CRM_690DE1523B8A5",
+      "listLabel": "Комментарий из разговора",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1759308450",
+      "title": "UF_CRM_1759308450",
+      "listLabel": "Комментарий дожима",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1760452674",
+      "title": "UF_CRM_1760452674",
+      "listLabel": "Причина не записи дожима",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1760452721",
+      "title": "UF_CRM_1760452721",
+      "listLabel": "Причина отмены записи дожима",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1761982559",
+      "title": "UF_CRM_1761982559",
+      "listLabel": "Причина полного отказа дожим",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_689EF34C0E10B",
+      "title": "UF_CRM_689EF34C0E10B",
+      "listLabel": "Есть ли проблема с глазами?",
+      "type": "boolean"
+    },
+    {
+      "code": "UF_CRM_690DE15241D96",
+      "title": "UF_CRM_690DE15241D96",
+      "listLabel": "Прозвон",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_68668723A727D",
+      "title": "UF_CRM_68668723A727D",
+      "listLabel": "Причина некачественного лида",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_690DE15248C72",
+      "title": "UF_CRM_690DE15248C72",
+      "listLabel": "Платная диагностика",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_68668723C74F9",
+      "title": "UF_CRM_68668723C74F9",
+      "listLabel": "Причина условного отказа",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_692960261FDD6",
+      "title": "UF_CRM_692960261FDD6",
+      "listLabel": "Входящий звонок",
+      "type": "boolean"
+    },
+    {
+      "code": "UF_CRM_1751637537744",
+      "title": "UF_CRM_1751637537744",
+      "listLabel": "Подробная причина провала сделки",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_68711E62DF19C",
+      "title": "UF_CRM_68711E62DF19C",
+      "listLabel": "Общался бот",
+      "type": "boolean"
+    },
+    {
+      "code": "UF_CRM_1754039778522",
+      "title": "UF_CRM_1754039778522",
+      "listLabel": "Сумма факт вторичка",
+      "type": "money"
+    },
+    {
+      "code": "UF_CRM_689EF34BF25BD",
+      "title": "UF_CRM_689EF34BF25BD",
+      "listLabel": "Инфоповод (стр)",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_68668723D7CA8",
+      "title": "UF_CRM_68668723D7CA8",
+      "listLabel": "Город",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1751552023",
+      "title": "UF_CRM_1751552023",
+      "listLabel": "Сумма согласованного плана лечения со скидкой",
+      "type": "money"
+    },
+    {
+      "code": "UF_CRM_1751552045",
+      "title": "UF_CRM_1751552045",
+      "listLabel": "Сумма общего плана лечения",
+      "type": "money"
+    },
+    {
+      "code": "UF_CRM_1751552078",
+      "title": "UF_CRM_1751552078",
+      "listLabel": "Сумма остатка по рассрочке",
+      "type": "money"
+    },
+    {
+      "code": "UF_CRM_1751552102",
+      "title": "UF_CRM_1751552102",
+      "listLabel": "Дата окончания рассрочки",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1751552123",
+      "title": "UF_CRM_1751552123",
+      "listLabel": "Дата продления рассрочки",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1751552162",
+      "title": "UF_CRM_1751552162",
+      "listLabel": "Учет рассрочек",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1751552302",
+      "title": "UF_CRM_1751552302",
+      "listLabel": "Статус рассрочки",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1759217891",
+      "title": "UF_CRM_1759217891",
+      "listLabel": "Направление лечения",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_690DE152509F5",
+      "title": "UF_CRM_690DE152509F5",
+      "listLabel": "Предыдущая стадия (п.п.)",
+      "type": "crm_status"
+    },
+    {
+      "code": "UF_CRM_1751552689",
+      "title": "UF_CRM_1751552689",
+      "listLabel": "План лечения",
+      "type": "file"
+    },
+    {
+      "code": "UF_CRM_1751552709",
+      "title": "UF_CRM_1751552709",
+      "listLabel": "Рентген снимок",
+      "type": "file"
+    },
+    {
+      "code": "UF_CRM_699EF9CB0C705",
+      "title": "UF_CRM_699EF9CB0C705",
+      "listLabel": "Количество записей",
+      "type": "integer"
+    },
+    {
+      "code": "UF_CRM_69E5F3763D310",
+      "title": "UF_CRM_69E5F3763D310",
+      "listLabel": "ID_49",
+      "type": "integer"
+    },
+    {
+      "code": "UF_CRM_1759481270",
+      "title": "UF_CRM_1759481270",
+      "listLabel": "Администратор (не исп.)",
+      "type": "double"
+    },
+    {
+      "code": "UF_CRM_1770634126",
+      "title": "UF_CRM_1770634126",
+      "listLabel": "Администратор",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1759481298",
+      "title": "UF_CRM_1759481298",
+      "listLabel": "Куратор по лечению (не исп.)",
+      "type": "double"
+    },
+    {
+      "code": "UF_CRM_1770634181",
+      "title": "UF_CRM_1770634181",
+      "listLabel": "Куратор по лечению",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1759481314",
+      "title": "UF_CRM_1759481314",
+      "listLabel": "Доктор (не исп.)",
+      "type": "double"
+    },
+    {
+      "code": "UF_CRM_1770634312",
+      "title": "UF_CRM_1770634312",
+      "listLabel": "Доктор",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1759481341",
+      "title": "UF_CRM_1759481341",
+      "listLabel": "Комфорт и атмосфера в клинике (не исп.)",
+      "type": "double"
+    },
+    {
+      "code": "UF_CRM_1770634385",
+      "title": "UF_CRM_1770634385",
+      "listLabel": "Комфорт и атмосфера в клинике",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1770273944",
+      "title": "UF_CRM_1770273944",
+      "listLabel": "Какова вероятность что вы порекомендуете стоматологию близким и коллегам (не исп.)",
+      "type": "double"
+    },
+    {
+      "code": "UF_CRM_1770634443",
+      "title": "UF_CRM_1770634443",
+      "listLabel": "Какова вероятность что вы порекомендуете стоматологию близким и коллегам",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_6866872369670",
+      "title": "UF_CRM_6866872369670",
+      "listLabel": "Дата и время первичного приема (не нужно!)",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_68BEE38168A22",
+      "title": "UF_CRM_68BEE38168A22",
+      "listLabel": "Была на стадии \"Не записан\" (Тех.поле)",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_68BEE38171E04",
+      "title": "UF_CRM_68BEE38171E04",
+      "listLabel": "Выберите филиал для проверки",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_68D265378940E",
+      "title": "UF_CRM_68D265378940E",
+      "listLabel": "тест",
+      "type": "boolean"
+    },
+    {
+      "code": "UF_CRM_1764768386",
+      "title": "UF_CRM_1764768386",
+      "listLabel": "Копия в дожим",
+      "type": "boolean"
+    },
+    {
+      "code": "UF_CRM_1766737164",
+      "title": "UF_CRM_1766737164",
+      "listLabel": "телефон_тех_поле",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_69E5F376487AC",
+      "title": "UF_CRM_69E5F376487AC",
+      "listLabel": "Запуск БП",
+      "type": "boolean"
+    },
+    {
+      "code": "UF_CRM_69E5F37652AF3",
+      "title": "UF_CRM_69E5F37652AF3",
+      "listLabel": "Город (список)",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_69E5F3766197A",
+      "title": "UF_CRM_69E5F3766197A",
+      "listLabel": "Исходное название Лида",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1778663132",
+      "title": "UF_CRM_1778663132",
+      "listLabel": "Зачет КЦ",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1779295162",
+      "title": "UF_CRM_1779295162",
+      "listLabel": "Причина отказа",
+      "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1779449189",
+      "title": "UF_CRM_1779449189",
+      "listLabel": "Комментарий к причине отказа",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1779442572",
+      "title": "UF_CRM_1779442572",
+      "listLabel": "Анкета",
+      "type": "url"
+    },
+    {
+      "code": "UF_CRM_1783062449",
+      "title": "UF_CRM_1783062449",
+      "listLabel": "Дата внесения в базу",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1783062489",
+      "title": "UF_CRM_1783062489",
+      "listLabel": "Дата последнего контакта",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1783062523",
+      "title": "UF_CRM_1783062523",
+      "listLabel": "Дата первого контакта",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1783062589",
+      "title": "UF_CRM_1783062589",
+      "listLabel": "Результат контакта",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1783062654",
+      "title": "UF_CRM_1783062654",
+      "listLabel": "Договоренность о следующем шаге",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1783062702",
+      "title": "UF_CRM_1783062702",
+      "listLabel": "Назначена дата следующего контакта",
+      "type": "boolean"
+    },
+    {
+      "code": "UF_CRM_1783062763",
+      "title": "UF_CRM_1783062763",
+      "listLabel": "Дата следующего контакта",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1783065159",
+      "title": "UF_CRM_1783065159",
+      "listLabel": "Анкета отправлена",
+      "type": "boolean"
+    },
+    {
+      "code": "UF_CRM_1783065193",
+      "title": "UF_CRM_1783065193",
+      "listLabel": "Анкета заполнена",
+      "type": "boolean"
+    },
+    {
+      "code": "UF_CRM_1783065228",
+      "title": "UF_CRM_1783065228",
+      "listLabel": "Предпочтения",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1783065262",
+      "title": "UF_CRM_1783065262",
+      "listLabel": "Дата записи на приём",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1783065291",
+      "title": "UF_CRM_1783065291",
+      "listLabel": "Врач, к которому записан",
+      "type": "employee"
+    },
+    {
+      "code": "UF_CRM_1783065334",
+      "title": "UF_CRM_1783065334",
+      "listLabel": "Тип приёма",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1783065395",
+      "title": "UF_CRM_1783065395",
+      "listLabel": "План лечения",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1783065448",
+      "title": "UF_CRM_1783065448",
+      "listLabel": "Ориентировочная стоимость плана лечения",
+      "type": "money"
+    },
+    {
+      "code": "UF_CRM_1783065501",
+      "title": "UF_CRM_1783065501",
+      "listLabel": "Дата начала лечения",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1783073991",
+      "title": "UF_CRM_1783073991",
+      "listLabel": "Дата промежуточного NPS",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1783074020",
+      "title": "UF_CRM_1783074020",
+      "listLabel": "Классификация промежуточного NPS",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1783065547",
+      "title": "UF_CRM_1783065547",
+      "listLabel": "Дата завершения лечения",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1783074049",
+      "title": "UF_CRM_1783074049",
+      "listLabel": "Дата итогового NPS",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1783074075",
+      "title": "UF_CRM_1783074075",
+      "listLabel": "Классификация итогового NPS",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1783065720",
+      "title": "UF_CRM_1783065720",
+      "listLabel": "Дата следующего контакта",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1783065870",
+      "title": "UF_CRM_1783065870",
+      "listLabel": "Тип следующего контакта",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1783069473",
+      "title": "UF_CRM_1783069473",
+      "listLabel": "Общее (подробнее)",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1783065980",
+      "title": "UF_CRM_1783065980",
+      "listLabel": "Дата последнего успешного контакта",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1783066010",
+      "title": "UF_CRM_1783066010",
+      "listLabel": "Количество попыток реактивации",
+      "type": "integer"
+    },
+    {
+      "code": "UF_CRM_1783066038",
+      "title": "UF_CRM_1783066038",
+      "listLabel": "Дата следующей попытки реактивации",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1783066126",
+      "title": "UF_CRM_1783066126",
+      "listLabel": "Причина потери контакта",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1783066236",
+      "title": "UF_CRM_1783066236",
+      "listLabel": "Не понравилось (подробнее)",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1783066265",
+      "title": "UF_CRM_1783066265",
+      "listLabel": "Общее (подробнее)",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1783066441",
+      "title": "UF_CRM_1783066441",
+      "listLabel": "Дата получения жалобы",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1783066459",
+      "title": "UF_CRM_1783066459",
+      "listLabel": "Суть жалобы",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1783066512",
+      "title": "UF_CRM_1783066512",
+      "listLabel": "Категория жалобы",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1783066531",
+      "title": "UF_CRM_1783066531",
+      "listLabel": "Другое (подробнее)",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1783066554",
+      "title": "UF_CRM_1783066554",
+      "listLabel": "Ответственный за решение",
+      "type": "employee"
+    },
+    {
+      "code": "UF_CRM_1783066577",
+      "title": "UF_CRM_1783066577",
+      "listLabel": "Что выполнено",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1783066655",
+      "title": "UF_CRM_1783066655",
+      "listLabel": "Этапы обработки жалобы",
+      "type": "enumeration"
+    },
+    {
+      "code": "UF_CRM_1783066729",
+      "title": "UF_CRM_1783066729",
+      "listLabel": "Дата получения предложения",
+      "type": "date"
+    },
+    {
+      "code": "UF_CRM_1783066744",
+      "title": "UF_CRM_1783066744",
+      "listLabel": "Суть предложения",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_1783074104",
+      "title": "UF_CRM_1783074104",
+      "listLabel": "Статус обработки",
+      "type": "string"
+    }
+  ],
+  "lastRunStats": {
+    "at": "2026-07-07T08:37:24.773Z",
+    "leadsFetched": 18684,
+    "dealsFetched": 2734,
+    "monthsTouched": [
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
+    ],
+    "firstRun": true
+  }
 }
