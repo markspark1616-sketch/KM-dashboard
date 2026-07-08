@@ -1,5 +1,5 @@
 {
-  "lastSyncCursor": null,
+  "lastSyncCursor": "2026-07-08T13:36:21.899Z",
   "sourceName": "Victory парсинг",
   "sourceId": "84",
   "leadStatusNames": {
@@ -980,6 +980,70 @@
     "C29:LOSE": {
       "name": "Сделка провалена",
       "semantics": "F"
+    },
+    "C30:NEW": {
+      "name": "Новая",
+      "semantics": null
+    },
+    "C30:PREPARATION": {
+      "name": "Подготовка документов",
+      "semantics": null
+    },
+    "C30:PREPAYMENT_INVOIC": {
+      "name": "Cчёт на предоплату",
+      "semantics": null
+    },
+    "C30:EXECUTING": {
+      "name": "В работе",
+      "semantics": null
+    },
+    "C30:FINAL_INVOICE": {
+      "name": "Финальный счёт",
+      "semantics": null
+    },
+    "C30:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C30:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C30:APOLOGY": {
+      "name": "Анализ причины провала",
+      "semantics": "F"
+    },
+    "C31:NEW": {
+      "name": "Новая",
+      "semantics": null
+    },
+    "C31:PREPARATION": {
+      "name": "Подготовка документов",
+      "semantics": null
+    },
+    "C31:PREPAYMENT_INVOIC": {
+      "name": "Cчёт на предоплату",
+      "semantics": null
+    },
+    "C31:EXECUTING": {
+      "name": "В работе",
+      "semantics": null
+    },
+    "C31:FINAL_INVOICE": {
+      "name": "Финальный счёт",
+      "semantics": null
+    },
+    "C31:WON": {
+      "name": "Сделка успешна",
+      "semantics": "S"
+    },
+    "C31:LOSE": {
+      "name": "Сделка провалена",
+      "semantics": "F"
+    },
+    "C31:APOLOGY": {
+      "name": "Анализ причины провала",
+      "semantics": "F"
     }
   },
   "dealCategoryNames": {
@@ -1008,7 +1072,9 @@
     "24": "Иркутск",
     "27": "Томск",
     "28": "VIP-клиенты",
-    "29": "Жалоба (VIP)"
+    "29": "Жалоба (VIP)",
+    "30": "Саратов",
+    "31": "Чебоксары"
   },
   "dealCityHintList": [
     "Санкт-Петербург",
@@ -1075,7 +1141,8 @@
     "leadNotCountedReasonCode": "UF_CRM_1755787390",
     "leadRefusalReasonCode": "UF_CRM_1748280876",
     "leadLowQualityReasonCode": "UF_CRM_1748008077",
-    "dealPlanSumCode": "UF_CRM_1751552023"
+    "dealPlanSumCode": "UF_CRM_1751552023",
+    "dealLossReasonCode": "UF_CRM_1757074876"
   },
   "debugAllLeadFields": [
     {
@@ -2930,18 +2997,18 @@
     }
   ],
   "lastRunStats": {
-    "at": "2026-07-08T10:35:46.900Z",
-    "leadsFetched": 265,
-    "dealsFetched": 3,
+    "at": "2026-07-08T13:36:21.899Z",
+    "leadsFetched": 18862,
+    "dealsFetched": 2761,
     "monthsTouched": [
-      "2026-05",
-      "2026-06",
       "2026-01",
-      "2026-07",
       "2026-02",
       "2026-03",
-      "2026-04"
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
     ],
-    "firstRun": false
+    "firstRun": true
   }
 }
