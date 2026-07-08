@@ -178,6 +178,12 @@
     </div>
 
     <div class="panel">
+      <span class="eyebrow">Считается само</span>
+      <h3>Причины провала сделок</h3>
+      <div id="loss-reasons"></div>
+    </div>
+
+    <div class="panel">
       <span class="eyebrow">Тренд</span>
       <h3>Динамика по дням</h3>
       <canvas id="trend-chart" height="90"></canvas>
@@ -368,8 +374,9 @@ async function aggregate(cityFilter, from, to) {
 
   const raw = {
     leads: 0, pcp: 0, booked: 0, activeBooked: 0, arrived: 0, junk: 0, noAnswer: 0,
-    dealsWon: 0, cashIn: 0, planAllCount: 0, planAllSum: 0, planWonSum: 0,
+    dealsWon: 0, dealsLost: 0, cashIn: 0, planAllCount: 0, planAllSum: 0, planWonSum: 0,
     junkReasonsCombined: {}, junkReasonsByStatus: {}, junkCountByStatus: {},
+    lossReasonsCombined: {},
     byDay: {}, // day -> {leads, arrived, dealsWon}
   };
 
@@ -415,11 +422,19 @@ async function aggregate(cityFilter, from, to) {
         for (const deal of Object.values(cityData.deals || {})) {
           const stageInfo = stageMap[deal.stage] || {};
           const isWon = stageInfo.semantics === "S";
+          const isLost = stageInfo.semantics === "F";
           if (deal.plan > 0) { raw.planAllCount++; raw.planAllSum += deal.plan; }
           if (isWon) {
             raw.dealsWon++; raw.byDay[day].dealsWon++;
             raw.cashIn += deal.opportunity;
             raw.planWonSum += deal.plan;
+          }
+          if (isLost) {
+            raw.dealsLost++;
+            const reasonList = Array.isArray(deal.r) && deal.r.length ? deal.r : ["Без указания причины"];
+            for (const reasonText of reasonList) {
+              raw.lossReasonsCombined[reasonText] = (raw.lossReasonsCombined[reasonText] || 0) + 1;
+            }
           }
         }
       }
@@ -529,6 +544,22 @@ function renderReasons(raw) {
       <p>${reasons.map(([r,c]) => `${r} — ${c} (${fmtPct(c/statusTotal*100)})`).join("<br>")}</p>
     </div>`;
   }).join("")}</div><p class="empty" style="text-align:left; padding-top:8px;">Если у лида отмечено несколько причин сразу — он учтён в каждой; проценты внутри статуса могут суммарно превышать 100%.</p>` : `<div class="empty">Нет брака за этот период</div>`;
+}
+
+function renderLossReasons(raw) {
+  const el = document.getElementById("loss-reasons");
+  const total = raw.dealsLost || 1;
+  const sorted = Object.entries(raw.lossReasonsCombined).sort((a,b) => b[1]-a[1]);
+  if (!sorted.length) {
+    el.innerHTML = `<div class="empty">Нет провальных сделок за этот период</div>`;
+    return;
+  }
+  el.innerHTML = `<div class="reason-row"><div class="reason-top"><span class="mono" style="color:#8A8272;">Всего провалов сделок</span><span class="mono">${fmtNum(raw.dealsLost)}</span></div></div>` +
+    sorted.map(([reason, count]) => `
+    <div class="reason-row">
+      <div class="reason-top"><span>${reason}</span><span class="mono">${fmtNum(count)} · ${fmtPct(count/total*100)}</span></div>
+      <div class="reason-bar-track"><div class="reason-bar-fill" style="width:${Math.max(3,count/sorted[0][1]*100)}%"></div></div>
+    </div>`).join("");
 }
 
 let trendChart = null;
@@ -678,6 +709,7 @@ async function refresh() {
   renderFunnel(raw);
   renderFin(raw, d, isFullMonthRange(from, to));
   renderReasons(raw);
+  renderLossReasons(raw);
   renderTrend(raw, from, to);
   await renderCompare(from, to);
 
