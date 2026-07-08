@@ -49,6 +49,7 @@ const FIELD_TITLES = {
   leadRefusalReason: "Причина условного отказа",
   leadLowQualityReason: "Причина некачественного лида",
   dealPlanSum: "Сумма согласованного плана лечения со скидкой",
+  dealLossReason: "Причина провала Сделки",
 };
 
 // Статусы лидов, которые считаются "Брак" — из них же собираем причины брака
@@ -280,6 +281,11 @@ const HARDCODED_REASON_MAPS = {
     "2296159": "Дубль самого себя",
     "2195208": "Наш пациент",
   },
+  // "Причина провала Сделки" (UF_CRM_1769503292, сделки в стадии "провалена")
+  // Пока пусто — ждём сопоставление ID->текст (см. README/переписку), до тех пор
+  // причины будут показываться как числа.
+  1769503292: {
+  },
 };
 
 function hardcodedMapFor(fieldCode) {
@@ -345,14 +351,17 @@ async function main() {
   const leadRefusalReasonCode = await discoverFieldCode("crm.lead.fields", FIELD_TITLES.leadRefusalReason);
   const leadLowQualityReasonCode = await discoverFieldCode("crm.lead.fields", FIELD_TITLES.leadLowQualityReason);
   const dealPlanSumCode = await discoverFieldCode("crm.deal.fields", FIELD_TITLES.dealPlanSum);
+  const dealLossReasonCode = await discoverFieldCode("crm.deal.fields", FIELD_TITLES.dealLossReason);
 
   const debugLeadFields = await getDebugFieldList("crm.lead.fields");
   const debugDealFields = await getDebugFieldList("crm.deal.fields");
 
   const leadFieldsRaw = await getFieldsList("crm.lead.fields");
+  const dealFieldsRaw = await getFieldsList("crm.deal.fields");
   const notCountedReasonEnumMap = leadNotCountedReasonCode ? await buildEnumMap(leadFieldsRaw, leadNotCountedReasonCode) : {};
   const refusalReasonEnumMap = leadRefusalReasonCode ? await buildEnumMap(leadFieldsRaw, leadRefusalReasonCode) : {};
   const lowQualityReasonEnumMap = leadLowQualityReasonCode ? await buildEnumMap(leadFieldsRaw, leadLowQualityReasonCode) : {};
+  const dealLossReasonEnumMap = dealLossReasonCode ? await buildEnumMap(dealFieldsRaw, dealLossReasonCode) : {};
 
   // --- meta / курсор последней синхронизации ---
   let meta = fs.existsSync(META_PATH)
@@ -382,7 +391,7 @@ async function main() {
   console.log("Загружаю сделки...");
   const deals = await fetchAll("crm.deal.list", {
     filter: dealFilter,
-    select: ["ID", "STAGE_ID", "CATEGORY_ID", "DATE_CREATE", "OPPORTUNITY", dealPlanSumCode].filter(Boolean),
+    select: ["ID", "STAGE_ID", "CATEGORY_ID", "DATE_CREATE", "OPPORTUNITY", dealPlanSumCode, dealLossReasonCode].filter(Boolean),
   });
   console.log(`Загружено сделок (дельта): ${deals.length}`);
 
@@ -445,10 +454,16 @@ async function main() {
     const cityKey = categoryNames[String(deal.CATEGORY_ID)] || "_unmatched";
     const cityData = ensureCity(dayData, cityKey);
 
+    const stageInfo = stageMap[deal.STAGE_ID] || {};
+    const lossReasons = stageInfo.semantics === "F"
+      ? decodeFieldValue(dealLossReasonCode && deal[dealLossReasonCode], dealLossReasonEnumMap)
+      : [];
+
     cityData.deals[deal.ID] = {
       stage: deal.STAGE_ID,
       opportunity: parseFloat(deal.OPPORTUNITY) || 0,
       plan: dealPlanSumCode ? (parseFloat(deal[dealPlanSumCode]) || 0) : 0,
+      r: lossReasons,
     };
   }
 
@@ -465,7 +480,7 @@ async function main() {
   meta.dealCategoryNames = categoryNames;
   meta.dealCityHintList = DEAL_CITY_HINT_LIST;
   meta.resolvedFieldCodes = {
-    leadSiteInfoCode, leadNotCountedReasonCode, leadRefusalReasonCode, leadLowQualityReasonCode, dealPlanSumCode,
+    leadSiteInfoCode, leadNotCountedReasonCode, leadRefusalReasonCode, leadLowQualityReasonCode, dealPlanSumCode, dealLossReasonCode,
   };
   meta.debugAllLeadFields = debugLeadFields;
   meta.debugAllDealFields = debugDealFields;
