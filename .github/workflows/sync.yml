@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
 
       - name: Run sync script
         env:
@@ -35,3 +35,12 @@ jobs:
           git add data/
           git diff --quiet --cached || git commit -m "chore: обновление данных из Bitrix24 [skip ci]"
           git push
+
+      # Отчёт в Telegram шлём только после вечернего запуска (18:00 МСК = 15:00 UTC)
+      # или при ручном запуске (удобно для проверки, что бот вообще работает)
+      - name: Send Telegram report
+        if: github.event.schedule == '0 15 * * *' || github.event_name == 'workflow_dispatch'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node scripts/send-telegram-report.js
