@@ -5,7 +5,17 @@ on:
     # МСК = UTC+3 → 06:00 МСК = 03:00 UTC, 18:00 МСК = 15:00 UTC
     - cron: "0 3 * * *"
     - cron: "0 15 * * *"
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      report_type:
+        description: "Какой отчёт отправить при ручном запуске (для проверки)"
+        type: choice
+        default: today
+        options:
+          - today
+          - yesterday
+          - week
+          - month
 
 permissions:
   contents: write
@@ -22,11 +32,31 @@ jobs:
         with:
           node-version: "24"
 
+      - name: Determine date context (MSK)
+        id: datectx
+        run: |
+          DOW=$(TZ="Europe/Moscow" date +%u)
+          DOM=$(TZ="Europe/Moscow" date +%d)
+          echo "is_monday=$([ "$DOW" = "1" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          echo "is_first_of_month=$([ "$DOM" = "01" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
       - name: Run sync script
         env:
           BITRIX_WEBHOOK_URL: ${{ secrets.BITRIX_WEBHOOK_URL }}
           BITRIX_SOURCE_NAME: "Victory парсинг"
         run: node scripts/sync-bitrix.js
+
+      # Если синхронизация выше упала — сразу пишем в Telegram, чтобы не узнать об этом
+      # постфактум по "странным" цифрам в дашборде
+      - name: Notify on sync failure
+        if: failure()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${TELEGRAM_CHAT_ID}" \
+            -d "text=⚠️ Синхронизация Bitrix24 (Victory) упала с ошибкой. Проверьте лог в GitHub Actions." > /dev/null
 
       - name: Commit updated data
         run: |
@@ -36,11 +66,39 @@ jobs:
           git diff --quiet --cached || git commit -m "chore: обновление данных из Bitrix24 [skip ci]"
           git push
 
-      # Отчёт в Telegram шлём только после вечернего запуска (18:00 МСК = 15:00 UTC)
-      # или при ручном запуске (удобно для проверки, что бот вообще работает)
-      - name: Send Telegram report
-        if: github.event.schedule == '0 15 * * *' || github.event_name == 'workflow_dispatch'
+      # ---- Отчёты в Telegram ----
+      # "Сегодня" — после вечерней синхронизации (18:00 МСК)
+      - name: Send Telegram report — today
+        if: github.event.schedule == '0 15 * * *' || (github.event_name == 'workflow_dispatch' && inputs.report_type == 'today')
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          REPORT_TYPE: today
+        run: node scripts/send-telegram-report.js
+
+      # "Вчера" — каждое утро, после утренней синхронизации (06:00 МСК)
+      - name: Send Telegram report — yesterday
+        if: github.event.schedule == '0 3 * * *' || (github.event_name == 'workflow_dispatch' && inputs.report_type == 'yesterday')
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          REPORT_TYPE: yesterday
+        run: node scripts/send-telegram-report.js
+
+      # "Неделя" — по понедельникам утром (итог только что закончившейся недели)
+      - name: Send Telegram report — week
+        if: (github.event.schedule == '0 3 * * *' && steps.datectx.outputs.is_monday == 'true') || (github.event_name == 'workflow_dispatch' && inputs.report_type == 'week')
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          REPORT_TYPE: week
+        run: node scripts/send-telegram-report.js
+
+      # "Месяц" — 1-го числа утром (итог только что закончившегося месяца)
+      - name: Send Telegram report — month
+        if: (github.event.schedule == '0 3 * * *' && steps.datectx.outputs.is_first_of_month == 'true') || (github.event_name == 'workflow_dispatch' && inputs.report_type == 'month')
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          REPORT_TYPE: month
         run: node scripts/send-telegram-report.js
