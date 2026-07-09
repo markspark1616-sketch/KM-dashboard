@@ -1,5 +1,5 @@
 {
-  "lastSyncCursor": "2026-07-09T06:50:15.142Z",
+  "lastSyncCursor": "2026-07-09T17:22:32.661Z",
   "sourceName": "Victory парсинг",
   "sourceId": "84",
   "leadStatusNames": {
@@ -982,23 +982,27 @@
       "semantics": "F"
     },
     "C30:NEW": {
-      "name": "Новая",
+      "name": "Пришел",
       "semantics": null
     },
     "C30:PREPARATION": {
-      "name": "Подготовка документов",
+      "name": "Назначен ТМ",
       "semantics": null
     },
     "C30:PREPAYMENT_INVOIC": {
-      "name": "Cчёт на предоплату",
+      "name": "На презентации",
       "semantics": null
     },
     "C30:EXECUTING": {
-      "name": "В работе",
+      "name": "На осмотре",
       "semantics": null
     },
     "C30:FINAL_INVOICE": {
-      "name": "Финальный счёт",
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C30:1": {
+      "name": "Фин отдел",
       "semantics": null
     },
     "C30:WON": {
@@ -1010,27 +1014,31 @@
       "semantics": "F"
     },
     "C30:APOLOGY": {
-      "name": "Анализ причины провала",
+      "name": "Расторжение",
       "semantics": "F"
     },
     "C31:NEW": {
-      "name": "Новая",
+      "name": "Пришел",
       "semantics": null
     },
     "C31:PREPARATION": {
-      "name": "Подготовка документов",
+      "name": "Назначен ТМ",
       "semantics": null
     },
     "C31:PREPAYMENT_INVOIC": {
-      "name": "Cчёт на предоплату",
+      "name": "На презентации",
       "semantics": null
     },
     "C31:EXECUTING": {
-      "name": "В работе",
+      "name": "На осмотре",
       "semantics": null
     },
     "C31:FINAL_INVOICE": {
-      "name": "Финальный счёт",
+      "name": "На закрытие",
+      "semantics": null
+    },
+    "C31:1": {
+      "name": "Фин отдел",
       "semantics": null
     },
     "C31:WON": {
@@ -1042,7 +1050,7 @@
       "semantics": "F"
     },
     "C31:APOLOGY": {
-      "name": "Анализ причины провала",
+      "name": "Расторжение",
       "semantics": "F"
     }
   },
@@ -1816,6 +1824,12 @@
       "title": "UF_CRM_1774601016",
       "listLabel": "Исходное название Лида",
       "type": "string"
+    },
+    {
+      "code": "UF_CRM_1783580350",
+      "title": "UF_CRM_1783580350",
+      "listLabel": "Запуск БП 1000",
+      "type": "boolean"
     }
   ],
   "debugAllDealFields": [
@@ -2997,16 +3011,17 @@
     }
   ],
   "lastRunStats": {
-    "at": "2026-07-09T06:50:15.142Z",
-    "leadsFetched": 323,
-    "dealsFetched": 5,
+    "at": "2026-07-09T17:22:32.661Z",
+    "leadsFetched": 896,
+    "dealsFetched": 14,
     "monthsTouched": [
+      "2026-06",
       "2026-07",
       "2026-05",
-      "2026-06",
-      "2026-01",
+      "2026-02",
+      "2026-03",
       "2026-04",
-      "2026-03"
+      "2026-01"
     ],
     "firstRun": false
   }
