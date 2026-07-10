@@ -1,5 +1,5 @@
 {
-  "lastSyncCursor": "2026-07-10T06:50:44.400Z",
+  "lastSyncCursor": "2026-07-10T16:56:05.940Z",
   "sourceName": "Victory парсинг",
   "sourceId": "84",
   "leadStatusNames": {
@@ -2260,6 +2260,24 @@
       "type": "employee"
     },
     {
+      "code": "UF_CRM_6A51052F6B8FE",
+      "title": "UF_CRM_6A51052F6B8FE",
+      "listLabel": "Обзвон",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_6A5105309011C",
+      "title": "UF_CRM_6A5105309011C",
+      "listLabel": "CianProfileId_WZ",
+      "type": "string"
+    },
+    {
+      "code": "UF_CRM_6A5105309A311",
+      "title": "UF_CRM_6A5105309A311",
+      "listLabel": "Был звонок",
+      "type": "string"
+    },
+    {
       "code": "UF_CRM_1752058279",
       "title": "UF_CRM_1752058279",
       "listLabel": "Фин менеджер",
@@ -2770,6 +2788,12 @@
       "type": "url"
     },
     {
+      "code": "UF_CRM_6A510530A1712",
+      "title": "UF_CRM_6A510530A1712",
+      "listLabel": "Запуск БП 1000",
+      "type": "boolean"
+    },
+    {
       "code": "UF_CRM_1783062449",
       "title": "UF_CRM_1783062449",
       "listLabel": "Дата внесения в базу",
@@ -3011,16 +3035,17 @@
     }
   ],
   "lastRunStats": {
-    "at": "2026-07-10T06:50:44.400Z",
-    "leadsFetched": 305,
-    "dealsFetched": 6,
+    "at": "2026-07-10T16:56:05.940Z",
+    "leadsFetched": 743,
+    "dealsFetched": 26,
     "monthsTouched": [
-      "2026-07",
       "2026-06",
       "2026-05",
+      "2026-07",
       "2026-04",
       "2026-03",
-      "2026-02"
+      "2026-02",
+      "2026-01"
     ],
     "firstRun": false
   }
