@@ -1,5 +1,5 @@
 {
-  "lastSyncCursor": "2026-07-17T05:46:28.715Z",
+  "lastSyncCursor": "2026-07-17T16:15:12.947Z",
   "sourceName": "Victory парсинг",
   "sourceId": "84",
   "leadStatusNames": {
@@ -1718,6 +1718,12 @@
       "type": "string"
     },
     {
+      "code": "UF_CRM_1784270539073",
+      "title": "UF_CRM_1784270539073",
+      "listLabel": "Общение в ОЛ",
+      "type": "string"
+    },
+    {
       "code": "UF_CRM_LEAD_1756133621687",
       "title": "UF_CRM_LEAD_1756133621687",
       "listLabel": "Выберите филиал для проверки",
@@ -2854,10 +2860,10 @@
       "type": "string"
     },
     {
-      "code": "UF_CRM_1783065262",
-      "title": "UF_CRM_1783065262",
+      "code": "UF_CRM_1784292795",
+      "title": "UF_CRM_1784292795",
       "listLabel": "Дата записи на приём",
-      "type": "date"
+      "type": "datetime"
     },
     {
       "code": "UF_CRM_1783065291",
@@ -3035,14 +3041,17 @@
     }
   ],
   "lastRunStats": {
-    "at": "2026-07-17T05:46:28.715Z",
-    "leadsFetched": 185,
-    "dealsFetched": 3,
+    "at": "2026-07-17T16:15:12.947Z",
+    "leadsFetched": 901,
+    "dealsFetched": 32,
     "monthsTouched": [
       "2026-07",
-      "2026-03",
       "2026-06",
-      "2026-05"
+      "2026-05",
+      "2026-03",
+      "2026-02",
+      "2026-04",
+      "2026-01"
     ],
     "firstRun": false
   }
