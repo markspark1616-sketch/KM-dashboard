@@ -1,5 +1,5 @@
 {
-  "lastSyncCursor": "2026-07-21T05:55:49.906Z",
+  "lastSyncCursor": "2026-07-21T16:22:47.188Z",
   "sourceName": "Victory парсинг",
   "sourceId": "84",
   "leadStatusNames": {
@@ -905,16 +905,8 @@
       "name": "Сбор предпочтений",
       "semantics": null
     },
-    "C28:EXECUTING": {
-      "name": "Запись на приём",
-      "semantics": null
-    },
     "C28:FINAL_INVOICE": {
       "name": "Планирование лечения",
-      "semantics": null
-    },
-    "C28:1": {
-      "name": "Подготовка к визиту",
       "semantics": null
     },
     "C28:2": {
@@ -923,14 +915,6 @@
     },
     "C28:3": {
       "name": "Лечение окончено",
-      "semantics": null
-    },
-    "C28:4": {
-      "name": "Поддержание контакта",
-      "semantics": null
-    },
-    "C28:5": {
-      "name": "Контакт потерян",
       "semantics": null
     },
     "C28:6": {
@@ -1782,6 +1766,12 @@
       "title": "UF_CRM_1769503292",
       "listLabel": "Причина провала Сделки",
       "type": "iblock_element"
+    },
+    {
+      "code": "UF_CRM_1784637686",
+      "title": "UF_CRM_1784637686",
+      "listLabel": "Регион нецелевого Лида",
+      "type": "string"
     },
     {
       "code": "UF_CRM_1757924516",
@@ -3041,16 +3031,16 @@
     }
   ],
   "lastRunStats": {
-    "at": "2026-07-21T05:55:49.906Z",
-    "leadsFetched": 203,
-    "dealsFetched": 13,
+    "at": "2026-07-21T16:22:47.188Z",
+    "leadsFetched": 816,
+    "dealsFetched": 27,
     "monthsTouched": [
       "2026-07",
-      "2026-03",
       "2026-06",
-      "2026-01",
-      "2026-04",
+      "2026-03",
       "2026-05",
+      "2026-04",
+      "2026-01",
       "2026-02"
     ],
     "firstRun": false
