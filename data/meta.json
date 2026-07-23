@@ -1,5 +1,5 @@
 {
-  "lastSyncCursor": "2026-07-23T06:05:50.872Z",
+  "lastSyncCursor": "2026-07-23T16:26:02.870Z",
   "sourceName": "Victory парсинг",
   "sourceId": "84",
   "leadStatusNames": {
@@ -1506,13 +1506,13 @@
     {
       "code": "UF_CRM_1746528777",
       "title": "UF_CRM_1746528777",
-      "listLabel": "Причина недозвона (список)",
+      "listLabel": "Причина недозвона",
       "type": "iblock_element"
     },
     {
       "code": "UF_CRM_1746529112",
       "title": "UF_CRM_1746529112",
-      "listLabel": "Причины не записи (список)",
+      "listLabel": "Причины не записи",
       "type": "iblock_element"
     },
     {
@@ -2144,7 +2144,7 @@
     {
       "code": "UF_CRM_68668723713C9",
       "title": "UF_CRM_68668723713C9",
-      "listLabel": "Причина недозвона (список)",
+      "listLabel": "Причина недозвона",
       "type": "iblock_element"
     },
     {
@@ -2162,7 +2162,7 @@
     {
       "code": "UF_CRM_686687237A32A",
       "title": "UF_CRM_686687237A32A",
-      "listLabel": "Причины не записи (список)",
+      "listLabel": "Причины не записи",
       "type": "iblock_element"
     },
     {
@@ -3031,17 +3031,17 @@
     }
   ],
   "lastRunStats": {
-    "at": "2026-07-23T06:05:50.872Z",
-    "leadsFetched": 262,
-    "dealsFetched": 7,
+    "at": "2026-07-23T16:26:02.870Z",
+    "leadsFetched": 888,
+    "dealsFetched": 31,
     "monthsTouched": [
-      "2026-07",
       "2026-05",
+      "2026-03",
       "2026-06",
-      "2026-01",
+      "2026-07",
       "2026-02",
       "2026-04",
-      "2026-03"
+      "2026-01"
     ],
     "firstRun": false
   }
