@@ -1,5 +1,5 @@
 {
-  "lastSyncCursor": "2026-07-24T05:54:17.416Z",
+  "lastSyncCursor": "2026-07-24T16:42:02.197Z",
   "sourceName": "Victory парсинг",
   "sourceId": "84",
   "leadStatusNames": {
@@ -1822,6 +1822,12 @@
       "type": "string"
     },
     {
+      "code": "UF_CRM_1784885761",
+      "title": "UF_CRM_1784885761",
+      "listLabel": "Сообщение отправлено",
+      "type": "string"
+    },
+    {
       "code": "UF_CRM_1783580350",
       "title": "UF_CRM_1783580350",
       "listLabel": "Запуск БП 1000",
@@ -3031,16 +3037,17 @@
     }
   ],
   "lastRunStats": {
-    "at": "2026-07-24T05:54:17.416Z",
-    "leadsFetched": 273,
-    "dealsFetched": 9,
+    "at": "2026-07-24T16:42:02.197Z",
+    "leadsFetched": 922,
+    "dealsFetched": 18,
     "monthsTouched": [
-      "2026-04",
       "2026-07",
-      "2026-06",
       "2026-05",
+      "2026-06",
+      "2026-04",
+      "2026-03",
       "2026-01",
-      "2026-03"
+      "2026-02"
     ],
     "firstRun": false
   }
